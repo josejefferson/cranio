@@ -1,0 +1,13 @@
+{
+  "name": "cranio-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "npx cross-env NODE_ENV=development node index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
