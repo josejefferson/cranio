@@ -7,7 +7,7 @@ import  CardTeam  from './CardTeam';
 const items = [
   {
     image: 'https://i.ibb.co/W5KYg03/luffy.webp',
-    title: 'Necromancer',
+    title: 'Lucas',
     description: 
     '"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores deserunt ea doloremque natus error, rerum quas odio quaerat nam ex commodi hic, suscipit in a veritatis pariatur minus consequuntur!"'
   },

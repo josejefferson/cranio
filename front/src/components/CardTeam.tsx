@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 interface IProps {
   image: string;
-  title: string;
+  title?: string;
   description: string;
 }
 const CardTeam: NextPage<IProps> = ({
@@ -38,12 +38,11 @@ const CardTeam: NextPage<IProps> = ({
             <Avatar
               w={20}
               h={20}
-              fit="cover"
+              objectFit="cover"
               rounded="full"
               borderStyle="solid"
               borderColor="purple.500"
               borderWidth={4}
-              alt={title}
               src={image}
             />
           </Flex>
@@ -55,7 +54,7 @@ const CardTeam: NextPage<IProps> = ({
             bgGradient="linear(to-l, #7928CA, #FF0080)"
             bgClip="text"
           >
-            Fã-animation
+           Anúncios
           </chakra.h2>
 
           <chakra.p mt={2} color={useColorModeValue("gray.600", "gray.200")}>
