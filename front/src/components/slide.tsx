@@ -24,7 +24,6 @@ const items = [
     '"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores deserunt ea doloremque natus error, rerum quas odio quaerat nam ex commodi hic, suscipit in a veritatis pariatur minus consequuntur!"'
   },
 ];
-
 const settings = {
   dots: true,
   infinite: true,

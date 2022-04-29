@@ -60,7 +60,6 @@ const CardTeam: NextPage<IProps> = ({
           <chakra.p mt={2} color={useColorModeValue("gray.600", "gray.200")}>
             {description}
           </chakra.p>
-
           <Flex justifyContent="end" mt={4}>
             <Text
               fontSize="xl"
