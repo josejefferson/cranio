@@ -35,7 +35,7 @@ export default function NavHero() {
               <VisuallyHidden>EPICE {new Date().getFullYear()}</VisuallyHidden>
             </chakra.a>
             <chakra.h1 as="a"  href="/" fontSize="xl" fontWeight="bold" ml="2" color={useColorModeValue("#18216d", "white")}>
-              Cránio {new Date().getFullYear()}
+              Crânio {new Date().getFullYear()}
             </chakra.h1>
           </Flex>
           <HStack display="flex" alignItems="center" spacing={1}>
