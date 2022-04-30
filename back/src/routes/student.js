@@ -5,6 +5,14 @@ const asyncRoutes = require('../helpers/async-routes')
 const Student = require('../models/Student')
 
 /**
+ * Retorna todos os estudantes
+ */
+router.get('/all', asyncRoutes(async (req, res) => {
+	const students = await Student.find()
+	res.json(students)
+}))
+
+/**
  * Retorna os dados de um estudante
  */
 router.get('/:registration', asyncRoutes(async (req, res) => {
