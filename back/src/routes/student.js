@@ -27,8 +27,8 @@ router.get('/:registration/confirm', asyncRoutes(async (req, res) => {
  * Adiciona um estudante
  */
 router.post('/add', asyncRoutes(async (req, res) => {
-	const { name, registration, course } = req.body
-	const student = await Student.create({ name, registration, course })
+	const { name, registration, course, courseName } = req.body
+	const student = await Student.create({ name, registration, course, courseName })
 	res.json(student)
 }))
 
