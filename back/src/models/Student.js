@@ -10,6 +10,7 @@ const schema = new mongoose.Schema({
 	name: { type: String, required: true },
 	registration: { type: String, required: true },
 	course: { type: Number, required: true },
+	courseName: { type: String },
 	canPlayIn: { type: Date, required: true, default: new Date() }
 }, options)
 
