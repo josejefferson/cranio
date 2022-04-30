@@ -17,9 +17,9 @@
     "nodemailer": "^6.7.4"
   },
   "_moduleAliases": {
-		"@models": "./src/models",
-		"@modules": "./src/modules"
-	},
+    "@models": "./src/models",
+    "@modules": "./src/modules"
+  },
   "devDependencies": {
     "cross-env": "^7.0.3"
   }
