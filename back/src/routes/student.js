@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const asyncRoutes = require('../helpers/async-routes')
+const Restrictions = require('./_restrictions')
 
 const Student = require('../models/Student')
 const databaseRoutes = require('./_database')(Student)
@@ -17,6 +18,6 @@ router.get('/find/:registration', asyncRoutes(async (req, res) => {
 /**
  * Rotas do banco de dados
  */
-router.use(databaseRoutes.all)
+router.use(Restrictions.admin, databaseRoutes.all)
 
 module.exports = router

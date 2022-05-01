@@ -12,11 +12,22 @@ const schema = new mongoose.Schema({
 	registration: { type: String, required: true },
 	course: { type: Number, required: true },
 	courseName: { type: String },
-	canPlayIn: { type: Date, required: true, default: new Date() }
+	canPlayIn: { type: Date, default: new Date() },
+	testUser: { type: Boolean }
 }, options)
 
 schema.virtual('canPlayToday').get(function () {
 	return new Date(this.canPlayIn) <= new Date()
+})
+
+schema.virtual('shortName').get(function () {
+	const nameChunks = this.name.split(' ')
+	const name = [nameChunks[0], nameChunks[1]]
+	if (nameChunks[1] && nameChunks[1].length <= 3) {
+		name.push(nameChunks[2])
+	}
+	const shortName = name.filter(_ => _).join(' ')
+	return shortName
 })
 
 schema.methods.playedToday = function () {

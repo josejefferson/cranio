@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
+const log = require('../helpers/logger')
 
 let mongoDBURL = process.env.MONGO_DB || 'mongodb://localhost'
 
-mongoose.connection.on('connecting', () => console.log('[MongoDB] Conectando...'))
-mongoose.connection.on('connected', () => console.log('[MongoDB] Conectado'))
-mongoose.connection.on('disconnected', () => console.log('[MongoDB] Desconectado'))
+mongoose.connection.on('connecting', () => log('yellowBright', 'MongoDB')('Conectando...'))
+mongoose.connection.on('connected', () => log('greenBright', 'MongoDB')('Conectado'))
+mongoose.connection.on('disconnected', () => log('redBright', 'MongoDB')('Desconectado'))
 mongoose.connection.on('error', (err) => {
-	console.log('[MongoDB] Erro ao conectar! ' + err.message, 'red')
+	log('redBright', 'MongoDB')('Falha ao conectar', err)
 	setTimeout(mongoConnect, 5000)
 })
 function mongoConnect() {
