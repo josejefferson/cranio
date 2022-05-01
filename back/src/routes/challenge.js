@@ -4,24 +4,19 @@ const asyncRoutes = require('../helpers/async-routes')
 
 const Challenge = require('../models/Challenge')
 const Student = require('../models/Student')
+const databaseRoutes = require('./_database')(Challenge)
 
 /**
  * Retorna um desafio para aquele estudante
  */
-router.get('/:studentRegistration', asyncRoutes(async (req, res) => {
+router.get('/start/:studentRegistration', asyncRoutes(async (req, res) => {
 	const { studentRegistration: registration } = req.params
 	const student = await Student.findOne({ registration })
+	// if (!student.canPlayToday) return res.json(null)
 	const challenges = await Challenge.find({ active: true, course: student.course })
 	const challenge = challenges[Math.floor(Math.random() * challenges.length)]
+	if (challenge) student.playedToday()
 	res.json(challenge || null)
-}))
-
-/**
- * Retorna todos os desafios
- */
-router.get('/all', asyncRoutes(async (req, res) => {
-	const challenges = await Challenge.find()
-	res.json(challenges)
 }))
 
 /**
@@ -46,12 +41,8 @@ router.post('/check', asyncRoutes(async (req, res) => {
 }))
 
 /**
- * Adiciona um desafio
+ * Rotas do banco de dados
  */
-router.post('/add', asyncRoutes(async (req, res) => {
-	const { question, topic, alternatives, course, image, time, correctMessage, incorrectMessage, timeOutMessage, createdBy } = req.body
-	const challenge = await Challenge.create({ question, topic, alternatives, course, image, time, correctMessage, incorrectMessage, timeOutMessage, createdBy })
-	res.json(challenge)
-}))
+router.use(databaseRoutes.all)
 
 module.exports = router

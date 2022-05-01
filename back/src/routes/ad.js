@@ -3,6 +3,7 @@ const router = express.Router()
 const asyncRoutes = require('../helpers/async-routes')
 
 const Ad = require('../models/Ad')
+const databaseRoutes = require('./_database')(Ad)
 
 /**
  * Retorna as propagandas ativas
@@ -10,26 +11,14 @@ const Ad = require('../models/Ad')
 router.get('/active', asyncRoutes(async (req, res) => {
 	const currentDate = new Date().toISOString()
 	const ads = await Ad.find({
-		'endDate': { $gte: currentDate }
+		endDate: { $gte: currentDate }
 	})
 	res.json(ads)
 }))
 
 /**
- * Retorna todas as propagandas
+ * Rotas do banco de dados
  */
-router.get('/all', asyncRoutes(async (req, res) => {
-	const ads = await Ad.find()
-	res.json(ads)
-}))
-
-/**
- * Adiciona uma propaganda
- */
-router.post('/add', asyncRoutes(async (req, res) => {
-	const { title, description, image, endDate } = req.body
-	const ad = await Ad.create({ title, description, image, endDate })
-	res.json(ad)
-}))
+router.use(databaseRoutes.all)
 
 module.exports = router

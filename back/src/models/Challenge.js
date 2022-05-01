@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const options = { timestamps: true }
+
 const schema = new mongoose.Schema({
 	active: { type: Boolean, default: true },
 	question: { type: String, required: true },
@@ -26,6 +28,6 @@ const schema = new mongoose.Schema({
 		},
 		required: true
 	}
-})
+}, options)
 
 module.exports = mongoose.model('Challenge', schema)

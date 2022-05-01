@@ -1,9 +1,6 @@
 const mongoose = require('mongoose')
 
-let mongoDBURL = process.env.MONGO_DB
-if (!mongoDBURL) {
-	mongoDBURL = 'mongodb://localhost'
-}
+let mongoDBURL = process.env.MONGO_DB || 'mongodb://localhost'
 
 mongoose.connection.on('connecting', () => console.log('[MongoDB] Conectando...'))
 mongoose.connection.on('connected', () => console.log('[MongoDB] Conectado'))
@@ -21,6 +18,6 @@ function mongoConnect() {
 
 mongoConnect()
 
-require('@models/Ad')
-require('@models/Challenge')
-require('@models/Student')
+require('../models/Ad')
+require('../models/Challenge')
+require('../models/Student')
