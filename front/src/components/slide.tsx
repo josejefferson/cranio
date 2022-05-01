@@ -24,24 +24,12 @@ const items = [
     '"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores deserunt ea doloremque natus error, rerum quas odio quaerat nam ex commodi hic, suscipit in a veritatis pariatur minus consequuntur!"'
   },
 ];
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 400,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  arrows: false,
-  autoplay: true,
-};
+
 
 const SliderTeam: NextPage = () => {
   return (
     <Box id="SliderTeam" pb={[8, 16]}>
-      <Slider {...settings}>
-        {items.map(item => (
-          <CardTeam {...item} key={item.title}/>
-        ))}
-      </Slider>
+
     </Box>
   );
 };
