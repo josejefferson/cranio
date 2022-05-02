@@ -15,8 +15,6 @@ router.get('/start/:studentRegistration', asyncRoutes(async (req, res) => {
 	const student = await Student.findOne({ registration })
 	// if (!student.canPlayToday) return res.json(null)
 	const challenge = await Challenge.findRandom(student.course)
-	// const challenges = await Challenge.find({ active: true, $or: [{ course: student.course }, { course: null }] })
-	// const challenge = challenges[Math.floor(Math.random() * challenges.length)]
 	if (!student.testUser && challenge) student.playedToday()
 	res.json(challenge || null)
 }))

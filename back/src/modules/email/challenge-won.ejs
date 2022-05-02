@@ -61,7 +61,7 @@
 				<tr>
 					<td colspan="2" style="text-align: center; padding-top: 5px">
 						<span style="border: <%= alternative.correct ? '#00796B' : '#E64A19' %> 2px solid; color: <%= alternative.correct ? '#00796B' : '#E64A19' %>; display: inline-block; text-align: left; width: 98%; padding: 5px 10px; border-radius: 10px;">
-							<b><%= i + 1 %>.</b> <%= alternative.title %>
+							<b><%= +i + 1 %>.</b> <%= alternative.title %>
 							<% if (alternative.subtitle) { %>
 							<small><%= alternative.subtitle %></small>
 							<% } %>
