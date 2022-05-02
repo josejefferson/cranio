@@ -33,6 +33,17 @@ const schema = new mongoose.Schema({
 	}
 }, options)
 
+schema.statics.findRandom = async function (course) {
+	const challenges = await this.find({ active: true, $or: [{ course }, { course: null }] })
+	const challenge = challenges[Math.floor(Math.random() * challenges.length)]
+	return challenge
+}
+
+schema.methods.checkCorrect = function (id) {
+	const correctAlternative = this.alternatives.find((alternative) => alternative.correct)
+	return correctAlternative._id.toString() === id.toString()
+}
+
 schema.methods.won = function (student) {
 	if (student.testUser) return Promise.resolve(null)
 	student.canPlayToday = false
