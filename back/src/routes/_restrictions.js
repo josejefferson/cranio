@@ -27,7 +27,7 @@ module.exports = {
 	admin: (req, res, next) => {
 		const admins = jsonParse(process.env.ADMINS, null, null)
 		if (!admins) return next()
-		
+
 		basicAuth({
 			users: admins,
 			challenge: true,

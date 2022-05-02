@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
 		}],
 		required: true
 	},
-	course: { type: Number, required: true }, // array de Number
+	course: { type: [Number] }, // array de Number
 	image: { type: String },
 	time: { type: Number, default: 60 },
 	preparationTime: { type: Number, default: 3 },
