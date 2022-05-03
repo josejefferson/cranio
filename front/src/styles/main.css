@@ -1,0 +1,58 @@
+.carousel.ads-carousel {
+  background-color: black;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  height: 100%;
+  z-index: 1;
+}
+
+.carousel-item {
+  background-size: cover;
+  height: 100%;
+}
+
+.carousel-item img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+  z-index: 1;
+}
+
+.carousel-item img.background-img {
+  filter: blur(6px) brightness(0.5);
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  z-index: -1 !important;
+}
+
+.carousel-caption {
+  /* SOLUÇÃO 1 */
+  /*background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent);*/
+  /*bottom: 0 !important;*/
+  /*left: initial !important;*/
+  /*padding-bottom: 3rem !important;*/
+  /*padding-left: 15%;*/
+  /*padding-right: 15%;*/
+  /*padding-top: 5rem !important;*/
+  /*right: initial !important;*/
+  /*width: 100%;*/
+
+  /* SOLUÇÃO 2 */
+  background-color: rgba(0,0,0,0.7);
+  border-radius: 10px;
+  bottom: 2.25rem;
+}
+
+.carousel-caption h3 {
+  font-size: calc(1.3rem + .6vw);
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
