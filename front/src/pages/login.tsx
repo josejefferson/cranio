@@ -76,7 +76,7 @@ export default function LoginChallenge(): JSX.Element {
     event.preventDefault();
     try {
       setLoading(true)
-      const { data } = await axios.get<Iuser>(`https://cranio.herokuapp.com/student/find/${registration}`)
+      const { data } = await axios.get<Iuser>(`${process.env.API_ENDPOINT}/student/find/${registration}`)
       SetName(data.name)
       SetcourseName(data.courseName)
       SetAbrir(true)
