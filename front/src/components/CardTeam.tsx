@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import React from "react";
-import { Button, Flex, Heading, chakra, Text, useBreakpointValue, Box, Stack, useColorModeValue } from "@chakra-ui/react";
+import {  Flex, chakra, Box, Stack } from "@chakra-ui/react";
 type IAds = {
   id: number;
   title?: string;
@@ -55,7 +55,7 @@ const CardTeam: NextPage<IAds> = ({
             {!title? (<React.Fragment/>) : (
               <Box
                 w='full'
-                bg={useColorModeValue("white", "gray.800")}
+                bg="gray.800"
                 shadow="lg"
                 rounded="lg"
                 overflow="hidden"
@@ -65,7 +65,7 @@ const CardTeam: NextPage<IAds> = ({
                   textAlign="center"
                   fontWeight="bold"
                   textTransform="uppercase"
-                  color={useColorModeValue("gray.800", "white")}
+                  color="white"
                   letterSpacing={1}
                 >
                   {title}
@@ -75,11 +75,11 @@ const CardTeam: NextPage<IAds> = ({
                   justifyContent="space-between"
                   py={2}
                   px={3}
-                  bg={useColorModeValue("gray.200", "gray.700")}
+                  bg="gray.700"
                 >
                   <chakra.span
                     fontWeight="bold"
-                    color={useColorModeValue("gray.800", "gray.200")}
+                    color="gray.200"
                   >
                     {description}
                   </chakra.span>
