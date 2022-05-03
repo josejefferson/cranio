@@ -12,7 +12,7 @@ module.exports = {
 	user: (req, res, next) => {
 		const users = jsonParse(process.env.USERS, null, null)
 		const admins = jsonParse(process.env.ADMINS, null, null)
-		if (!users || !admins) return next()
+		if (!users) return next()
 
 		basicAuth({
 			users: { ...admins, ...users },
@@ -27,7 +27,7 @@ module.exports = {
 	admin: (req, res, next) => {
 		const admins = jsonParse(process.env.ADMINS, null, null)
 		if (!admins) return next()
-		
+
 		basicAuth({
 			users: admins,
 			challenge: true,

@@ -14,8 +14,7 @@ router.get('/start/:studentRegistration', asyncRoutes(async (req, res) => {
 	const { studentRegistration: registration } = req.params
 	const student = await Student.findOne({ registration })
 	// if (!student.canPlayToday) return res.json(null)
-	const challenges = await Challenge.find({ active: true, course: student.course })
-	const challenge = challenges[Math.floor(Math.random() * challenges.length)]
+	const challenge = await Challenge.findRandom(student.course)
 	if (!student.testUser && challenge) student.playedToday()
 	res.json(challenge || null)
 }))
@@ -31,8 +30,7 @@ router.post('/check', asyncRoutes(async (req, res) => {
 	if (!challenge) res.status(400).json({ error: true, message: 'Challenge not found' })
 	if (!choiceID) return res.json({ status: 'TIMEOUT', message: challenge.timeOutMessage })
 
-	const correctAlternative = challenge.alternatives.find((alternative) => alternative.correct === true)
-	if (correctAlternative._id.toString() === choiceID) {
+	if (challenge.checkCorrect(choiceID)) {
 		res.json({ status: 'CORRECT', message: challenge.correctMessage })
 		challenge.won(student)
 	} else {

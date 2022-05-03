@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
 		}],
 		required: true
 	},
-	course: { type: Number, required: true }, // array de Number
+	course: { type: [Number] }, // array de Number
 	image: { type: String },
 	time: { type: Number, default: 60 },
 	preparationTime: { type: Number, default: 3 },
@@ -33,9 +33,21 @@ const schema = new mongoose.Schema({
 	}
 }, options)
 
+schema.statics.findRandom = async function (course) {
+	const challenges = await this.find({ active: true, $or: [{ course }, { course: null }] })
+	const challenge = challenges[Math.floor(Math.random() * challenges.length)]
+	return challenge
+}
+
+schema.methods.checkCorrect = function (id) {
+	const correctAlternative = this.alternatives.find((alternative) => alternative.correct)
+	return correctAlternative._id.toString() === id.toString()
+}
+
 schema.methods.won = function (student) {
 	if (student.testUser) return Promise.resolve(null)
 	student.canPlayToday = false
+	student.challengesCompleted += 1
 	student.save()
 	sendChallengeWonEmail(this, student)
 	this.answeredBy = student.registration

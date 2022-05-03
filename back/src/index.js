@@ -12,9 +12,9 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(Restrictions.user)
 app.use(cors())
-app.use('/ad', require('./routes/ad'))
-app.use('/challenge', require('./routes/challenge'))
-app.use('/student', require('./routes/student'))
+app.use(['/ad', '/ads'], require('./routes/ad'))
+app.use(['/challenge', '/challenges'], require('./routes/challenge'))
+app.use(['/student', '/students'], require('./routes/student'))
 
 app.use((req, res) => {
 	if (res.headersSent) return

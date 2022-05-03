@@ -26,18 +26,18 @@ function log(color, title, onlyDevelopment = false) {
 		const minutes = date.getMinutes().toString().padStart(2, 0)
 		const seconds = date.getSeconds().toString().padStart(2, 0)
 		const fmtDate = chalk.gray(`${hours}:${minutes}:${seconds}`)
-	
+
 		for (const i in contents) {
 			const content = contents[i]
 			if (typeof content === 'string' && chalk[color]) {
 				contents[i] = chalk[color](content)
 			}
 		}
-		
+
 		if (typeof title === 'string') {
 			title = chalk.underline(title) + ':'
 		}
-	
+
 		if (!title) console.log(fmtDate, ...contents)
 		else console.log(fmtDate, title, ...contents)
 	}
