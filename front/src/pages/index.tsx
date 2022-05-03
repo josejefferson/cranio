@@ -6,6 +6,7 @@ import axios from '../api/'
 import Slider from 'react-slick'
 import CardTeam from '../components/CardTeam'
 import { Box } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 
 type IAds = {
   id: number;
@@ -19,7 +20,7 @@ const settings = {
   infinite: true,
   speed: 400,
   slidesToShow: 1,
-  slidesToScroll: 2,
+  slidesToScroll: 1,
   arrows: false,
   autoplay: true,
 };
@@ -29,16 +30,26 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       data: data
-    }
+    },
+    revalidate: 60, // At most once every 60 seconds
   }
 }
 
 const Home: NextPage<IAds> = (data) => {
+  const [key, Setkey] = React.useState('')
+  const router = useRouter()
   const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key) {
       console.log(e.key)
+      Setkey(e.key)
     }
   };
+  React.useEffect(() => {
+    if (key) {
+      router.push('/login')
+      console.log(key)
+    }
+  }, [key])
   return (
     <div onKeyDown={handleInputKeyPress}>
       <Head>
@@ -52,7 +63,7 @@ const Home: NextPage<IAds> = (data) => {
           {data.data?.map((data: IAds, index: number) => {
             return (
               <>
-                <CardTeam {...data} key={index} />
+                <CardTeam {...data} key={data.id} />
               </>
             )
           })}

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import React from "react";
-import { Button, Flex, Heading, chakra, Text, useBreakpointValue, Box, Stack, useColorModeValue } from "@chakra-ui/react";
+import {  Flex, chakra, Box, Stack } from "@chakra-ui/react";
 type IAds = {
   id: number;
   title?: string;
@@ -52,38 +52,41 @@ const CardTeam: NextPage<IAds> = ({
               bgPos='center'
               bgImage={image}
             />
-            <Box
-            w='full'
-              bg={useColorModeValue("white", "gray.800")}
-              shadow="lg"
-              rounded="lg"
-              overflow="hidden"
-            >
-              <chakra.h3
-                py={2}
-                textAlign="center"
-                fontWeight="bold"
-                textTransform="uppercase"
-                color={useColorModeValue("gray.800", "white")}
-                letterSpacing={1}
+            {!title? (<React.Fragment/>) : (
+              <Box
+                w='full'
+                bg="gray.800"
+                shadow="lg"
+                rounded="lg"
+                overflow="hidden"
               >
-                {title ? title: 'IFPB'}
-              </chakra.h3>
-              <Flex
-                alignItems="center"
-                justifyContent="space-between"
-                py={2}
-                px={3}
-                bg={useColorModeValue("gray.200", "gray.700")}
-              >
-                <chakra.span
+                <chakra.h3
+                  py={2}
+                  textAlign="center"
                   fontWeight="bold"
-                  color={useColorModeValue("gray.800", "gray.200")}
+                  textTransform="uppercase"
+                  color="white"
+                  letterSpacing={1}
                 >
-                 {description}
-                </chakra.span>
-              </Flex>
-            </Box>
+                  {title}
+                </chakra.h3>
+                <Flex
+                  alignItems="center"
+                  justifyContent="space-between"
+                  py={2}
+                  px={3}
+                  bg="gray.700"
+                >
+                  <chakra.span
+                    fontWeight="bold"
+                    color="gray.200"
+                  >
+                    {description}
+                  </chakra.span>
+                </Flex>
+              </Box>
+            )
+            }
           </Stack>
         </Flex>
       </Flex>
