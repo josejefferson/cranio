@@ -13,6 +13,7 @@ const schema = new mongoose.Schema({
 	course: { type: Number, required: true },
 	courseName: { type: String },
 	canPlayIn: { type: Date, default: new Date() },
+	challengesCompleted: { type: Number, default: 0 },
 	testUser: { type: Boolean }
 }, options)
 

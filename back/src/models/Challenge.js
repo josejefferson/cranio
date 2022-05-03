@@ -47,6 +47,7 @@ schema.methods.checkCorrect = function (id) {
 schema.methods.won = function (student) {
 	if (student.testUser) return Promise.resolve(null)
 	student.canPlayToday = false
+	student.challengesCompleted += 1
 	student.save()
 	sendChallengeWonEmail(this, student)
 	this.answeredBy = student.registration
