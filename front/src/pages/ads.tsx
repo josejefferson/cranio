@@ -15,8 +15,9 @@ export const getStaticProps: GetStaticProps = async () => {
   const { data } = await axios.get<IAds>('/ad/active')
   return {
     props: {
-      data: data
-    }
+      data: data,
+    },
+    revalidate: 60
   }
 }
 
