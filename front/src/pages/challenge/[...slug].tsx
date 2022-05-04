@@ -4,17 +4,14 @@ import { Center, Text, Box } from '@chakra-ui/react'
 import { GetStaticProps } from 'next';
 import useSWR from 'swr'
 import fetch from '../../lib/fetch'
-import MotionBox from '../../components/Motionbox';
-
-type Merge<P, T> = Omit<P, keyof T> & T;
-
+import { MotionBox } from '../../components/';
 
 const Challenge = () => {
   const router = useRouter()
   const { slug } = router.query
   return (
     <Box bg="gray.800" h='100vh'>
-      <Box d='flex' alignItems={'center'}  mb={40}>
+      <Box d='flex' alignItems={'center'} mb={40}>
         <MotionBox
           margin="0 auto"
           alignItems={'center'}

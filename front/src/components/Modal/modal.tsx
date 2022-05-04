@@ -1,10 +1,14 @@
+import { useRouter } from 'next/router'
 import { Button, Divider, Modal, ModalBody, Text, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
-import { Iuser } from "../pages/login"
+import { Iuser } from "../../pages/login"
 type IModal = Iuser & {
-	abrir: boolean
+	abrir: boolean;
+	registration: string;
 }
-export const ModalAlert = ({ abrir, name, courseName }: IModal) => {
-	const { isOpen, onOpen, onClose } = useDisclosure()
+
+const ModalAlert = ({ abrir, name, courseName, registration }: IModal) => {
+	const { onClose } = useDisclosure()
+	const router = useRouter()
 	return (
 		<>
 			<Modal isOpen={abrir} onClose={onClose}>
@@ -17,10 +21,10 @@ export const ModalAlert = ({ abrir, name, courseName }: IModal) => {
 						<Text>Curso:{courseName}</Text>
 					</ModalBody>
 					<ModalFooter>
-						<Button colorScheme='blue' mr={3}>
+						<Button colorScheme='blue' mr={3} onClick={onClose}>
 							Para fechar digite #
 						</Button>
-						<Button colorScheme='green'>
+						<Button colorScheme='green' onClick={() => router.push(`/challenge/${registration}`)}>
 							Para continuar digite *
 						</Button>
 					</ModalFooter>
@@ -29,3 +33,5 @@ export const ModalAlert = ({ abrir, name, courseName }: IModal) => {
 		</>
 	)
 }
+
+export default ModalAlert
