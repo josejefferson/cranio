@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
-import { chakra, Heading, Center, Alert } from '@chakra-ui/react';
+import { chakra, Heading, Stack, Text, LinkOverlay, Box, HStack } from '@chakra-ui/react';
+// import { Stack } from 'react-bootstrap';
 
 export default function NavHero() {
   return (
@@ -13,14 +14,30 @@ export default function NavHero() {
         top="0"
         zIndex="100"
         w="full"
-        mb={20}
         boxShadow="none"
       >
-        <Center>
-          <Alert status='error' justifyContent={'center'}>
-            <Heading fontSize={'3xl'}>Pressione qualquer tecla para jogar!</Heading>
-          </Alert>
-        </Center>
+        <HStack
+          w='full'
+          justifyContent='center'
+          mb={22}
+        >
+          <Box
+            as='article'
+            bg='teal.100'
+            color='teal.700'
+            p={2}
+            rounded='md'
+            transition='transform 150ms ease-out'
+            _hover={{ transform: 'scale(1.05, 1.05)' }}
+          >
+            <Stack direction={{ base: 'column', md: 'row' }} spacing={1}>
+              <Text fontWeight='bold'>
+                Pronto para um desafio? 🚀
+              </Text>
+              <Text>Aperte qualquer tecla</Text>
+            </Stack>
+          </Box>
+        </HStack>
       </chakra.header>
     </React.Fragment >
   );

@@ -2,6 +2,7 @@ const styles = {
   global: {
     body: {
       overflowX: 'hidden',
+      bg: 'gray.700'
     },
   },
 };
