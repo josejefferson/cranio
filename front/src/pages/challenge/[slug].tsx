@@ -15,8 +15,8 @@ interface Data {
   time: number;
   preparationTime: number;
   topic: string;
+  image?: string;
   alternatives: Array<{
-    image?: string;
     title: string;
     description?: string;
     answer: number;
@@ -92,8 +92,8 @@ const Challenge: NextPage<Props> = (data) => {
       console.log(error)
     }
   }
-  React.useEffect(()=>{
-    if(message === 'INCORRECT'){
+  React.useEffect(() => {
+    if (message === 'INCORRECT') {
       setTimeout(() => {
         router.push(`/`)
       }, 100);
@@ -112,8 +112,9 @@ const Challenge: NextPage<Props> = (data) => {
             rounded="lg"
             loading="lazy"
             shadow="2xl"
-            src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+            src={data.data.image}
             alt="Hellonext feedback boards software screenshot"
+            hidden={!data.data.image}
           />
         </Center>
         <RadioGroup onChange={setValue} value={value} >
