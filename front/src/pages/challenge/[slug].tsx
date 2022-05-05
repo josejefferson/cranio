@@ -6,7 +6,7 @@ import {
   Radio, Stack, Heading, Center,
   useToast, Button, Flex
 } from '@chakra-ui/react'
-import axios from 'axios'
+import axios from '../../api'
 
 import React from 'react';
 interface Data {
@@ -60,7 +60,7 @@ const Challenge: NextPage<Props> = (data) => {
     }
     console.log(dataCheck)
     try {
-      const { data } = await axios.post('https://cranio.herokuapp.com/challenge/check', dataCheck)
+      const { data } = await axios.post('/challenge/check', dataCheck)
       setMessage(data.status)
       console.log(data.message)
       if (data.status === 'CORRECT') {
@@ -167,7 +167,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   console.log(params.slug)
-  const { data } = await axios.get<Props>(`https://cranio.herokuapp.com/challenge/start/${params.slug}`)
+  const { data } = await axios.get<Props>(`/challenge/start/${params.slug}`)
   return {
     props: {
       data: data

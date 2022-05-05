@@ -12,7 +12,7 @@ import {
 import React from 'react';
 import { AiOutlineSend } from 'react-icons/ai'
 import Head from 'next/head'
-import axios from 'axios'
+import axios from '../api'
 import { ModalAlert } from '../components/';
 import { useRouter } from 'next/router';
 
@@ -56,8 +56,8 @@ export default function LoginChallenge(): JSX.Element {
   async function onSubmitHandler(event: React.FormEvent): Promise<void> {
     event.preventDefault();
     try {
-      setLoading(true)
-      const { data } = await axios.get<Iuser>(`https://cranio.herokuapp.com/student/find/${registration}`)
+			setLoading(true)
+			const { data } = await axios.get<Iuser>(`/student/find/${registration}`)
       SetName(data.name)
       SetcourseName(data.courseName)
       setcanPlayToday(data.canPlayToday)
