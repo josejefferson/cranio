@@ -167,7 +167,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   console.log(params.slug)
-  const { data } = await axios.get<Props>(`https://cranio.herokuapp.com/challenge/start/202211790042`)
+  const { data } = await axios.get<Props>(`https://cranio.herokuapp.com/challenge/start/${params.slug}`)
   return {
     props: {
       data: data
