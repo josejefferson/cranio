@@ -25,10 +25,10 @@ const schema = new mongoose.Schema({
 	timeOutMessage: { type: String, default: 'Tempo esgotado!' },
 	answeredBy: { type: String },
 	createdBy: {
-		type: {
+		type: [{
 			name: { type: String, required: true },
 			email: { type: String, required: true }
-		},
+		}],
 		required: true
 	}
 }, options)
