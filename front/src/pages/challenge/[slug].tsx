@@ -54,7 +54,7 @@ const Challenge: NextPage<Props> = (data) => {
   async function onSubmitHandler(event: React.FormEvent): Promise<void> {
     event.preventDefault();
     const dataCheck = {
-      studentID: slug,
+      studentRegistration: slug,
       challengeID: data.data._id,
       choiceID: value
     }
