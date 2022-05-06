@@ -6,7 +6,7 @@ import {
   Radio, Stack, Heading, Center,
   useToast, Button, Flex
 } from '@chakra-ui/react'
-import axios from 'axios'
+import axios from '../../api'
 
 import React from 'react';
 interface Data {
@@ -15,8 +15,8 @@ interface Data {
   time: number;
   preparationTime: number;
   topic: string;
+  image?: string;
   alternatives: Array<{
-    image?: string;
     title: string;
     description?: string;
     answer: number;
@@ -60,7 +60,7 @@ const Challenge: NextPage<Props> = (data) => {
     }
     console.log(dataCheck)
     try {
-      const { data } = await axios.post('https://cranio.herokuapp.com/challenge/check', dataCheck)
+      const { data } = await axios.post('/challenge/check', dataCheck)
       setMessage(data.status)
       console.log(data.message)
       if (data.status === 'CORRECT') {
@@ -92,8 +92,8 @@ const Challenge: NextPage<Props> = (data) => {
       console.log(error)
     }
   }
-  React.useEffect(()=>{
-    if(message === 'INCORRECT'){
+  React.useEffect(() => {
+    if (message === 'INCORRECT') {
       setTimeout(() => {
         router.push(`/`)
       }, 100);
@@ -112,8 +112,8 @@ const Challenge: NextPage<Props> = (data) => {
             rounded="lg"
             loading="lazy"
             shadow="2xl"
-            src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            alt="Hellonext feedback boards software screenshot"
+            src={data.data.image}
+            hidden={!data.data.image}
           />
         </Center>
         <RadioGroup onChange={setValue} value={value} >
@@ -167,7 +167,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   console.log(params.slug)
-  const { data } = await axios.get<Props>(`https://cranio.herokuapp.com/challenge/start/${params.slug}`)
+  const { data } = await axios.get<Props>(`/challenge/start/${params.slug}`)
   return {
     props: {
       data: data

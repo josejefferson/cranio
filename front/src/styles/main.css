@@ -32,18 +32,6 @@
 }
 
 .carousel-caption {
-  /* SOLUÇÃO 1 */
-  /*background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent);*/
-  /*bottom: 0 !important;*/
-  /*left: initial !important;*/
-  /*padding-bottom: 3rem !important;*/
-  /*padding-left: 15%;*/
-  /*padding-right: 15%;*/
-  /*padding-top: 5rem !important;*/
-  /*right: initial !important;*/
-  /*width: 100%;*/
-
-  /* SOLUÇÃO 2 */
   background-color: rgba(0,0,0,0.7);
   border-radius: 10px;
   bottom: 2.25rem;
