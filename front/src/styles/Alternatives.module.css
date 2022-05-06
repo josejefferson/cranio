@@ -25,6 +25,7 @@
   gap: 2vh;
   padding: 1vh 2vh;
   width: 100%;
+  justify-content: center;
 }
 
 .alternative {
@@ -37,6 +38,11 @@
   font-family: "Varela Round";
 	gap: 2vh;
 	padding: 0 1vh;
+  max-height: 10vh;
+}
+
+.alternative.selected {
+  background-color: var(--color-arc);
 }
 
 .alternativeNumber {

@@ -5,22 +5,22 @@ import { useState, useEffect } from 'react'
 type Iapi = {
 
 }
-export default function Question({ topic }: any) {
-	const [timer, setTimer] = useState(100)
-console.log(topic)
+export default function Question({ time, topic, question, createdBy }: any) {
+	const [timer, setTimer] = useState(time)
+
 	useEffect(() => {
-		const time = setInterval(() => {
+		const _timer = setInterval(() => {
 			setTimer(timer - 1)
 		}, 1000)
-		return () => clearTimeout(time)
+		return () => clearTimeout(_timer)
 	})
 
 	return (
 		<div className={styles.questionContainer}>
 			<div className={styles.details}>
 				<div className={styles.topic}>{topic}</div>
-				<div className={styles.question}>{}</div>
-				<div className={styles.createdBy}>Por: {}</div>
+				<div className={styles.question}>{question}</div>
+				<div className={styles.createdBy}>Por: {createdBy.map((e: any) => e.name).join(', ')}</div>
 			</div>
 			<div className={styles.timer}>
 				<CircularProgressbar
@@ -32,6 +32,7 @@ console.log(topic)
 						textSize: '2vh'
 					})}
 					value={timer}
+					maxValue={time}
 					text={`${timer}`}
 				/>
 			</div>
