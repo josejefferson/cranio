@@ -7,9 +7,10 @@ export default function Question() {
 	const [timer, setTimer] = useState(100)
 
 	useEffect(() => {
-		setInterval(() => {
+		const time = setInterval(() => {
 			setTimer(timer - 1)
 		}, 1000)
+		return () => clearTimeout(time)
 	})
 
 	return (
