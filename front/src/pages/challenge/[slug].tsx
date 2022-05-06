@@ -30,6 +30,8 @@ interface Props {
   _id: string;
 }
 const Challenge: NextPage<Props> = (data) => {
+  if (data.data === null) return (<Box color={'white'}>Nenhum desafio</Box>) // temp
+
   const timeInMinutes = 1
   const router = useRouter()
   const { slug } = router.query
@@ -113,7 +115,6 @@ const Challenge: NextPage<Props> = (data) => {
             loading="lazy"
             shadow="2xl"
             src={data.data.image}
-            alt="Hellonext feedback boards software screenshot"
             hidden={!data.data.image}
           />
         </Center>
