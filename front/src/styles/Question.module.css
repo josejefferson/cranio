@@ -1,0 +1,52 @@
+.questionContainer {
+  background-color: var(--color-highlight);
+  height: 20vh;
+  box-shadow: var(--shadow);
+  display: flex;
+  color: white;
+  padding: 1vh;
+  font-size: 2vh;
+  border-radius: 0 0 7vh 0;
+  gap: 2vh;
+}
+
+.details {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.topic {
+  font-family: "Bungee";
+  margin-bottom: 0.6vh;
+}
+
+.question {
+  font-family: "Varela Round";
+}
+
+.createdBy {
+  font-family: "Varela Round";
+  flex: 1;
+  display: flex;
+  align-items: end;
+  font-size: 1vh;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: "Days One";
+  font-size: 10vh;
+}
+
+.test {
+  height: 100%;
+}
+
+.question div {
+  display: flex;
+}

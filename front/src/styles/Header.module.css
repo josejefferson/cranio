@@ -1,0 +1,27 @@
+.header {
+  align-items: center;
+  background-color: var(--color-header);
+  box-shadow: var(--shadow);
+  display: flex;
+  height: 7vh;
+  justify-content: center;
+  padding: 1vh;
+  width: 100%;
+}
+
+.image {
+	width: 5vh;
+  height: 100%;
+  margin-right: 2vh;
+	position: relative;
+}
+
+.image img {
+  height: 100%;
+}
+
+.title {
+  color: white;
+  font-family: "Cherry Bomb";
+  font-size: 3.5vh;
+}

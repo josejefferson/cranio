@@ -1,3 +1,32 @@
+:root {
+  --color-header: #540b0e;
+  --color-highlight: #9e2a2b;
+  --color-buttons: #fff3b0;
+  --color-arc: #e09f3e;
+  --color-background: #335c67;
+  --shadow: rgba(0, 0, 0, 0.25) 0 4px 4px;
+}
+
+@font-face {
+  font-family: 'Bungee';
+  src: url('/fonts/Bungee.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Cherry Bomb';
+  src: url('/fonts/CherryBomb.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Days One';
+  src: url('/fonts/DaysOne.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Varela Round';
+  src: url('/fonts/VarelaRound.ttf') format('truetype');
+}
+
 .carousel.ads-carousel {
   background-color: black;
   height: 100vh;
@@ -32,13 +61,13 @@
 }
 
 .carousel-caption {
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 10px;
   bottom: 2.25rem;
 }
 
 .carousel-caption h3 {
-  font-size: calc(1.3rem + .6vw);
+  font-size: calc(1.3rem + 0.6vw);
   font-weight: 500;
   line-height: 1.2;
   margin-bottom: 0.5rem;
