@@ -37,7 +37,7 @@ const schema = new mongoose.Schema({
 schema.statics.findRandom = async function (course) {
 	const challenges = await this.find({ active: true, $or: [{ course }, { course: null }] })
 	const challenge = challenges[Math.floor(Math.random() * challenges.length)]
-	if (challenge.randomizeAlternatives) {
+	if (challenge && challenge.randomizeAlternatives) {
 		challenge.alternatives = challenge.alternatives.sort(() => Math.random() - 0.5)
 	}
 	return challenge
