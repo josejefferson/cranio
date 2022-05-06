@@ -1,6 +1,6 @@
-import styles from '../styles/Body.module.css'
+import styles from '../../styles/Alternatives.module.css'
 
-export default function Question() {
+export default function Alternatives() {
 	return (
 		<div className={styles.body}>
 			<div className={styles.image}>
