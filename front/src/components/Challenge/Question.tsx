@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { Data } from '@/interface/index'
 import { Text } from '@chakra-ui/react'
 interface Ianswer extends Data{
-	answer: any;
+	currentTime: any;
 }
 
 export default function Question({ time, topic, question, createdBy, currentTime }: Ianswer) {
