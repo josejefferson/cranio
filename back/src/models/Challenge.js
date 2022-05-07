@@ -45,8 +45,9 @@ schema.statics.findRandom = async function (course, testUser = false) {
 }
 
 schema.methods.checkCorrect = function (id) {
-	const correctAlternative = this.alternatives.find((alternative) => alternative.correct)
-	return correctAlternative._id.toString() === id.toString()
+	const correctAlternatives = this.alternatives.filter((alternative) => alternative.correct)
+	const correct = correctAlternatives.some((alternative) => alternative._id.toString() === id.toString())
+	return correct
 }
 
 schema.methods.won = function (student) {
