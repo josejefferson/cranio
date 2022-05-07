@@ -14,7 +14,7 @@ router.get('/start/:studentRegistration', asyncRoutes(async (req, res) => {
 	const { studentRegistration: registration } = req.params
 	const student = await Student.findOne({ registration })
 	if (!student.canPlayToday) return res.status(403).json({ error: true, code: 'CANT_PLAY_TODAY', message: 'Você só pode jogar amanhã' })
-	const challenge = await Challenge.findRandom(student.course)
+	const challenge = await Challenge.findRandom(student.course, student.testUser)
 	if (!student.testUser && challenge) student.playedToday()
 	res.json(challenge || null)
 }))

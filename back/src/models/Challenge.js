@@ -7,7 +7,17 @@ const schema = new mongoose.Schema({
 	active: { type: Boolean, default: true },
 	question: { type: String, required: true },
 	topic: { type: String, required: true },
-	randomizeAlternatives: { type: Boolean, default: false },
+	course: { type: [Number] },
+	image: { type: String },
+	time: { type: Number, default: 60 },
+	preparationTime: { type: Number, default: 3 },
+	createdBy: {
+		type: [{
+			name: { type: String, required: true },
+			email: { type: String, required: true }
+		}],
+		required: true
+	},
 	alternatives: {
 		type: [{
 			title: { type: String, required: true },
@@ -16,26 +26,17 @@ const schema = new mongoose.Schema({
 		}],
 		required: true
 	},
-	course: { type: [Number] }, // array de Number
-	image: { type: String },
-	time: { type: Number, default: 60 },
-	preparationTime: { type: Number, default: 3 },
+	randomizeAlternatives: { type: Boolean, default: false },
 	preparationMessage: { type: String, default: 'Prepare-se!' },
 	correctMessage: { type: String, default: 'Parabéns, você acertou!' },
 	incorrectMessage: { type: String, default: 'Que pena, você errou!' },
 	timeOutMessage: { type: String, default: 'Tempo esgotado!' },
-	answeredBy: { type: String },
-	createdBy: {
-		type: [{
-			name: { type: String, required: true },
-			email: { type: String, required: true }
-		}],
-		required: true
-	}
+	answeredBy: { type: String }
 }, options)
 
-schema.statics.findRandom = async function (course) {
-	const challenges = await this.find({ active: true, $or: [{ course }, { course: null }] })
+schema.statics.findRandom = async function (course, testUser = false) {
+	const conditions = testUser ? {} : { active: true, $or: [{ course }, { course: null }] }
+	const challenges = await this.find(conditions)
 	const challenge = challenges[Math.floor(Math.random() * challenges.length)]
 	if (challenge && challenge.randomizeAlternatives) {
 		challenge.alternatives = challenge.alternatives.sort(() => Math.random() - 0.5)
@@ -44,8 +45,9 @@ schema.statics.findRandom = async function (course) {
 }
 
 schema.methods.checkCorrect = function (id) {
-	const correctAlternative = this.alternatives.find((alternative) => alternative.correct)
-	return correctAlternative._id.toString() === id.toString()
+	const correctAlternatives = this.alternatives.filter((alternative) => alternative.correct)
+	const correct = correctAlternatives.some((alternative) => alternative._id.toString() === id.toString())
+	return correct
 }
 
 schema.methods.won = function (student) {
