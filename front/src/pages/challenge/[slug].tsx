@@ -1,36 +1,14 @@
+import React from 'react';
 import { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router'
-import axios from '../../api'
-import Header from '../../components/Header'
-import Question from '../../components/Challenge/Question'
-import Alternatives from '../../components/Challenge/Alternatives'
 import { useState, useEffect } from 'react'
 import _Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 const Swal = withReactContent(_Swal)
-// import { Header, Question, Alternatives } from '../../components'
+import axios from '@/api/index'
+import { Header, Question, Alternatives } from '@/components/index'
+import { Props } from '@/interface/index';
 
-import React from 'react';
-interface Data {
-  question: string;
-  createdBy: any;
-  time: number;
-  preparationTime: number;
-  topic: string;
-  image?: string;
-  alternatives: Array<{
-    title: string;
-    description?: string;
-    correct: boolean;
-    _id: string
-  }>;
-  _id: string
-}
-
-interface Props {
-  api: Data;
-  _id: string;
-}
 const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
   const { slug } = router.query
@@ -69,6 +47,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
         INCORRECT: ['Que pena!', 'error'],
         TIMEOUT: ['Ops!', 'warning']
       }
+      console.log(typeof(STATUS))
       const { data } = await axios.post('/challenge/check', {
         studentRegistration: slug,
         challengeID: api._id,
