@@ -47,7 +47,6 @@ const Challenge: NextPage<Props> = ({ api }) => {
         INCORRECT: ['Que pena!', 'error'],
         TIMEOUT: ['Ops!', 'warning']
       }
-      console.log(typeof(STATUS))
       const { data } = await axios.post('/challenge/check', {
         studentRegistration: slug,
         challengeID: api._id,

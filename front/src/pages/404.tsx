@@ -10,7 +10,7 @@ const PageNotFound: NextPage = () => {
   React.useEffect(() => {
     setTimeout(() => {
       router.push('/')
-    }, 1000)
+    }, 2000)
   }, [])
   return (
     <React.Fragment>

@@ -13,7 +13,7 @@ const Page500: NextPage = () => {
   React.useEffect(() => {
     setTimeout(() => {
       router.push('/')
-    }, 1000)
+    }, 2000)
   }, [])
   return (
     <React.Fragment>
