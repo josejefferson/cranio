@@ -16,23 +16,37 @@ type IAds = {
   data: []
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetStaticProps = async () => {
   const { data } = await axios.get<IAds>('/ad/active')
   return {
     props: {
-      data: data
+      data: data,
+      test: new Date().toString()
     },
-    revalidate: 60, // At most once every 60 seconds
+    // revalidate: 60, // At most once every 60 seconds
   }
 }
 
 const Home: NextPage<IAds> = (data) => {
   const router = useRouter()
-  
+
+  // Atualiza a lista de anúncios
+  const refreshData = () => {
+    router.replace(router.asPath)
+  }
+
   React.useEffect(() => {
-    document.addEventListener('keydown', (event) => {
+    const interval = setInterval(refreshData, 60000)
+    return () => clearInterval(interval)
+  })
+
+  React.useEffect(() => {
+    document.addEventListener('keyup', (event) => {
+      const KEYS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '#']
+      if (!KEYS.includes(event.key)) return
+      console.log('Abrindo login...')
       router.push('/login')
-    });
+    })
   }, [])
 
   return (
