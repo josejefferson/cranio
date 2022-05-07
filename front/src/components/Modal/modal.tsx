@@ -1,17 +1,18 @@
+import React from 'react';
 import { useRouter } from 'next/router'
 import { Button, Divider, Modal, ModalBody, Text, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
-import { Iuser } from "../../pages/login"
+import { Iuser } from "@/interface/index"
 type IModal = Iuser & {
-	abrir: boolean;
 	registration: string;
 }
 
-const ModalAlert = ({ abrir, name, courseName, registration }: IModal) => {
-	const { onClose } = useDisclosure()
+const ModalAlert = ({ name, courseName, registration }: IModal) => {
+	const { onClose, isOpen, onOpen } = useDisclosure()
 	const router = useRouter()
 	return (
 		<>
-			<Modal isOpen={abrir} onClose={onClose}>
+			<Button id='Open' onClick={onOpen} display={'none'}>Open Modal</Button>
+			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 				<ModalContent>
 					<ModalHeader>Dados do estudante:</ModalHeader>
@@ -21,10 +22,23 @@ const ModalAlert = ({ abrir, name, courseName, registration }: IModal) => {
 						<Text>Curso:{courseName}</Text>
 					</ModalBody>
 					<ModalFooter>
-						<Button colorScheme='blue' mr={3} onClick={onClose}>
+						<Button
+							colorScheme='blue'
+							mr={3}
+							onClick={onClose}
+							id="close"
+						>
 							Para fechar digite #
 						</Button>
-						<Button colorScheme='green' onClick={() => router.push(`/challenge/${registration}`)}>
+						<Button colorScheme='green'
+							id="router"
+							onClick={() => {
+								router.push({
+									pathname: '/challenge/[slug]',
+									query: { slug: registration },
+								})
+							}}
+						>
 							Para continuar digite *
 						</Button>
 					</ModalFooter>

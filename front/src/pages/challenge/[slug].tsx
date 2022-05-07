@@ -1,36 +1,13 @@
+import React from 'react';
 import { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
-import axios from '../../api'
 import _Swal from 'sweetalert2'
 import swalReact from 'sweetalert2-react-content'
 const Swal = swalReact(_Swal)
-
-import Header from '../../components/Header'
-import Question from '../../components/Challenge/Question'
-import Alternatives from '../../components/Challenge/Alternatives'
-// import { Header, Question, Alternatives } from '../../components'
-
-interface Data {
-  question: string;
-  createdBy: any;
-  time: number;
-  preparationTime: number;
-  topic: string;
-  image?: string;
-  alternatives: Array<{
-    title: string;
-    description?: string;
-    correct: boolean;
-    _id: string
-  }>;
-  _id: string
-}
-
-interface Props {
-  api: Data;
-  _id: string;
-}
+import axios from '@/api/index'
+import { Header, Question, Alternatives } from '@/components/index'
+import { Props } from '@/interface/index';
 
 const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()

@@ -2,13 +2,10 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
 import { useRouter } from 'next/router';
-import {
-  VStack, Heading, Text, Center,
-  Img as Image, Box, Flex
-} from '@chakra-ui/react'
+import { VStack, Heading, Text, Center, Img as Image, Box, Flex } from '@chakra-ui/react'
 import { MotionBox } from '@/components/index'
 
-const Page500: NextPage = () => {
+const PageNotFound: NextPage = () => {
   const router = useRouter()
   React.useEffect(() => {
     setTimeout(() => {
@@ -61,4 +58,4 @@ const Page500: NextPage = () => {
   );
 };
 
-export default Page500;
+export default PageNotFound;
