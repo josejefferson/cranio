@@ -41,17 +41,21 @@ const Home: NextPage<IAds> = (props) => {
     return () => clearInterval(interval)
   })
 
+  // Tecla pressionada
   React.useEffect(() => {
-    document.addEventListener('keyup', (event) => {
-      const KEYS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '#']
-      if (!KEYS.includes(event.key)) return
-      props.setLoading(true)
-      console.log('Abrindo login...')
-      router.push('/login').then(() => {
-        props.setLoading(false)
-      })
+    document.addEventListener('keyup', handleKeyUp)
+    return () => document.removeEventListener('keyup', handleKeyUp)
+  })
+
+  const handleKeyUp = (event: any) => {
+    const KEYS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '#']
+    if (!KEYS.includes(event.key)) return
+    props.setLoading(true)
+    console.log('Abrindo login...')
+    router.push('/login').then(() => {
+      props.setLoading(false)
     })
-  }, [])
+  }
 
   return (
     <Box>
