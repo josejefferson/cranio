@@ -5,22 +5,7 @@ import { useState, useEffect } from 'react'
 type Iapi = {
 
 }
-export default function Question({ time, topic, question, createdBy, answer }: any) {
-	const [timer, setTimer] = useState(time)
-	const [timeOut, setTimeOut] = useState(false)
-
-	useEffect(() => {
-		const _timer = setInterval(() => {
-			if (timer === 0 && !timeOut) {
-				setTimeOut(true)
-				return answer()
-			}
-			if (timer === 0) return
-			setTimer(timer - 1)
-		}, 1000)
-		return () => clearTimeout(_timer)
-	})
-
+export default function Question({ time, topic, question, createdBy, currentTime }: any) {
 	return (
 		<div className={styles.questionContainer}>
 			<div className={styles.details}>
@@ -37,9 +22,9 @@ export default function Question({ time, topic, question, createdBy, answer }: a
 						textColor: 'white',
 						textSize: '2vh'
 					})}
-					value={timer}
+					value={currentTime}
 					maxValue={time}
-					text={`${timer}`}
+					text={`${currentTime}`}
 				/>
 			</div>
 		</div>
