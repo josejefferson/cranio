@@ -48,11 +48,13 @@ export default function LoginChallenge({ setLoading }: any): JSX.Element {
       setCursoName(data.courseName)
       if (data.canPlayToday) {
         document.getElementById('Open')?.click()
-        document.addEventListener('keydown', (event) => {
+        const handleKeyDown = (event: any) => {
           if (event.key === '*') document.getElementById('router')?.click()
           if (event.key === '#') document.getElementById('close')?.click()
           setLoading(true)
-        })
+          document.removeEventListener('keydown', handleKeyDown)
+        }
+        document.addEventListener('keydown', handleKeyDown)
       }
       if (!data.canPlayToday) {
         Swal.fire({
