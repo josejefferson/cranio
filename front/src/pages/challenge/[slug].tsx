@@ -1,161 +1,139 @@
+import React from 'react';
 import { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router'
-import {
-  RadioGroup, Text, Box,
-  Progress, Container, Image,
-  Radio, Stack, Heading, Center,
-  useToast, Button, Flex
-} from '@chakra-ui/react'
-import axios from '../../api'
+import { useState, useEffect, useCallback } from 'react'
+import _Swal from 'sweetalert2'
+import swalReact from 'sweetalert2-react-content'
+const Swal = swalReact(_Swal)
+import axios from '@/api/index'
+import { Header, Question, Alternatives } from '@/components/index'
+import { Props } from '@/interface/index';
 
-import React from 'react';
-interface Data {
-  question: string;
-  createdBy: any;
-  time: number;
-  preparationTime: number;
-  topic: string;
-  image?: string;
-  alternatives: Array<{
-    title: string;
-    description?: string;
-    answer: number;
-    _id: string
-  }>;
-  _id: string
-}
-
-interface Props {
-  data: Data;
-  _id: string;
-}
-const Challenge: NextPage<Props> = (data) => {
-  const timeInMinutes = 1
+const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
-  const { slug } = router.query
-  const toast = useToast()
-  const [time, setTime] = React.useState(timeInMinutes * Number(data.data.time));
-  const [isActive, setIsActive] = React.useState(true);
-  const [message, setMessage] = React.useState('');
-  const [hasFinished, setHasFinished] = React.useState(false);
-  const [value, setValue] = React.useState('')
-  let percentTime = Math.floor(100 + ((time / (timeInMinutes * Number(data.data.time)) * (-100))))
-  React.useEffect(() => {
-    if (isActive && time > 0) {
-      setTimeout(() => {
-        setTime(time - 1);
-      }, 1000);
-    } else if (isActive && time === 0) {
-      router.push(`/`)
-      setHasFinished(true)
-      setIsActive(false)
-    }
-  }, [isActive, time]);
-  async function onSubmitHandler(event: React.FormEvent): Promise<void> {
-    event.preventDefault();
-    const dataCheck = {
-      studentRegistration: slug,
-      challengeID: data.data._id,
-      choiceID: value
-    }
-    console.log(dataCheck)
-    try {
-      const { data } = await axios.post('/challenge/check', dataCheck)
-      setMessage(data.status)
-      console.log(data.message)
-      if (data.status === 'CORRECT') {
-        toast({
-          title: data.message,
-          description: 'vamos enviar um email com suas informações!',
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        })
-      } if (data.status === 'INCORRECT') {
-        toast({
-          title: data.message,
-          description: 'Não desista! Volte amanhã e tente novamente!',
-          status: 'warning',
-          duration: 9000,
-          isClosable: true,
-        })
-      } if (data.status === 'TIMEOUT') {
-        toast({
-          title: data.message,
-          description: 'Seu tempo acabou!',
-          status: 'warning',
-          duration: 9000,
-          isClosable: true,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  React.useEffect(() => {
-    if (message === 'INCORRECT') {
-      setTimeout(() => {
-        router.push(`/`)
-      }, 100);
-    }
-  }, [message])
-  return (
-    <Box bg="gray.700" h='100vh'>
-      <Progress value={percentTime} hasStripe colorScheme='green' rounded='base' />
-      <Container maxW={'106ch'} as='form' onSubmit={onSubmitHandler}>
-        <Heading color='white' mt={10} textAlign='center'>
-          {data.data.question}
-        </Heading>
-        <Center>
-          <Image
-            w="400px"
-            rounded="lg"
-            loading="lazy"
-            shadow="2xl"
-            src={data.data.image}
-            hidden={!data.data.image}
-          />
-        </Center>
-        <RadioGroup onChange={setValue} value={value} >
-          <Stack spacing={[1, 5]} direction={['column']} color='white'>
-            {data.data.alternatives?.map((alternatives, index: number) => {
-              return (
-                <>
-                  <Radio
-                    key={index}
-                    mt='4px'
-                    value={alternatives._id}
-                    onChange={(e) => setValue(e.target.value)}
-                  >
-                    {alternatives.title}
-                  </Radio>
-                </>
-              )
-            })}
-          </Stack>
-        </RadioGroup>
-        <Flex
-          align={'center'}
-          justify={'center'}
-          w={'full'}
+  const { slug, test } = router.query
 
-        >
-          <Stack spacing={6} maxW={'100ch'}>
-            <Button
-              bg={'blue.400'}
-              color={'white'}
-              type="submit"
-              _hover={{
-                bg: 'blue.500',
-              }}>
-              Enter
-            </Button>
-          </Stack>
-        </Flex>
-      </Container>
-      <Text color='white' textAlign={'center'}>{data.data.createdBy.name}</Text>
-      <Text color='white' textAlign={'center'}>{data.data.time}</Text>
-    </Box>
+  // Responder pergunta
+  const answer = useCallback(async (key: any) => {
+    // Mensagens
+    const STATUS: any = {
+      CORRECT: ['Parabéns!', 'Certa resposta!', 'success'],
+      INCORRECT: ['Que pena!', 'Você errou!', 'error'],
+      TIMEOUT: ['Ops!', 'Tempo esgotado!', 'warning']
+    }
+
+    setLoading(true)
+
+    // Que rufem os tambores...
+    if (key) Swal.fire({
+      imageUrl: 'https://c.tenor.com/gvx0Ukr-9zkAAAAj/dm4uz3-foekoe.gif',
+      text: 'Que rufem os tambores...',
+      showConfirmButton: false
+    })
+
+    try {
+      if (key) {
+        var { data } = await axios.post('/challenge/check', {
+          studentRegistration: slug,
+          challengeID: api._id,
+          choiceID: api.alternatives[key - 1]?._id || null
+        })
+      } else {
+        var data: any = { status: 'TIMEOUT' }
+      }
+
+      // Exibe mensagem de sucesso/erro
+      Swal.fire({
+        title: STATUS[data.status][0],
+        text: data.message || STATUS[data.status][1],
+        icon: STATUS[data.status][2],
+        showConfirmButton: false
+      })
+
+      // Redireciona
+      if (!test) setTimeout(() => {
+        console.log('Redirecionando...')
+        router.push('/').then(() => {
+          Swal.close()
+        })
+      }, 2000)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      if (test) setLoading(false) //temp
+      if (test) setSelectedAlternatives([]) //temp
+    }
+  }, [api, slug, router, test])
+
+  // Timer
+  const [timer, setTimer] = useState(api.time)
+  const [isActive, setIsActive] = useState(true)
+  useEffect(() => {
+    if (isActive && timer > 0) {
+      const _timer = setInterval(() => {
+        setTimer(timer - 1)
+      }, 1000)
+      return () => clearTimeout(_timer)
+    } else if (isActive && timer === 0) {
+      setIsActive(false)
+      answer(null)
+    }
+  }, [isActive, timer, answer])
+
+  // Seleção de alternativas
+  const [loading, setLoading] = useState(false)
+  const [selectedAlternatives, setSelectedAlternatives]: [number[], Function] = useState([])
+
+  // Quando a tecla for apertada
+  const handleKeyDown = (e: any) => {
+    if (loading) return
+    const key = parseInt(e.key)
+    if (key > api.alternatives.length) return
+    if (key) setSelectedAlternatives([...selectedAlternatives, key])
+  }
+
+  // Quando a tecla for desapertada
+  const handleKeyUp = (e: any) => {
+    if (loading) return
+    const key = parseInt(e.key)
+    if (key > api.alternatives.length) return
+    const alternatives = selectedAlternatives.filter(a => a !== key)
+    if (!alternatives.length && key) return answer(key)
+    if (key) setSelectedAlternatives(alternatives)
+  }
+
+  const handleClick = (alternativeIndex: any) => {
+    answer(alternativeIndex + 1)
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('keyup', handleKeyUp)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('keyup', handleKeyUp)
+    }
+  })
+
+  return (
+    <div
+      style={{
+        height: '100vh',
+        maxHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+      <Header />
+      <Question
+        {...api}
+        currentTime={timer}
+      />
+      <Alternatives
+        {...api}
+        selected={selectedAlternatives}
+        handleClick={handleClick}
+      />
+    </div>
   )
 }
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -170,7 +148,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   const { data } = await axios.get<Props>(`/challenge/start/${params.slug}`)
   return {
     props: {
-      data: data
+      api: data
     },
   }
 }

@@ -13,27 +13,49 @@ type IAds = {
   title?: string;
   description?: string;
   image: string;
+  setLoading: Function;
   data: []
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetStaticProps = async () => {
   const { data } = await axios.get<IAds>('/ad/active')
   return {
     props: {
-      data: data
+      data: data,
+      test: new Date().toString()
     },
-    revalidate: 60, // At most once every 60 seconds
+    // revalidate: 60, // At most once every 60 seconds
   }
 }
 
-const Home: NextPage<IAds> = (data) => {
+const Home: NextPage<IAds> = (props) => {
   const router = useRouter()
-  
+
+  // Atualiza a lista de anúncios
+  const refreshData = () => {
+    router.replace(router.asPath)
+  }
+
   React.useEffect(() => {
-    document.addEventListener('keydown', (event) => {
-      router.push('/login')
-    });
-  }, [])
+    const interval = setInterval(refreshData, 60000)
+    return () => clearInterval(interval)
+  })
+
+  // Tecla pressionada
+  React.useEffect(() => {
+    document.addEventListener('keyup', handleKeyUp)
+    return () => document.removeEventListener('keyup', handleKeyUp)
+  })
+
+  const handleKeyUp = (event: any) => {
+    const KEYS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '#']
+    if (!KEYS.includes(event.key)) return
+    props.setLoading(true)
+    console.log('Abrindo login...')
+    router.push('/login').then(() => {
+      props.setLoading(false)
+    })
+  }
 
   return (
     <Box>
@@ -44,7 +66,7 @@ const Home: NextPage<IAds> = (data) => {
       </Head>
       <NavHero />
       <Carousel className="ads-carousel" pause={false} controls={false} interval={10000}>
-        {data.data?.map((data: IAds, index: number) => {
+        {props.data?.map((data: IAds, index: number) => {
           return (
             <Carousel.Item key={index}>
               <img className="background-img" src={data.image} alt={data.title} />

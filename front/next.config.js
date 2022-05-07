@@ -3,6 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
 	publicRuntimeConfig: {
 		apiEndpoint: process.env.API_ENDPOINT
+	},
+	images: {
+		domains: ['*']
 	}
 }
 
