@@ -3,8 +3,8 @@ const styles = {
     body: {
       overflowX: 'hidden',
       bg: 'gray.700'
-    },
-  },
-};
+    }
+  }
+}
 
-export default styles;
+export default styles

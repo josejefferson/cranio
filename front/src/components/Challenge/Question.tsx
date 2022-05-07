@@ -1,4 +1,4 @@
-import styles from '../../styles/Question.module.css'
+import styles from '@/styles/Question.module.css'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { useState, useEffect } from 'react'
@@ -15,7 +15,7 @@ export default function Question({ time, topic, question, createdBy, currentTime
 				<div className={styles.topic}>{topic}</div>
 				<div className={styles.question}>{question}</div>
 				<div className={styles.createdBy}>
-					<Text fontSize={'14px'}>Por: {createdBy.map((e: any) => e.name).join(', ')}</Text>
+					<Text fontSize={'1vh'}>Por: {createdBy.map((e: any) => e.name).join(', ')}</Text>
 				</div>
 			</div>
 			<div className={styles.timer}>

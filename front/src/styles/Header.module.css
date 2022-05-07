@@ -10,10 +10,10 @@
 }
 
 .image {
-	width: 5vh;
+  width: 5vh;
   height: 100%;
   margin-right: 2vh;
-	position: relative;
+  position: relative;
 }
 
 .image img {

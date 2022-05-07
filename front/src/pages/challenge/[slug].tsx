@@ -1,5 +1,5 @@
-import React from 'react';
-import { NextPage, GetStaticPaths, GetStaticProps } from 'next';
+import React from 'react'
+import { NextPage, GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
 import _Swal from 'sweetalert2'
@@ -7,26 +7,30 @@ import swalReact from 'sweetalert2-react-content'
 const Swal = swalReact(_Swal)
 import axios from '@/api/index'
 import { Header, Question, Alternatives } from '@/components/index'
-import { Props } from '@/interface/index';
+import { Props } from '@/interface/index'
+import Head from 'next/head'
 
 const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
   const { slug, test } = router.query
+  const [timer, setTimer] = useState(api.time)
+  const [isActive, setIsActive] = useState(true)
 
   // Responder pergunta
   const answer = useCallback(async (key: any) => {
     // Mensagens
     const STATUS: any = {
-      CORRECT: ['Parabéns!', 'Certa resposta!', 'success'],
-      INCORRECT: ['Que pena!', 'Você errou!', 'error'],
-      TIMEOUT: ['Ops!', 'Tempo esgotado!', 'warning']
+      CORRECT: ['Parabéns, você acertou!', 'Você respondeu corretamente! Continue assim.', 'success'],
+      INCORRECT: ['Que pena, resposta errada!', 'Não fique triste, você deu o seu melhor! Volte amanhã.', 'error'],
+      TIMEOUT: ['Tempo esgotado!', 'Tic tac, o tempo acabou! Infelizmente você demorou muito e o relógio não parou. Amanhã você terá uma nova chance!', null, '/img/alarm.gif']
     }
 
+    setIsActive(false)
     setLoading(true)
 
     // Que rufem os tambores...
     if (key) Swal.fire({
-      imageUrl: 'https://c.tenor.com/gvx0Ukr-9zkAAAAj/dm4uz3-foekoe.gif',
+      imageUrl: '/img/drum.gif',
       text: 'Que rufem os tambores...',
       showConfirmButton: false
     })
@@ -47,6 +51,8 @@ const Challenge: NextPage<Props> = ({ api }) => {
         title: STATUS[data.status][0],
         text: data.message || STATUS[data.status][1],
         icon: STATUS[data.status][2],
+        imageUrl: STATUS[data.status][3],
+        imageHeight: 128,
         showConfirmButton: false
       })
 
@@ -56,7 +62,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
         router.push('/').then(() => {
           Swal.close()
         })
-      }, 2000)
+      }, 5000)
     } catch (err) {
       console.log(err)
     } finally {
@@ -66,8 +72,6 @@ const Challenge: NextPage<Props> = ({ api }) => {
   }, [api, slug, router, test])
 
   // Timer
-  const [timer, setTimer] = useState(api.time)
-  const [isActive, setIsActive] = useState(true)
   useEffect(() => {
     if (isActive && timer > 0) {
       const _timer = setInterval(() => {
@@ -116,24 +120,29 @@ const Challenge: NextPage<Props> = ({ api }) => {
   })
 
   return (
-    <div
-      style={{
-        height: '100vh',
-        maxHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-      <Header />
-      <Question
-        {...api}
-        currentTime={timer}
-      />
-      <Alternatives
-        {...api}
-        selected={selectedAlternatives}
-        handleClick={handleClick}
-      />
-    </div>
+    <React.Fragment>
+      <Head>
+        <title>O Crânio | Desafio</title>
+      </Head>
+      <div
+        style={{
+          height: '100vh',
+          maxHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+        <Header />
+        <Question
+          {...api}
+          currentTime={timer}
+        />
+        <Alternatives
+          {...api}
+          selected={selectedAlternatives}
+          handleClick={handleClick}
+        />
+      </div>
+    </React.Fragment>
   )
 }
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -149,7 +158,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   return {
     props: {
       api: data
-    },
+    }
   }
 }
 

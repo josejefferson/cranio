@@ -1,9 +1,79 @@
 {
   "root": true,
-  "extends": "next/core-web-vitals",
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true,
+    "jquery": true
+  },
+  "plugins": [
+    "only-warn"
+  ],
+  "ignorePatterns": [
+    "*.min.js"
+  ],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@next/next/recommended",
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    },
+    "allowImportExportEverywhere": true,
+    "sourceType": "module"
+  },
   "rules": {
     "react/display-name": "off",
     "react/no-children-prop": "off",
-    "import/no-anonymous-default-export": [2, {"allowArrowFunction": true}]
+    "import/no-anonymous-default-export": [
+      2,
+      {
+        "allowArrowFunction": true
+      }
+    ],
+    "indent": [
+      "off",
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "linebreak-style": "off",
+    "quotes": [
+      "warn",
+      "single"
+    ],
+    "semi": [
+      "warn",
+      "never"
+    ],
+    "no-unused-vars": "off",
+    "no-empty": [
+      "warn",
+      {
+        "allowEmptyCatch": true
+      }
+    ],
+    "no-undef": "off",
+    "no-inner-declarations": "off",
+    "camelcase": [
+      "warn",
+      {
+        "properties": "always"
+      }
+    ],
+    "comma-dangle": [
+      "warn",
+      "never"
+    ],
+    "jsx-quotes": [
+      "warn",
+      "prefer-double"
+    ],
+    "no-redeclare": "off",
+    "@next/next/no-img-element": "off"
   }
 }

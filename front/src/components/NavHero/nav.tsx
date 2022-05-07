@@ -1,6 +1,5 @@
-/* eslint-disable */
-import React from 'react';
-import { chakra, Heading, Stack, Text, LinkOverlay, Box, HStack } from '@chakra-ui/react';
+import React from 'react'
+import { chakra, Stack, Text, Box, HStack } from '@chakra-ui/react'
 // import { Stack } from 'react-bootstrap';
 
 export default function NavHero() {
@@ -17,21 +16,21 @@ export default function NavHero() {
         boxShadow="none"
       >
         <HStack
-          w='full'
-          justifyContent='center'
+          w="full"
+          justifyContent="center"
           mb={22}
         >
           <Box
-            as='article'
-            bg='teal.100'
-            color='teal.700'
+            as="article"
+            bg="teal.100"
+            color="teal.700"
             p={2}
-            rounded='md'
-            transition='transform 150ms ease-out'
+            rounded="md"
+            transition="transform 150ms ease-out"
             _hover={{ transform: 'scale(1.05, 1.05)' }}
           >
             <Stack direction={{ base: 'column', md: 'row' }} spacing={1}>
-              <Text fontWeight='bold'>
+              <Text fontWeight="bold">
                 Pronto para um desafio? 🚀
               </Text>
               <Text>Aperte qualquer tecla</Text>
@@ -40,5 +39,5 @@ export default function NavHero() {
         </HStack>
       </chakra.header>
     </React.Fragment >
-  );
-};
+  )
+}

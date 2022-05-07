@@ -7,9 +7,9 @@ import Document, {
   Main,
   NextScript
 } from 'next/document'
-
-import { ColorModeScript } from '@chakra-ui/react';
+import { ColorModeScript } from '@chakra-ui/react'
 import theme from '../theme/config'
+
 export default class MyDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
@@ -19,7 +19,7 @@ export default class MyDocument extends Document {
     ctx.renderPage = () =>
       originalRenderPage({
         enhanceApp: (App) => App,
-        enhanceComponent: (Component) => Component,
+        enhanceComponent: (Component) => Component
       })
 
     const initialProps = await Document.getInitialProps(ctx)

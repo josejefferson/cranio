@@ -1,5 +1,4 @@
-import styles from '../../styles/Alternatives.module.css'
-import Image from 'next/image'
+import styles from '@/styles/Alternatives.module.css'
 import { Data } from '@/interface/index'
 interface IprosAlternatives extends Data {
 	selected: any;
@@ -16,8 +15,7 @@ export default function Alternatives({ image, alternatives, selected, handleClic
 				{alternatives.map((alternative, i: number) => {
 					return (
 						<div
-							className={`${styles.alternative} 
-							${String(selected).includes(String(i) + 1) ? styles.selected : ''}`}
+							className={`${styles.alternative} ${selected.includes(i + 1) ? styles.selected : ''}`}
 							onClick={() => handleClick(i)}
 							key={alternative._id}
 						>

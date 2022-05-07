@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Button,
   FormControl,
@@ -6,41 +6,41 @@ import {
   Heading,
   Input,
   Stack,
-  Progress,
-} from '@chakra-ui/react';
+  Progress
+} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { AiOutlineSend } from 'react-icons/ai';
+import { AiOutlineSend } from 'react-icons/ai'
 import _Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-const Swal = withReactContent(_Swal)
+import swalReact from 'sweetalert2-react-content'
+const Swal = swalReact(_Swal)
 import axios from '@/api/index'
-import { Header, ModalAlert } from '@/components/index';
-import { Iuser } from '@/interface/index';
+import { Header, ModalAlert } from '@/components/index'
+import { Iuser } from '@/interface/index'
 
-export default function LoginChallenge(): JSX.Element {
+export default function LoginChallenge({ setLoading }: any): JSX.Element {
   const router = useRouter()
   const [registration, Setregistration] = React.useState('')
   const [name, setName] = React.useState('')
   const [cursoName, setCursoName] = React.useState('')
-  const [time, setTime] = React.useState(1 * 60);
-  const [isActive, setIsActive] = React.useState(true);
+  const [time, setTime] = React.useState(1 * 60)
+  const [isActive, setIsActive] = React.useState(true)
   let percentTime = Math.floor(100 + ((time / (1 * 60) * (-100))))
   let [redirect, setRedirect] = React.useState(false)
-  let [loading, setLoading] = React.useState(false)
+  let [searchLoading, setSearchLoading] = React.useState(false)
   React.useEffect(() => {
     if (isActive && time > 0) {
       setTimeout(() => {
-        setTime(time - 1);
-      }, 1000);
+        setTime(time - 1)
+      }, 1000)
     } else if (isActive && time === 0) {
-      router.push(`/`)
+      router.push('/')
       setIsActive(false)
     }
-  }, [isActive, time]);
+  }, [isActive, time, router])
   async function onSubmitHandler(event: React.FormEvent): Promise<void> {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      setLoading(true)
+      setSearchLoading(true)
       const { data } = await axios.get<Iuser>(`/student/find/${registration}`)
       console.log(data)
       Setregistration(data.registration)
@@ -51,37 +51,40 @@ export default function LoginChallenge(): JSX.Element {
         document.addEventListener('keydown', (event) => {
           if (event.key === '*') document.getElementById('router')?.click()
           if (event.key === '#') document.getElementById('close')?.click()
-        });
+          setLoading(true)
+        })
       }
       if (!data.canPlayToday) {
         Swal.fire({
-          title: "Ops você já jogou!",
-          text: "Volte amanhã, agora de a vez para uma pessoa que não jogou.",
+          title: 'Ops, você já jogou hoje!',
+          text: 'Por favor, volte amanhã para mais desafios',
           icon: 'info',
           showConfirmButton: false,
-          timer: 2000 //temp
+          timer: 3000,
+          timerProgressBar: true
         })
-        setRedirect(true)
+        // setRedirect(true)
       }
     } catch (error: any) {
       Swal.fire({
-        title: "Opss verifique se digitou tudo",
-        text: "Verifique se sua mátricula está digitada corretamente",
+        title: 'Ops, estudante não encontrado!',
+        text: 'Verifique se a sua matrícula está correta',
         icon: 'info',
         showConfirmButton: false,
-        timer: 2000 //temp
+        timer: 3000,
+        timerProgressBar: true
       })
     } finally {
-      setLoading(false)
+      setSearchLoading(false)
     }
-  };
+  }
   React.useEffect(() => {
     if (redirect) {
       setTimeout(() => {
         router.push('/')
       }, 100)
     }
-  }, [redirect])
+  }, [redirect, router])
   return (
     <>
       <Header />
@@ -89,26 +92,27 @@ export default function LoginChallenge(): JSX.Element {
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        bg='gray.600'
+        bg="gray.600"
         overflow={'hidden'}
       >
         <ModalAlert
           name={name}
           courseName={cursoName}
           registration={registration}
+          setLoading={setLoading}
         />
         <Stack
-          as='form'
+          as="form"
           spacing={4}
           w={'full'}
           maxW={'md'}
-          bg='gray.800'
+          bg="gray.800"
           rounded={'xl'}
           boxShadow={'lg'}
           p={6}
           onSubmit={onSubmitHandler}
           my={12}>
-          <Heading lineHeight={1.1} color='white' fontSize={{ base: '2xl', md: '3xl' }}>
+          <Heading lineHeight={1.1} color="white" fontSize={{ base: '2xl', md: '3xl' }}>
             Coloque sua matrícula
           </Heading>
 
@@ -119,28 +123,28 @@ export default function LoginChallenge(): JSX.Element {
               autoFocus
               // disabled={!isActive}
               onChange={(e) => Setregistration(e.target.value)}
-              color='white'
+              color="white"
             />
           </FormControl>
           <Stack spacing={6}>
             <Button
               leftIcon={<AiOutlineSend />}
-              isLoading={loading}
+              isLoading={searchLoading}
               type={'submit'}
               bg={'blue.400'}
               color={'white'}
-              size='md'
-              height='48px'
-              width='100%'
+              size="md"
+              height="48px"
+              width="100%"
               _hover={{
-                bg: 'blue.500',
+                bg: 'blue.500'
               }}>
               Enter
             </Button>
           </Stack>
-          <Progress value={percentTime} hasStripe colorScheme='green' rounded='base' />
+          <Progress value={percentTime} hasStripe colorScheme="green" rounded="base" />
         </Stack>
       </Flex>
     </>
-  );
+  )
 }
