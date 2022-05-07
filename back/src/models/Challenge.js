@@ -27,10 +27,10 @@ const schema = new mongoose.Schema({
 		required: true
 	},
 	randomizeAlternatives: { type: Boolean, default: false },
-	preparationMessage: { type: String, default: 'Prepare-se!' },
-	correctMessage: { type: String, default: 'Parabéns, você acertou!' },
-	incorrectMessage: { type: String, default: 'Que pena, você errou!' },
-	timeOutMessage: { type: String, default: 'Tempo esgotado!' },
+	preparationMessage: { type: String },
+	correctMessage: { type: String },
+	incorrectMessage: { type: String },
+	timeOutMessage: { type: String },
 	answeredBy: { type: String }
 }, options)
 
