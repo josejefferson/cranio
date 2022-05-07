@@ -5,11 +5,17 @@ import { useState, useEffect } from 'react'
 type Iapi = {
 
 }
-export default function Question({ time, topic, question, createdBy }: any) {
+export default function Question({ time, topic, question, createdBy, answer }: any) {
 	const [timer, setTimer] = useState(time)
+	const [timeOut, setTimeOut] = useState(false)
 
 	useEffect(() => {
 		const _timer = setInterval(() => {
+			if (timer === 0 && !timeOut) {
+				setTimeOut(true)
+				return answer()
+			}
+			if (timer === 0) return
 			setTimer(timer - 1)
 		}, 1000)
 		return () => clearTimeout(_timer)

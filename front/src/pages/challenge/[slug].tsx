@@ -1,17 +1,13 @@
 import { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router'
-import {
-  RadioGroup, Text, Box,
-  Progress, Container, Image,
-  Radio, Stack, Heading, Center,
-  useToast, Button, Flex
-} from '@chakra-ui/react'
 import axios from '../../api'
 import Header from '../../components/Header'
 import Question from '../../components/Challenge/Question'
 import Alternatives from '../../components/Challenge/Alternatives'
 import { useState, useEffect } from 'react'
-
+import _Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const Swal = withReactContent(_Swal)
 // import { Header, Question, Alternatives } from '../../components'
 
 import React from 'react';
@@ -25,7 +21,7 @@ interface Data {
   alternatives: Array<{
     title: string;
     description?: string;
-    answer: number;
+    correct: boolean;
     _id: string
   }>;
   _id: string
@@ -36,20 +32,71 @@ interface Props {
   _id: string;
 }
 const Challenge: NextPage<Props> = ({ api }) => {
+  const router = useRouter()
+  const { slug } = router.query
+
   const [selectedAlternatives, setSelectedAlternatives]: [number[], Function] = useState([])
-  const [loading, setLoading] = useState(false)
+  let [loading, setLoading] = useState(false)
+  let [redirect, setRedirect] = useState(false)
 
   const handleKeyDown = (e: any) => {
     if (loading) return
     const key = parseInt(e.key)
+    if (key > api.alternatives.length) return
     if (key) setSelectedAlternatives([...selectedAlternatives, key])
   }
+
   const handleKeyUp = (e: any) => {
+    if (loading) return
     const key = parseInt(e.key)
+    if (key > api.alternatives.length) return
     const alternatives = selectedAlternatives.filter(a => a !== key)
+    if (!alternatives.length && key) return answer(key)
     if (key) setSelectedAlternatives(alternatives)
-    if (!alternatives.length && key) console.log(api.alternatives[key - 1])
   }
+
+  async function answer(key: any) {
+    setLoading(true)
+    Swal.fire({
+      imageUrl: 'https://c.tenor.com/gvx0Ukr-9zkAAAAj/dm4uz3-foekoe.gif',
+      text: 'Que rufem os tambores...',
+      showConfirmButton: false
+    })
+
+    try {
+      const STATUS: any = {
+        CORRECT: ['Parabéns!', 'success'],
+        INCORRECT: ['Que pena!', 'error'],
+        TIMEOUT: ['Ops!', 'warning']
+      }
+      const { data } = await axios.post('/challenge/check', {
+        studentRegistration: slug,
+        challengeID: api._id,
+        choiceID: api.alternatives[key - 1]?._id || null
+      })
+
+      Swal.fire({
+        title: STATUS[data.status][0],
+        text: data.message,
+        icon: STATUS[data.status][1],
+        showConfirmButton: false,
+        timer: 2000 //temp
+      })
+
+      setRedirect(true)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setLoading(false) //temp
+      setSelectedAlternatives([]) //temp
+    }
+  }
+
+  // useEffect(() => {
+  //   if (redirect) setTimeout(() => {
+  //     router.push(`/`)
+  //   }, 5000)
+  // })
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown)
@@ -70,7 +117,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
           flexDirection: 'column'
         }}>
         <Header />
-        <Question {...api} />
+        <Question {...api} answer={answer} />
         <Alternatives {...api} selected={selectedAlternatives} />
       </div>
     </>
