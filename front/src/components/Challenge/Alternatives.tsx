@@ -4,7 +4,8 @@ import { Data } from '@/interface/index'
 interface IprosAlternatives extends Data {
 	selected: any
 }
-export default function Alternatives({ image, alternatives, selected }: IprosAlternatives) {
+
+export default function Alternatives({ image, alternatives, selected, handleClick }: IprosAlternatives) {
 	return (
 		<div className={styles.body}>
 			<div className={styles.image} hidden={!image}>
@@ -16,6 +17,7 @@ export default function Alternatives({ image, alternatives, selected }: IprosAlt
 						<div
 							className={`${styles.alternative} 
 							${String(selected).includes(String(i) + 1) ? styles.selected : ''}`}
+							onClick={() => handleClick(i)}
 							key={alternative._id}
 						>
 							<div className={styles.alternativeNumber}>{i + 1}</div>

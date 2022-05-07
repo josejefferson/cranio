@@ -1,22 +1,90 @@
 import React from 'react';
 import { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import _Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-const Swal = withReactContent(_Swal)
+import swalReact from 'sweetalert2-react-content'
+const Swal = swalReact(_Swal)
 import axios from '@/api/index'
 import { Header, Question, Alternatives } from '@/components/index'
 import { Props } from '@/interface/index';
 
 const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
-  const { slug } = router.query
+  const { slug, test } = router.query
 
+  // Responder pergunta
+  const answer = useCallback(async (key: any) => {
+    // Mensagens
+    const STATUS: any = {
+      CORRECT: ['Parabéns!', 'Certa resposta!', 'success'],
+      INCORRECT: ['Que pena!', 'Você errou!', 'error'],
+      TIMEOUT: ['Ops!', 'Tempo esgotado!', 'warning']
+    }
+
+    setLoading(true)
+
+    // Que rufem os tambores...
+    if (key) Swal.fire({
+      imageUrl: 'https://c.tenor.com/gvx0Ukr-9zkAAAAj/dm4uz3-foekoe.gif',
+      text: 'Que rufem os tambores...',
+      showConfirmButton: false
+    })
+
+    try {
+      if (key) {
+        var { data } = await axios.post('/challenge/check', {
+          studentRegistration: slug,
+          challengeID: api._id,
+          choiceID: api.alternatives[key - 1]?._id || null
+        })
+      } else {
+        var data: any = { status: 'TIMEOUT' }
+      }
+
+      // Exibe mensagem de sucesso/erro
+      Swal.fire({
+        title: STATUS[data.status][0],
+        text: data.message || STATUS[data.status][1],
+        icon: STATUS[data.status][2],
+        showConfirmButton: false
+      })
+
+      // Redireciona
+      if (!test) setTimeout(() => {
+        console.log('Redirecionando...')
+        router.push('/').then(() => {
+          Swal.close()
+        })
+      }, 2000)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      if (test) setLoading(false) //temp
+      if (test) setSelectedAlternatives([]) //temp
+    }
+  }, [api, slug, router, test])
+
+  // Timer
+  const [timer, setTimer] = useState(api.time)
+  const [isActive, setIsActive] = useState(true)
+  useEffect(() => {
+    if (isActive && timer > 0) {
+      const _timer = setInterval(() => {
+        setTimer(timer - 1)
+      }, 1000)
+      return () => clearTimeout(_timer)
+    } else if (isActive && timer === 0) {
+      setIsActive(false)
+      answer(null)
+    }
+  }, [isActive, timer, answer])
+
+  // Seleção de alternativas
+  const [loading, setLoading] = useState(false)
   const [selectedAlternatives, setSelectedAlternatives]: [number[], Function] = useState([])
-  let [loading, setLoading] = useState(false)
-  let [redirect, setRedirect] = useState(false)
 
+  // Quando a tecla for apertada
   const handleKeyDown = (e: any) => {
     if (loading) return
     const key = parseInt(e.key)
@@ -24,6 +92,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
     if (key) setSelectedAlternatives([...selectedAlternatives, key])
   }
 
+  // Quando a tecla for desapertada
   const handleKeyUp = (e: any) => {
     if (loading) return
     const key = parseInt(e.key)
@@ -33,48 +102,9 @@ const Challenge: NextPage<Props> = ({ api }) => {
     if (key) setSelectedAlternatives(alternatives)
   }
 
-  async function answer(key: any) {
-    setLoading(true)
-    Swal.fire({
-      imageUrl: 'https://c.tenor.com/gvx0Ukr-9zkAAAAj/dm4uz3-foekoe.gif',
-      text: 'Que rufem os tambores...',
-      showConfirmButton: false
-    })
-
-    try {
-      const STATUS: any = {
-        CORRECT: ['Parabéns!', 'success'],
-        INCORRECT: ['Que pena!', 'error'],
-        TIMEOUT: ['Ops!', 'warning']
-      }
-      const { data } = await axios.post('/challenge/check', {
-        studentRegistration: slug,
-        challengeID: api._id,
-        choiceID: api.alternatives[key - 1]?._id || null
-      })
-
-      Swal.fire({
-        title: STATUS[data.status][0],
-        text: data.message,
-        icon: STATUS[data.status][1],
-        showConfirmButton: false,
-        timer: 2000 //temp
-      })
-
-      setRedirect(true)
-    } catch (err) {
-      console.log(err)
-    } finally {
-      setLoading(false) //temp
-      setSelectedAlternatives([]) //temp
-    }
+  const handleClick = (alternativeIndex: any) => {
+    answer(alternativeIndex + 1)
   }
-
-  // useEffect(() => {
-  //   if (redirect) setTimeout(() => {
-  //     router.push(`/`)
-  //   }, 5000)
-  // })
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown)
@@ -86,19 +116,24 @@ const Challenge: NextPage<Props> = ({ api }) => {
   })
 
   return (
-    <>
-      <div
-        style={{
-          height: '100vh',
-          maxHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
-        <Header />
-        <Question {...api} answer={answer} />
-        <Alternatives {...api} selected={selectedAlternatives} />
-      </div>
-    </>
+    <div
+      style={{
+        height: '100vh',
+        maxHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+      <Header />
+      <Question
+        {...api}
+        currentTime={timer}
+      />
+      <Alternatives
+        {...api}
+        selected={selectedAlternatives}
+        handleClick={handleClick}
+      />
+    </div>
   )
 }
 export const getStaticPaths: GetStaticPaths = async () => {
