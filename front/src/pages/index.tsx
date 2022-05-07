@@ -13,6 +13,7 @@ type IAds = {
   title?: string;
   description?: string;
   image: string;
+  setLoading: Function;
   data: []
 }
 
@@ -27,7 +28,7 @@ export const getServerSideProps: GetStaticProps = async () => {
   }
 }
 
-const Home: NextPage<IAds> = (data) => {
+const Home: NextPage<IAds> = (props) => {
   const router = useRouter()
 
   // Atualiza a lista de anúncios
@@ -44,8 +45,11 @@ const Home: NextPage<IAds> = (data) => {
     document.addEventListener('keyup', (event) => {
       const KEYS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '#']
       if (!KEYS.includes(event.key)) return
+      props.setLoading(true)
       console.log('Abrindo login...')
-      router.push('/login')
+      router.push('/login').then(() => {
+        props.setLoading(false)
+      })
     })
   }, [])
 
@@ -58,7 +62,7 @@ const Home: NextPage<IAds> = (data) => {
       </Head>
       <NavHero />
       <Carousel className="ads-carousel" pause={false} controls={false} interval={10000}>
-        {data.data?.map((data: IAds, index: number) => {
+        {props.data?.map((data: IAds, index: number) => {
           return (
             <Carousel.Item key={index}>
               <img className="background-img" src={data.image} alt={data.title} />

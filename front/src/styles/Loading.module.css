@@ -1,0 +1,55 @@
+.loadingScreen {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10100;
+  flex-direction: column;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  backdrop-filter: blur(10px);
+}
+
+.loadingScreen.visible {
+  display: flex;
+  opacity: 1;
+}
+
+.loadingScreenText {
+  margin-bottom: 20px;
+  font-size: 8vmin;
+  color: white;
+}
+
+.loadingScreenIcon {
+  animation: sandClock 3s ease infinite;
+  font-size: 25vmin;
+  border: white 2vmin solid;
+  width: 40vmin;
+  height: 40vmin;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.loadingScreenIcon img {
+  width: 25vmin;
+}
+
+@keyframes sandClock {
+  from {
+    transform: rotate(0deg);
+  }
+
+  50%,
+  to {
+    transform: rotate(360deg);
+  }
+}
