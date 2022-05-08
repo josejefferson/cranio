@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import { FormLogin } from 'src/container'
 
-const Login = ({ setLoading }: any) => {
+const Login = () => {
   return (
     <>
       <Head>
         <title>O Crânio | Login</title>
       </Head>
-      <FormLogin setLoading={setLoading} />
+      <FormLogin />
     </>
   )
 }

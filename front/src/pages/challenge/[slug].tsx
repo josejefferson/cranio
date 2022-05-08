@@ -145,6 +145,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
     </React.Fragment>
   )
 }
+
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],

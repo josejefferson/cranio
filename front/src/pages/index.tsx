@@ -7,10 +7,10 @@ import axios from '../api/'
 import { Box, Heading, chakra } from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Carousel from 'react-bootstrap/Carousel'
+import { useLoadingContext } from '@/contexts/loading'
 
 type Props = {
-  ads: IAds[],
-  setLoading: Function
+  ads: IAds[]
 }
 
 type IAds = {
@@ -31,6 +31,7 @@ export const getServerSideProps: GetStaticProps = async () => {
 
 const Home: NextPage<Props> = (props) => {
   const router = useRouter()
+  const loading = useLoadingContext()
 
   // Atualiza a lista de anúncios
   const refreshData = () => {
@@ -51,18 +52,18 @@ const Home: NextPage<Props> = (props) => {
   const handleKeyUp = (event: any) => {
     const KEYS = '0123456789*#'.split('')
     if (!KEYS.includes(event.key)) return
-    props.setLoading(true)
+    loading(true)
     console.log('Abrindo login...')
     router.push('/login').then(() => {
-      props.setLoading(false)
+      loading(false)
     })
   }
 
   const handleDoubleClick = (event: any) => {
-    props.setLoading(true)
+    loading(true)
     console.log('Abrindo login...')
     router.push('/login').then(() => {
-      props.setLoading(false)
+      loading(false)
     })
   }
 

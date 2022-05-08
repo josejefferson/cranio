@@ -16,9 +16,11 @@ const Swal = swalReact(_Swal)
 import axios from '@/api/index'
 import { Header, ModalAlert } from '@/components/index'
 import { Iuser } from '@/interface/index'
+import { useLoadingContext } from '@/contexts/loading'
 
-export default function LoginChallenge({ setLoading }: any): JSX.Element {
+export default function LoginChallenge(): JSX.Element {
   const router = useRouter()
+  const loading = useLoadingContext()
   const [registration, Setregistration] = React.useState('')
   const [name, setName] = React.useState('')
   const [cursoName, setCursoName] = React.useState('')
@@ -51,7 +53,7 @@ export default function LoginChallenge({ setLoading }: any): JSX.Element {
         const handleKeyDown = (event: any) => {
           if (event.key === '*') document.getElementById('router')?.click()
           if (event.key === '#') document.getElementById('close')?.click()
-          setLoading(true)
+          if (event.key === '*') loading(true, 'Procurando um desafio')
           document.removeEventListener('keydown', handleKeyDown)
         }
         document.addEventListener('keydown', handleKeyDown)
@@ -101,7 +103,6 @@ export default function LoginChallenge({ setLoading }: any): JSX.Element {
           name={name}
           courseName={cursoName}
           registration={registration}
-          setLoading={setLoading}
         />
         <Stack
           as="form"
