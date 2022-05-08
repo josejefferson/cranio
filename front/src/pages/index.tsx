@@ -1,5 +1,5 @@
 import React from 'react'
-import type { GetStaticProps, NextPage } from 'next'
+import type { NextPage, GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import axios from '../api/'
@@ -21,7 +21,7 @@ type IAds = {
   image: string
 }
 
-export const getServerSideProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { data: ads } = await axios.get<IAds>('/ad/active')
   const { data: challenges } = await axios.get<IAds>('/challenge/active')
   return {
@@ -35,6 +35,11 @@ export const getServerSideProps: GetStaticProps = async () => {
 const Home: NextPage<Props> = (props) => {
   const router = useRouter()
   const loading = useLoadingContext()
+
+  // Pré-carrega a página de login
+  React.useEffect(() => {
+    router.prefetch('/login')
+  })
 
   // Atualiza a lista de anúncios
   const refreshData = () => {
@@ -53,7 +58,7 @@ const Home: NextPage<Props> = (props) => {
   })
 
   const handleKeyUp = (event: any) => {
-    const KEYS = '0123456789*#'.split('')
+    const KEYS = '0123456789*# '.split('')
     if (!KEYS.includes(event.key)) return
     loading(true)
     console.log('Abrindo login...')
@@ -134,14 +139,14 @@ const Home: NextPage<Props> = (props) => {
           <>
             {props.challenges.totalChallenges} desafios disponíveis:&nbsp;
             {Object.entries(props.challenges.challengesPerCourse).map(([course, count]: any) => `${course} (${count})`).join(' - ')}
-            <div style={{ width: '30vh' }}></div>
+            <div style={{ width: '20vh' }}></div>
           </>
         ) : (
           <>Nenhum desafio aberto no momento. Por favor, volte mais tarde</>
         )}
 
         Pronto para um desafio? Aperte qualquer tecla...
-        <div style={{ width: '30vh' }}></div>
+        <div style={{ width: '20vh' }}></div>
       </Marquee>
     </Box>
   )

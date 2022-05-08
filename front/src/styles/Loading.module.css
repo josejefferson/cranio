@@ -39,7 +39,7 @@
   border-radius: 50%;
 }
 
-.loadingScreenIcon img {
+.loadingScreenIcon .loadingScreenIconImg {
   width: 25vmin;
 }
 

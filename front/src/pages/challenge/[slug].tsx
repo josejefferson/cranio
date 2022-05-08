@@ -1,5 +1,5 @@
 import React from 'react'
-import { NextPage, GetStaticPaths, GetStaticProps } from 'next'
+import { NextPage, GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
 import _Swal from 'sweetalert2'
@@ -13,8 +13,9 @@ import Head from 'next/head'
 const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
   const { slug, test } = router.query
-  const [timer, setTimer] = useState(api.time)
-  const [isActive, setIsActive] = useState(true)
+  const [active, setActive] = useState(true)
+  const [answered, setAnswered] = useState(false)
+  const [selectedAlternatives, setSelectedAlternatives]: [number[], Function] = useState([])
 
   // Responder pergunta
   const answer = useCallback(async (key: any) => {
@@ -25,8 +26,8 @@ const Challenge: NextPage<Props> = ({ api }) => {
       TIMEOUT: ['Tempo esgotado!', 'Tic tac, o tempo acabou! Infelizmente você demorou muito e o relógio não parou. Amanhã você terá uma nova chance!', null, '/img/alarm.gif']
     }
 
-    setIsActive(false)
-    setLoading(true)
+    setActive(false)
+    setAnswered(true)
 
     // Que rufem os tambores...
     if (key) Swal.fire({
@@ -66,31 +67,14 @@ const Challenge: NextPage<Props> = ({ api }) => {
     } catch (err) {
       console.log(err)
     } finally {
-      if (test) setLoading(false) //temp
-      if (test) setSelectedAlternatives([]) //temp
+      if (test) setAnswered(false)
+      if (test) setSelectedAlternatives([])
     }
   }, [api, slug, router, test])
 
-  // Timer
-  useEffect(() => {
-    if (isActive && timer > 0) {
-      const _timer = setInterval(() => {
-        setTimer(timer - 1)
-      }, 1000)
-      return () => clearTimeout(_timer)
-    } else if (isActive && timer === 0) {
-      setIsActive(false)
-      answer(null)
-    }
-  }, [isActive, timer, answer])
-
-  // Seleção de alternativas
-  const [loading, setLoading] = useState(false)
-  const [selectedAlternatives, setSelectedAlternatives]: [number[], Function] = useState([])
-
   // Quando a tecla for apertada
   const handleKeyDown = (e: any) => {
-    if (loading) return
+    if (answered) return
     const key = parseInt(e.key)
     if (key > api.alternatives.length) return
     if (key) setSelectedAlternatives([...selectedAlternatives, key])
@@ -98,7 +82,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
 
   // Quando a tecla for desapertada
   const handleKeyUp = (e: any) => {
-    if (loading) return
+    if (answered) return
     const key = parseInt(e.key)
     if (key > api.alternatives.length) return
     const alternatives = selectedAlternatives.filter(a => a !== key)
@@ -106,10 +90,12 @@ const Challenge: NextPage<Props> = ({ api }) => {
     if (key) setSelectedAlternatives(alternatives)
   }
 
+  // Clique do mouse
   const handleClick = (alternativeIndex: any) => {
     answer(alternativeIndex + 1)
   }
 
+  // Eventos do teclado
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown)
     document.addEventListener('keyup', handleKeyUp)
@@ -136,7 +122,8 @@ const Challenge: NextPage<Props> = ({ api }) => {
         <Header />
         <Question
           {...api}
-          currentTime={timer}
+          active={active}
+          timeOutCallback={() => answer(null)}
         />
         <Alternatives
           {...api}
@@ -148,14 +135,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking'
-  }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }: any) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
   console.log(params.slug)
   const { data } = await axios.get<Props>(`/challenge/start/${params.slug}`)
   return {

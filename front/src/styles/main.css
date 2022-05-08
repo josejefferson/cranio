@@ -8,8 +8,8 @@
 }
 
 * {
-  line-height: initial !important;
   letter-spacing: initial !important;
+  line-height: initial !important;
 }
 
 body {
@@ -73,11 +73,12 @@ body {
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 1vh;
   bottom: 8vh !important;
-  right: 3vh !important;
   left: 3vh !important;
-  padding: 1vh !important;
-  width: fit-content !important;
   margin: auto;
+  max-width: calc(100% - 6vh);
+  padding: 1vh !important;
+  right: 3vh !important;
+  width: fit-content !important;
 }
 
 .carousel-caption h2 {
@@ -96,13 +97,13 @@ body {
 }
 
 .carousel-indicators button {
-  width: 1vh !important;
-  height: 1vh !important;
   border-radius: 50%;
-  margin: 0 1vh !important;
   border: none !important;
-  transition: 0.2s ease !important;
+  height: 1vh !important;
+  margin: 0 1vh !important;
   transform: scale(1);
+  transition: 0.2s ease !important;
+  width: 1vh !important;
 }
 
 .carousel-indicators button.active {
@@ -110,10 +111,14 @@ body {
 }
 
 .marquee-container {
-  font-family: "Varela Round";
-  position: fixed !important;
-  bottom: 0;
-  z-index: 1;
   background: linear-gradient(0deg, #000000c4, transparent);
+  bottom: 0;
+  font-family: "Varela Round";
   height: 4vh;
+  position: fixed !important;
+  z-index: 1;
+}
+
+.progress > div {
+  transition: width 1s linear;
 }

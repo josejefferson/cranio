@@ -22,6 +22,7 @@ export interface Props {
 export type Iuser = {
   id?: number
   name: string
+  shortName?: string
   courseName: string
   registration: string
   canPlayToday?: any

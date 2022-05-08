@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { Button, Divider, Modal, ModalBody, Text, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
 import { Iuser } from '@/interface/index'
 import { useLoadingContext } from '@/contexts/loading'
+import { BsAsterisk, BsHash } from 'react-icons/bs'
 
 type IModal = Iuser & {
 	registration: string
@@ -31,11 +32,13 @@ const ModalAlert = ({ name, courseName, registration }: IModal) => {
 							mr={3}
 							onClick={onClose}
 							id="close"
+							leftIcon={<BsHash />}
 						>
-							Para fechar digite #
+							Corrigir
 						</Button>
 						<Button colorScheme="green"
 							id="router"
+							leftIcon={<BsAsterisk />}
 							onClick={() => {
 								loading(true, 'Procurando um desafio')
 								router.push({
@@ -44,7 +47,7 @@ const ModalAlert = ({ name, courseName, registration }: IModal) => {
 								}).then(() => loading(false))
 							}}
 						>
-							Para continuar digite *
+							Continuar
 						</Button>
 					</ModalFooter>
 				</ModalContent>

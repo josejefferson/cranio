@@ -1,13 +1,20 @@
 import styles from '@/styles/Question.module.css'
-import 'react-circular-progressbar/dist/styles.css'
 import { Data } from '@/interface/index'
 import { Text } from '@chakra-ui/react'
 import Timer from '@/components/Challenge/Timer'
-interface Ianswer extends Data{
-	currentTime: any;
+interface Ianswer extends Data {
+	active?: boolean
+	timeOutCallback?: Function
 }
 
-export default function Question({ time, topic, question, createdBy, currentTime }: Ianswer) {
+export default function Question({
+	time,
+	topic,
+	question,
+	createdBy,
+	active,
+	timeOutCallback
+}: Ianswer) {
 	return (
 		<div className={styles.questionContainer}>
 			<div className={styles.details}>
@@ -18,7 +25,7 @@ export default function Question({ time, topic, question, createdBy, currentTime
 				</div>
 			</div>
 			<div className={styles.timer}>
-				<Timer time={time} currentTime={currentTime} />
+				<Timer {...({ time, active, timeOutCallback })} />
 			</div>
 		</div>
 	)
