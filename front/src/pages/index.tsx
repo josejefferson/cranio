@@ -2,15 +2,16 @@ import React from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { NavHero } from '../components/'
 import axios from '../api/'
 import { Box, Heading, chakra } from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Carousel from 'react-bootstrap/Carousel'
 import { useLoadingContext } from '@/contexts/loading'
+import Marquee from 'react-fast-marquee'
 
 type Props = {
   ads: IAds[]
+  challenges: any
 }
 
 type IAds = {
@@ -21,10 +22,12 @@ type IAds = {
 }
 
 export const getServerSideProps: GetStaticProps = async () => {
-  const { data } = await axios.get<IAds>('/ad/active')
+  const { data: ads } = await axios.get<IAds>('/ad/active')
+  const { data: challenges } = await axios.get<IAds>('/challenge/active')
   return {
     props: {
-      ads: data
+      ads,
+      challenges
     }
   }
 }
@@ -73,13 +76,13 @@ const Home: NextPage<Props> = (props) => {
         <title>O Crânio</title>
       </Head>
 
-      <NavHero />
+      {/* <NavHero /> */}
 
       <Carousel
         className="ads-carousel"
         pause={false}
         controls={false}
-        interval={1000000}
+        interval={10000}
         onDoubleClick={handleDoubleClick}
       >
         {props.ads?.map((ad: IAds, index: number) => {
@@ -122,6 +125,24 @@ const Home: NextPage<Props> = (props) => {
           )
         })}
       </Carousel>
+      <Marquee
+        style={{ color: 'white', fontSize: '2vh' }}
+        speed={100}
+        gradient={false}
+      >
+        {props.challenges.totalChallenges ? (
+          <>
+            {props.challenges.totalChallenges} desafios disponíveis:&nbsp;
+            {Object.entries(props.challenges.challengesPerCourse).map(([course, count]: any) => `${course} (${count})`).join(' - ')}
+            <div style={{ width: '30vh' }}></div>
+          </>
+        ) : (
+          <>Nenhum desafio aberto no momento. Por favor, volte mais tarde</>
+        )}
+
+        Pronto para um desafio? Aperte qualquer tecla...
+        <div style={{ width: '30vh' }}></div>
+      </Marquee>
     </Box>
   )
 }

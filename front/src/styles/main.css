@@ -1,10 +1,19 @@
 :root {
-  --color-header: #540b0e;
+  --color-header: #000000;
   --color-highlight: #9e2a2b;
   --color-buttons: #fff3b0;
   --color-arc: #e09f3e;
   --color-background: #335c67;
   --shadow: rgba(0, 0, 0, 0.25) 0 4px 4px;
+}
+
+* {
+  line-height: initial !important;
+  letter-spacing: initial !important;
+}
+
+body {
+  font-size: 2vh !important;
 }
 
 @font-face {
@@ -52,7 +61,7 @@
 }
 
 .carousel-item img.background-img {
-  filter: blur(6px) brightness(0.5);
+  filter: blur(1vh) brightness(0.5);
   left: 0;
   object-fit: cover;
   position: absolute;
@@ -62,19 +71,49 @@
 
 .carousel-caption {
   background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 10px;
-  bottom: 2vh !important;
+  border-radius: 1vh;
+  bottom: 8vh !important;
   right: 3vh !important;
   left: 3vh !important;
   padding: 1vh !important;
+  width: fit-content !important;
+  margin: auto;
 }
 
 .carousel-caption h2 {
   font-size: 4vh;
   margin-bottom: 0.5vh;
   margin-top: 0;
+  padding: 1vh 0;
 }
 
 .carousel-caption span {
   font-size: 2vh;
+}
+
+.carousel-indicators {
+  margin-bottom: 5vh !important;
+}
+
+.carousel-indicators button {
+  width: 1vh !important;
+  height: 1vh !important;
+  border-radius: 50%;
+  margin: 0 1vh !important;
+  border: none !important;
+  transition: 0.2s ease !important;
+  transform: scale(1);
+}
+
+.carousel-indicators button.active {
+  transform: scale(1.5);
+}
+
+.marquee-container {
+  font-family: "Varela Round";
+  position: fixed !important;
+  bottom: 0;
+  z-index: 1;
+  background: linear-gradient(0deg, #000000c4, transparent);
+  height: 4vh;
 }

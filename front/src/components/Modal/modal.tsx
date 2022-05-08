@@ -37,6 +37,7 @@ const ModalAlert = ({ name, courseName, registration }: IModal) => {
 						<Button colorScheme="green"
 							id="router"
 							onClick={() => {
+								loading(true, 'Procurando um desafio')
 								router.push({
 									pathname: '/challenge/[slug]',
 									query: { slug: registration }

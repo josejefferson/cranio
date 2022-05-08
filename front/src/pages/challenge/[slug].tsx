@@ -123,6 +123,8 @@ const Challenge: NextPage<Props> = ({ api }) => {
     <React.Fragment>
       <Head>
         <title>O Crânio | Desafio</title>
+        <link rel="preload" as="image" href="/img/drum.gif" />
+        <link rel="preload" as="image" href="/img/alarm.gif" />
       </Head>
       <div
         style={{

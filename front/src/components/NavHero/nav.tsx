@@ -6,7 +6,7 @@ export default function NavHero() {
   return (
     <React.Fragment>
       <chakra.header
-        borderTop="10px solid #8257e5"
+        // borderTop="10px solid #8257e5"
         shadow="md"
         transition="all 0.5s ease-in-out"
         pos="fixed"
