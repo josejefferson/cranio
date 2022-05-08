@@ -8,6 +8,27 @@ const Student = require('../models/Student')
 const databaseRoutes = require('./_database')(Challenge)
 
 /**
+ * Retorna o número de desafios ativos
+ */
+router.get('/active', asyncRoutes(async (req, res) => {
+	const currentDate = new Date().toISOString()
+	const challenges = await Challenge.find({ active: true })
+	let challengesPerCourse = {}
+
+	for (const challenge of challenges) {
+		for (const course of challenge.course) {
+			challengesPerCourse[course] = challengesPerCourse[course] || 0
+			challengesPerCourse[course]++
+		}
+	}
+
+	res.json({
+		totalChallenges: challenges.length,
+		challengesPerCourse
+	})
+}))
+
+/**
  * Retorna um desafio para aquele estudante
  */
 router.get('/start/:studentRegistration', asyncRoutes(async (req, res) => {
