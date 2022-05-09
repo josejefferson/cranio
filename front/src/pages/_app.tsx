@@ -6,9 +6,9 @@ import { LoadingProvider } from '@/contexts/loading'
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <LoadingProvider>
-        <Chakra cookies={pageProps.cookies}>
-          <Component {...pageProps} />
-        </Chakra>
+      <Chakra cookies={pageProps.cookies}>
+        <Component {...pageProps} />
+      </Chakra>
     </LoadingProvider>
   )
 }

@@ -1,9 +1,9 @@
 import styles from '@/styles/Alternatives.module.css'
 import { IprosAlternatives } from '@/interface/index'
 
-export default function Alternatives({ image, alternatives, selected, handleClick }: IprosAlternatives) {
+export default function Alternatives({ image, alternatives, active, selected, handleClick }: IprosAlternatives) {
 	return (
-		<div className={styles.body}>
+		<div className={`${styles.body} ${!active ? styles.end : ''}`}>
 			<div className={styles.image} hidden={!image}>
 				<img src={image} alt="" hidden={!image} />
 			</div>
@@ -13,6 +13,7 @@ export default function Alternatives({ image, alternatives, selected, handleClic
 						<div
 							className={`${styles.alternative} ${selected.includes(i + 1) ? styles.selected : ''}`}
 							onClick={() => handleClick(i)}
+							style={{ animationDelay: `${i * 100}ms, ${1000 + i * 100}ms` }}
 							key={alternative._id}
 						>
 							<div className={styles.alternativeNumber}>{i + 1}</div>

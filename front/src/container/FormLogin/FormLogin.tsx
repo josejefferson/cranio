@@ -95,7 +95,10 @@ export default function LoginChallenge(): JSX.Element {
   const handleKeyUp = (event: any) => {
     if (Swal.isVisible()) {
       if (event.key === '*') Swal.clickConfirm()
-      if (event.key === '#') Swal.clickCancel()
+      if (event.key === '#') {
+        Swal.clickCancel()
+        setRegistration('')
+      }
     } else {
       if (event.key === '*') onSubmitHandler()
       if (event.key === '#') setRegistration('')

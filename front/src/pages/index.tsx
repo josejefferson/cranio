@@ -56,7 +56,7 @@ const Home: NextPage<Props> = (props) => {
     })
   }
 
-  const handleDoubleClick = () => {
+  const handleClick = () => {
     loading(true)
     console.log('Abrindo login...')
     router.push('/login').then(() => {
@@ -75,7 +75,7 @@ const Home: NextPage<Props> = (props) => {
         pause={false}
         controls={false}
         interval={10000}
-        onDoubleClick={handleDoubleClick}
+        onClick={handleClick}
       >
         {props.ads?.map((ad: IAds, index: number) => {
           return (

@@ -43,6 +43,7 @@ export default class MyDocument extends Document {
           <meta property="og:site_name" content="O Crânio" />
           <meta property="twitter:title" content="O Crânio" />
           <meta property="twitter:description" content="O Crânio" />
+          <link rel="preload" as="image" href="/img/skull.svg" />
         </Head>
         <body>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />

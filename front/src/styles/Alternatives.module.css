@@ -30,6 +30,8 @@
 
 .alternative {
   align-items: center;
+  animation-fill-mode: both, none !important;
+  animation: transform 0.3s ease, scale 5s ease infinite;
   background-color: var(--color-buttons);
   border-radius: 2vh;
   box-shadow: var(--shadow);
@@ -40,7 +42,13 @@
   font-family: "Varela Round";
   gap: 2vh;
   max-height: 10vh;
+  opacity: 1;
   padding: 0 1vh;
+  transform: translateX(0) scale(1);
+}
+
+.body.end .alternative {
+  animation: none !important;
 }
 
 .alternative:active,
@@ -57,4 +65,23 @@
 .alternativeBody {
   flex: 1;
   font-size: 2vh;
+}
+
+@keyframes transform {
+  from {
+    opacity: 0;
+    transform: translateX(-110%);
+  }
+}
+
+@keyframes scale {
+  from,
+  94%,
+  to {
+    transform: scale(1);
+  }
+
+  97% {
+    transform: scale(1.01);
+  }
 }

@@ -28,6 +28,7 @@ export interface Ianswer extends Data {
 }
 
 export interface IprosAlternatives extends Data {
+  active: boolean
 	selected: any;
   handleClick: any
 }

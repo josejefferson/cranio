@@ -2,7 +2,7 @@ import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
-import ReactAudioPlayer from 'react-audio-player';
+import ReactAudioPlayer from 'react-audio-player'
 import _Swal from 'sweetalert2'
 import swalReact from 'sweetalert2-react-content'
 const Swal = swalReact(_Swal)
@@ -15,7 +15,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
   const { slug, test } = router.query
   const [active, setActive] = useState(true)
-  const [music, setMusic] = useState(`/music/CountDown.mp3`)
+  const [music, setMusic] = useState('/music/CountDown.mp3')
   const [answered, setAnswered] = useState(false)
   const [selectedAlternatives, setSelectedAlternatives]: [number[], Function] = useState([])
 
@@ -66,7 +66,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
             Swal.close()
           })
         }, 5000)
-      }, 1000)
+      }, key ? 2000 : 0)
     } catch (err) {
       console.log(err)
     } finally {
@@ -130,6 +130,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
         />
         <Alternatives
           {...api}
+          active={active}
           selected={selectedAlternatives}
           handleClick={handleClick}
         />

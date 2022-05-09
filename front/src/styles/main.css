@@ -115,7 +115,7 @@ body {
   bottom: 0;
   font-family: "Varela Round";
   height: 4vh;
-  position: fixed !important;
+  position: absolute !important;
   z-index: 1;
 }
 
