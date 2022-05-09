@@ -1,5 +1,3 @@
-export { default as ModalAlert } from './Modal/modal'
-export { default as NavHero } from './NavHero/nav'
 export { default as MotionBox } from './MotionBox/Motionbox'
 export { default as Loading } from './Loading'
 export { default as Header } from './Header'

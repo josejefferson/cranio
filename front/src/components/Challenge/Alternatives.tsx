@@ -1,9 +1,5 @@
 import styles from '@/styles/Alternatives.module.css'
-import { Data } from '@/interface/index'
-interface IprosAlternatives extends Data {
-	selected: any;
-  handleClick: any
-}
+import { IprosAlternatives } from '@/interface/index'
 
 export default function Alternatives({ image, alternatives, selected, handleClick }: IprosAlternatives) {
 	return (

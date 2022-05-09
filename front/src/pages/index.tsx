@@ -8,18 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Carousel from 'react-bootstrap/Carousel'
 import { useLoadingContext } from '@/contexts/loading'
 import Marquee from 'react-fast-marquee'
-
-type Props = {
-  ads: IAds[]
-  challenges: any
-}
-
-type IAds = {
-  _id: string
-  title?: string
-  description?: string
-  image: string
-}
+import { IAds, Props } from '../interface'
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data: ads } = await axios.get<IAds>('/ad/active')
@@ -67,7 +56,7 @@ const Home: NextPage<Props> = (props) => {
     })
   }
 
-  const handleDoubleClick = (event: any) => {
+  const handleDoubleClick = () => {
     loading(true)
     console.log('Abrindo login...')
     router.push('/login').then(() => {
@@ -80,8 +69,6 @@ const Home: NextPage<Props> = (props) => {
       <Head>
         <title>O Crânio</title>
       </Head>
-
-      {/* <NavHero /> */}
 
       <Carousel
         className="ads-carousel"
@@ -131,7 +118,7 @@ const Home: NextPage<Props> = (props) => {
         })}
       </Carousel>
       <Marquee
-        style={{ color: 'white', fontSize: '2vh' }}
+        style={{ color: 'white', fontSize: '2vh', backgroundColor: '#2c373d4d' }}
         speed={100}
         gradient={false}
       >
@@ -139,14 +126,14 @@ const Home: NextPage<Props> = (props) => {
           <>
             {props.challenges.totalChallenges} desafios disponíveis:&nbsp;
             {Object.entries(props.challenges.challengesPerCourse).map(([course, count]: any) => `${course} (${count})`).join(' - ')}
-            <div style={{ width: '20vh' }}></div>
+            <div style={{ width: '20vh' }} />
           </>
         ) : (
           <>Nenhum desafio aberto no momento. Por favor, volte mais tarde</>
         )}
 
         Pronto para um desafio? Aperte qualquer tecla...
-        <div style={{ width: '20vh' }}></div>
+        <div style={{ width: '20vh' }} />
       </Marquee>
     </Box>
   )

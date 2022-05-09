@@ -1,11 +1,7 @@
 import styles from '@/styles/Question.module.css'
-import { Data } from '@/interface/index'
+import { Ianswer } from '@/interface/index'
 import { Text } from '@chakra-ui/react'
 import Timer from '@/components/Challenge/Timer'
-interface Ianswer extends Data {
-	active?: boolean
-	timeOutCallback?: Function
-}
 
 export default function Question({
 	time,
