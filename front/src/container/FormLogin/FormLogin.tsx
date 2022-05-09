@@ -15,7 +15,7 @@ import _Swal from 'sweetalert2'
 import swalReact from 'sweetalert2-react-content'
 const Swal = swalReact(_Swal)
 import axios from '@/api/index'
-import { Header, ModalAlert } from '@/components/index'
+import { Header } from '@/components/index'
 import { Iuser } from '@/interface/index'
 import { useLoadingContext } from '@/contexts/loading'
 
@@ -51,7 +51,7 @@ export default function LoginChallenge(): JSX.Element {
         title: `Você é ${data.shortName}?`,
         html: `Você digitou a matrícula <b>${data.registration}</b> correspondente a(o) aluno(a) ` +
           `<b>${data.shortName}</b> do curso de <b>${data.courseName}</b>.<br><br>Caso esteja correta, ` +
-          'pressione *<br>Se você deseja corrigir, pressione #',
+          'pressione <b>*</b><br>Se você deseja corrigir, pressione <b>#</b>',
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: '* Confirmar',
