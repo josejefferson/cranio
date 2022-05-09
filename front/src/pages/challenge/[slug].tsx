@@ -2,6 +2,7 @@ import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
+import ReactAudioPlayer from 'react-audio-player';
 import _Swal from 'sweetalert2'
 import swalReact from 'sweetalert2-react-content'
 const Swal = swalReact(_Swal)
@@ -14,6 +15,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
   const { slug, test } = router.query
   const [active, setActive] = useState(true)
+  const [music, setMusic] = useState(`/music/CountDown.mp3`)
   const [answered, setAnswered] = useState(false)
   const [selectedAlternatives, setSelectedAlternatives]: [number[], Function] = useState([])
 
@@ -21,21 +23,20 @@ const Challenge: NextPage<Props> = ({ api }) => {
   const answer = useCallback(async (key: any) => {
     // Mensagens
     const STATUS: any = {
-      CORRECT: ['Parabéns, você acertou!', 'Você respondeu corretamente! Continue assim.', 'success'],
-      INCORRECT: ['Que pena, resposta errada!', 'Não fique triste, você deu o seu melhor! Volte amanhã.', 'error'],
-      TIMEOUT: ['Tempo esgotado!', 'Tic tac, o tempo acabou! Infelizmente você demorou muito e o relógio não parou. Amanhã você terá uma nova chance!', null, '/img/alarm.gif']
+      CORRECT: ['Parabéns, você acertou!', 'Você respondeu corretamente! Continue assim.', 'success', '/music/Suspense.mp3'],
+      INCORRECT: ['Que pena, resposta errada!', 'Não fique triste, você deu o seu melhor! Volte amanhã.', 'error', 'http://goldfirestudios.com/proj/howlerjs/sound.ogg'],
+      TIMEOUT: ['Tempo esgotado!', 'Tic tac, o tempo acabou! Infelizmente você demorou muito e o relógio não parou. Amanhã você terá uma nova chance!', null, 'http://goldfirestudios.com/proj/howlerjs/sound.ogg', '/img/alarm.gif']
     }
 
     setActive(false)
     setAnswered(true)
-
     // Que rufem os tambores...
+    setMusic('http://goldfirestudios.com/proj/howlerjs/sound.ogg')
     if (key) Swal.fire({
       imageUrl: '/img/drum.gif',
       text: 'Que rufem os tambores...',
       showConfirmButton: false
     })
-
     try {
       if (key) {
         var { data } = await axios.post('/challenge/check', {
@@ -48,22 +49,24 @@ const Challenge: NextPage<Props> = ({ api }) => {
       }
 
       // Exibe mensagem de sucesso/erro
-      Swal.fire({
-        title: STATUS[data.status][0],
-        text: data.message || STATUS[data.status][1],
-        icon: STATUS[data.status][2],
-        imageUrl: STATUS[data.status][3],
-        imageHeight: 128,
-        showConfirmButton: false
-      })
-
-      // Redireciona
-      if (!test) setTimeout(() => {
-        console.log('Redirecionando...')
-        router.push('/').then(() => {
-          Swal.close()
+      setTimeout(() => {
+        setMusic(STATUS[data.status][3])
+        Swal.fire({
+          title: STATUS[data.status][0],
+          text: data.message || STATUS[data.status][1],
+          icon: STATUS[data.status][2],
+          imageUrl: STATUS[data.status][4],
+          imageHeight: 128,
+          showConfirmButton: false
         })
-      }, 5000)
+        // Redireciona
+        if (!test) setTimeout(() => {
+          console.log('Redirecionando...')
+          router.push('/').then(() => {
+            Swal.close()
+          })
+        }, 5000)
+      }, 1000)
     } catch (err) {
       console.log(err)
     } finally {
@@ -131,6 +134,13 @@ const Challenge: NextPage<Props> = ({ api }) => {
           handleClick={handleClick}
         />
       </div>
+      <ReactAudioPlayer
+        src={music}
+        autoPlay
+      // preload
+      // onLoad={}
+      // loop
+      />
     </React.Fragment>
   )
 }
