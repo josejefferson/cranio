@@ -21,9 +21,10 @@ import { useLoadingContext } from '@/contexts/loading'
 
 export default function LoginChallenge(): JSX.Element {
   const router = useRouter()
+  const { test } = router.query
   const loading = useLoadingContext()
 
-  const TIME: number = 60
+  const TIME: number = 30
   const [registration, setRegistration] = React.useState('')
   const [time, setTime] = React.useState(TIME)
   const [isActive, setIsActive] = React.useState(true)
@@ -31,19 +32,21 @@ export default function LoginChallenge(): JSX.Element {
 
   React.useEffect(() => {
     if (isActive && time > 0) {
-      setTimeout(() => {
+      var timer = setTimeout(() => {
         setTime(time - 1)
       }, 1000)
     } else if (isActive && time === 0) {
-      loading(true, 'Carregando anúncios')
-      router.push('/').then(() => loading(false))
+      if (!test) loading(true, 'Carregando anúncios')
+      if (!test) router.push('/').then(() => loading(false))
       setIsActive(false)
     }
-  }, [isActive, time, router, loading])
+    return () => clearTimeout(timer)
+  }, [isActive, time, router, loading, test])
 
   async function onSubmitHandler(event?: React.FormEvent): Promise<void> {
     event?.preventDefault()
     try {
+      setIsActive(false)
       setSearchLoading(true)
       const { data } = await axios.get<Iuser>(`/student/find/${registration}`)
 
@@ -60,7 +63,11 @@ export default function LoginChallenge(): JSX.Element {
         timerProgressBar: true
       })
 
-      if (!isConfirmed) return
+      if (!isConfirmed) {
+        setIsActive(true)
+        return
+      }
+
       if (data.canPlayToday) {
         loading(true, 'Procurando um desafio')
         router.push({
@@ -103,6 +110,7 @@ export default function LoginChallenge(): JSX.Element {
       if (event.key === '*') onSubmitHandler()
       if (event.key === '#') setRegistration('')
     }
+    setTime(TIME)
   }
 
   // Eventos do teclado

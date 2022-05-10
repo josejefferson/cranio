@@ -8,8 +8,10 @@
 }
 
 * {
+  -webkit-tap-highlight-color: transparent;
   letter-spacing: initial !important;
   line-height: initial !important;
+  word-break: break-word !important;
 }
 
 body {

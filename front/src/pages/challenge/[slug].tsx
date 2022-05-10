@@ -24,8 +24,8 @@ const Challenge: NextPage<Props> = ({ api }) => {
     // Mensagens
     const STATUS: any = {
       CORRECT: ['Parabéns, você acertou!', 'Você respondeu corretamente! Continue assim.', 'success', '/music/Suspense.mp3'],
-      INCORRECT: ['Que pena, resposta errada!', 'Não fique triste, você deu o seu melhor! Volte amanhã.', 'error', 'http://goldfirestudios.com/proj/howlerjs/sound.ogg'],
-      TIMEOUT: ['Tempo esgotado!', 'Tic tac, o tempo acabou! Infelizmente você demorou muito e o relógio não parou. Amanhã você terá uma nova chance!', null, 'http://goldfirestudios.com/proj/howlerjs/sound.ogg', '/img/alarm.gif']
+      INCORRECT: ['Que pena, resposta errada!', 'Não fique triste, você deu o seu melhor! Volte amanhã.', 'error', 'https://goldfirestudios.com/proj/howlerjs/sound.ogg'],
+      TIMEOUT: ['Tempo esgotado!', 'Tic tac, o tempo acabou! Infelizmente você demorou muito e o relógio não parou. Amanhã você terá uma nova chance!', null, 'https://goldfirestudios.com/proj/howlerjs/sound.ogg', '/img/alarm.gif']
     }
 
     setActive(false)
@@ -59,17 +59,23 @@ const Challenge: NextPage<Props> = ({ api }) => {
           imageHeight: 128,
           showConfirmButton: false
         })
-        // Redireciona
-        if (!test) setTimeout(() => {
-          console.log('Redirecionando...')
-          router.push('/').then(() => {
-            Swal.close()
-          })
-        }, 5000)
+        
       }, key ? 2000 : 0)
     } catch (err) {
       console.log(err)
+      Swal.fire({
+        title: 'Ocorreu um erro',
+        icon: 'error',
+        showConfirmButton: false
+      })
     } finally {
+      // Redireciona
+      if (!test) setTimeout(() => {
+        console.log('Redirecionando...')
+        router.push('/').then(() => {
+          Swal.close()
+        })
+      }, 5000)
       if (test) setAnswered(false)
       if (test) setSelectedAlternatives([])
     }

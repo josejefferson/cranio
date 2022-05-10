@@ -1,6 +1,5 @@
 .questionContainer {
   background-color: var(--color-highlight);
-  height: 20vh;
   box-shadow: var(--shadow);
   display: flex;
   color: white;
@@ -24,14 +23,15 @@
 
 .question {
   font-family: "Varela Round";
+  flex: 1;
 }
 
 .createdBy {
   font-family: "Varela Round";
-  flex: 1;
   display: flex;
   align-items: flex-end;
   font-size: 1vh;
+  margin-top: 2vh;
 }
 
 .timer {
@@ -40,6 +40,8 @@
   justify-content: center;
   height: 100%;
   position: relative;
+  max-height: 17vh;
+  align-self: center;
 }
 
 .timerText {
@@ -47,7 +49,7 @@
   color: white;
   display: flex;
   font-family: "Days One";
-  font-size: 7vh;
+  font-size: 6vh;
   height: 100%;
   justify-content: center;
   left: 0;

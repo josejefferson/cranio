@@ -23,7 +23,7 @@ export function useLoadingContext() {
   const [text, setText] = textState
 
   return (newLoadingState: boolean, newText?: string) => {
-    setText(newText)
+    if (newLoadingState) setText(newText)
     setLoading(newLoadingState)
   }
 }
