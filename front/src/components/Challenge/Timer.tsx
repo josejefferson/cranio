@@ -1,4 +1,4 @@
-import styles from '@/styles/Question.module.css'
+import styles from '@/styles/Timer.module.css'
 import 'react-circular-progressbar/dist/styles.css'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import { useState, useEffect } from 'react'
@@ -25,9 +25,8 @@ export default function Timer({ time, active, timeOutCallback }: any) {
   const color = chroma.scale(['#ff595e', '#ffca3a', '#8ac926']).mode('hsl')(timer / time)
 
   return (
-    <>
+    <div className={styles.timer}>
       <CircularProgressbar
-        className={styles.test}
         styles={buildStyles({
           trailColor: 'transparent',
           pathColor: color.toString()
@@ -40,6 +39,6 @@ export default function Timer({ time, active, timeOutCallback }: any) {
       >
         {timer}
       </div>
-    </>
+    </div>
   )
 }

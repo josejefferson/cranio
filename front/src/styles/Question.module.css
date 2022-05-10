@@ -41,35 +41,8 @@
   height: 100%;
   position: relative;
   max-height: 17vh;
+  width: 17vh;
   align-self: center;
-}
-
-.timerText {
-  align-items: center;
-  color: white;
-  display: flex;
-  font-family: "Days One";
-  font-size: 6vh;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  top: 0;
-  transform: scale(1);
-  transition: transform 0.2s ease;
-  width: 100%;
-}
-
-.timerText.scale {
-  transform: scale(1.2);
-}
-
-.timerText.timeEnding {
-  color: var(--color-arc);
-}
-
-.test {
-  height: 100%;
 }
 
 .question div {

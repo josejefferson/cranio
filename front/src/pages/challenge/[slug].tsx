@@ -10,14 +10,16 @@ import axios from '@/api/index'
 import { Header, Question, Alternatives } from '@/components/index'
 import { Props } from '@/interface/index'
 import Head from 'next/head'
+import { Preparation } from '@/components/index'
 
 const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
   const { slug, test } = router.query
-  const [active, setActive] = useState(true)
+  const [active, setActive] = useState(false)
   const [music, setMusic] = useState('/music/CountDown.mp3')
   const [answered, setAnswered] = useState(false)
   const [selectedAlternatives, setSelectedAlternatives]: [number[], Function] = useState([])
+  const [started, setStarted] = useState(false)
 
   // Responder pergunta
   const answer = useCallback(async (key: any) => {
@@ -83,7 +85,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
 
   // Quando a tecla for apertada
   const handleKeyDown = (e: any) => {
-    if (answered) return
+    if (answered || !started) return
     const key = parseInt(e.key)
     if (key > api.alternatives.length) return
     if (key) setSelectedAlternatives([...selectedAlternatives, key])
@@ -91,7 +93,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
 
   // Quando a tecla for desapertada
   const handleKeyUp = (e: any) => {
-    if (answered) return
+    if (answered || !started) return
     const key = parseInt(e.key)
     if (key > api.alternatives.length) return
     const alternatives = selectedAlternatives.filter(a => a !== key)
@@ -101,6 +103,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
 
   // Clique do mouse
   const handleClick = (alternativeIndex: any) => {
+    if (!started) return
     answer(alternativeIndex + 1)
   }
 
@@ -121,6 +124,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
         <link rel="preload" as="image" href="/img/drum.gif" />
         <link rel="preload" as="image" href="/img/alarm.gif" />
       </Head>
+      <Preparation {...api} callback={() => { setStarted(true); setActive(true) }} />
       <div
         style={{
           height: '100vh',
@@ -142,7 +146,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
         />
       </div>
       <ReactAudioPlayer
-        src={music}
+        src={started ? music : ''}
         autoPlay
       // preload
       // onLoad={}
