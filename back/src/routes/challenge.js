@@ -16,9 +16,11 @@ router.get('/active', asyncRoutes(async (req, res) => {
 	let challengesPerCourse = {}
 
 	for (const challenge of challenges) {
-		for (const course of challenge.course) {
-			challengesPerCourse[course] = challengesPerCourse[course] || 0
-			challengesPerCourse[course]++
+		if (!challenge.courseName) continue
+		for (let courseName of challenge.courseName) {
+			courseName = courseName.trim()
+			challengesPerCourse[courseName] = challengesPerCourse[courseName] || 0
+			challengesPerCourse[courseName]++
 		}
 	}
 
