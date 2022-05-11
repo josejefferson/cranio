@@ -4,6 +4,7 @@
   --color-buttons: #fff3b0;
   --color-arc: #e09f3e;
   --color-background: #335c67;
+  --color-background-preparation: #0e2a47;
   --shadow: rgba(0, 0, 0, 0.25) 0 4px 4px;
 }
 
@@ -11,6 +12,7 @@
   -webkit-tap-highlight-color: transparent;
   letter-spacing: initial !important;
   line-height: initial !important;
+  user-select: none;
   word-break: break-word !important;
 }
 

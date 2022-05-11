@@ -8,11 +8,15 @@ export default function Question({
 	topic,
 	question,
 	createdBy,
+	preparationTime,
 	active,
 	timeOutCallback
 }: Ianswer) {
 	return (
-		<div className={styles.questionContainer}>
+		<div
+			className={styles.questionContainer}
+			style={{ animationDelay: `${preparationTime + 1}s` }}
+		>
 			<div className={styles.details}>
 				<div className={styles.topic}>{topic}</div>
 				<div className={styles.question}>{question}</div>
@@ -22,6 +26,12 @@ export default function Question({
 			</div>
 			<div className={styles.timer}>
 				<Timer {...({ time, active, timeOutCallback })} />
+			</div>
+			<div className={styles.rippleBackground}>
+				<div className={`${styles.circle} ${styles.xxlarge} ${styles.shade1}`}></div>
+				<div className={`${styles.circle} ${styles.xlarge} ${styles.shade2}`}></div>
+				<div className={`${styles.circle} ${styles.large} ${styles.shade3}`}></div>
+				<div className={`${styles.circle} ${styles.medium} ${styles.shade4}`}></div>
 			</div>
 		</div>
 	)

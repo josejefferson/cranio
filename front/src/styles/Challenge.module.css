@@ -1,0 +1,93 @@
+.container {
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.waveWrapper {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.waveWrapperInner {
+  background-image: linear-gradient(to top, #86377b 20%, #27273c 80%);
+  bottom: -1px;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}
+
+.bgTop {
+  opacity: 0.5;
+  z-index: 15;
+}
+
+.bgMiddle {
+  opacity: 0.75;
+  z-index: 10;
+}
+
+.bgBottom {
+  z-index: 5;
+}
+
+.wave {
+  background-position: 0 bottom;
+  background-repeat: repeat no-repeat;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  transform-origin: center bottom;
+  width: 200%;
+}
+
+.waveTop {
+  background-image: url("/img/wave-top.png");
+  background-size: 50% 100px;
+}
+
+.waveAnimation .waveTop {
+  -webkit-animation-delay: 1s;
+  -webkit-animation: move-wave 3s;
+  animation-delay: 1s;
+  animation: move-wave 3s;
+}
+
+.waveMiddle {
+  background-image: url("/img/wave-mid.png");
+  background-size: 50% 120px;
+}
+
+.waveAnimation .waveMiddle {
+  animation: moveWave 10s linear infinite;
+}
+
+.waveBottom {
+  background-image: url("/img/wave-bot.png");
+  background-size: 50% 100px;
+}
+
+.waveAnimation .waveBottom {
+  animation: moveWave 15s linear infinite;
+}
+
+@keyframes moveWave {
+  0% {
+    transform: translateX(0) translateZ(0) scaleY(1);
+  }
+  50% {
+    transform: translateX(-25%) translateZ(0) scaleY(0.55);
+  }
+  100% {
+    transform: translateX(-50%) translateZ(0) scaleY(1);
+  }
+}

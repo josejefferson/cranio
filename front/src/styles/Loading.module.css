@@ -1,19 +1,19 @@
 .loadingScreen {
   align-items: center;
+  backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
-  justify-content: center;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10100;
   flex-direction: column;
-  pointer-events: none;
+  height: 100%;
+  justify-content: center;
+  left: 0;
   opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
   transition: opacity 0.15s ease;
-  backdrop-filter: blur(10px);
+  width: 100%;
+  z-index: 10100;
 }
 
 .loadingScreen.visible {
@@ -22,21 +22,21 @@
 }
 
 .loadingScreenText {
-  margin-bottom: 20px;
-  font-size: 8vmin;
   color: white;
+  font-size: 8vmin;
+  margin-bottom: 20px;
 }
 
 .loadingScreenIcon {
-  animation: sandClock 3s ease infinite;
-  font-size: 25vmin;
-  border: white 2vmin solid;
-  width: 40vmin;
-  height: 40vmin;
-  display: flex;
   align-items: center;
-  justify-content: center;
+  animation: sandClock 3s ease infinite;
   border-radius: 50%;
+  border: white 2vmin solid;
+  display: flex;
+  font-size: 25vmin;
+  height: 40vmin;
+  justify-content: center;
+  width: 40vmin;
 }
 
 .loadingScreenIcon .loadingScreenIconImg {

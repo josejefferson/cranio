@@ -11,6 +11,7 @@ import { Header, Question, Alternatives } from '@/components/index'
 import { Props } from '@/interface/index'
 import Head from 'next/head'
 import { Preparation } from '@/components/index'
+import styles from '@/styles/Challenge.module.css'
 
 const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
@@ -61,7 +62,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
           imageHeight: 128,
           showConfirmButton: false
         })
-        
+
       }, key ? 2000 : 0)
     } catch (err) {
       console.log(err)
@@ -125,13 +126,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
         <link rel="preload" as="image" href="/img/alarm.gif" />
       </Head>
       <Preparation {...api} callback={() => { setStarted(true); setActive(true) }} />
-      <div
-        style={{
-          height: '100vh',
-          maxHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
+      <div className={styles.container}>
         <Header />
         <Question
           {...api}
@@ -145,12 +140,22 @@ const Challenge: NextPage<Props> = ({ api }) => {
           handleClick={handleClick}
         />
       </div>
+
+      <div className={`${styles.waveWrapper} ${styles.waveAnimation}`}>
+        <div className={`${styles.waveWrapperInner} ${styles.bgTop}`}>
+          <div className={`${styles.wave} ${styles.waveTop}`}></div>
+        </div>
+        <div className={`${styles.waveWrapperInner} ${styles.bgMiddle}`}>
+          <div className={`${styles.wave} ${styles.waveMiddle}`}></div>
+        </div>
+        <div className={`${styles.waveWrapperInner} ${styles.bgBottom}`}>
+          <div className={`${styles.wave} ${styles.waveBottom}`}></div>
+        </div>
+      </div>
+
       <ReactAudioPlayer
         src={started ? music : ''}
         autoPlay
-      // preload
-      // onLoad={}
-      // loop
       />
     </React.Fragment>
   )

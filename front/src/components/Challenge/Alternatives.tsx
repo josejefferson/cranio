@@ -4,7 +4,7 @@ import { IprosAlternatives } from '@/interface/index'
 export default function Alternatives({ image, alternatives, preparationTime, active, selected, handleClick }: IprosAlternatives) {
 	return (
 		<div className={`${styles.body} ${!active ? styles.end : ''}`}>
-			<div className={styles.image} hidden={!image}>
+			<div className={styles.image} hidden={!image} style={{ animationDelay: `${preparationTime + 1}s` }}>
 				<img src={image} alt="" hidden={!image} />
 			</div>
 			<div className={styles.alternatives}>

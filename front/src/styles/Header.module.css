@@ -7,13 +7,14 @@
   justify-content: center;
   padding: 1vh;
   width: 100%;
+  z-index: 2;
 }
 
 .image {
-  width: 5vh;
   height: 100%;
   margin-right: 2vh;
   position: relative;
+  width: 5vh;
 }
 
 .image img {

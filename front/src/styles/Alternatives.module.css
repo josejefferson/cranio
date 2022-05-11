@@ -6,10 +6,13 @@
 }
 
 .image {
-  margin: 2vh;
-  overflow: hidden;
-  max-height: 25vh;
+  animation-delay: inherit;
+  animation-fill-mode: both !important;
+  animation: zoom 0.2s ease;
   height: 100%;
+  margin: 2vh;
+  max-height: 25vh;
+  overflow: hidden;
 }
 
 .image img {
@@ -23,15 +26,15 @@
   flex-direction: column;
   flex: 1;
   gap: 2vh;
+  justify-content: center;
   padding: 1vh 2vh;
   width: 100%;
-  justify-content: center;
 }
 
 .alternative {
   align-items: center;
   animation-fill-mode: both, none !important;
-  animation: transform 0.3s ease, scale 5s ease infinite;
+  animation: slide 0.3s ease, wave 5s ease infinite;
   background-color: var(--color-buttons);
   border-radius: 2vh;
   box-shadow: var(--shadow);
@@ -67,14 +70,19 @@
   font-size: 2vh;
 }
 
-@keyframes transform {
+@keyframes slide {
   from {
     opacity: 0;
     transform: translateX(-110%);
   }
+  
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-@keyframes scale {
+@keyframes wave {
   from,
   94%,
   to {
@@ -83,5 +91,15 @@
 
   97% {
     transform: scale(1.01);
+  }
+}
+
+@keyframes zoom {
+  from,
+  to {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
   }
 }
