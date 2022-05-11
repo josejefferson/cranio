@@ -8,6 +8,7 @@ const schema = new mongoose.Schema({
 	question: { type: String, required: true },
 	topic: { type: String, required: true },
 	course: { type: [Number] },
+	courseName: { type: [String] },
 	image: { type: String },
 	time: { type: Number, default: 60 },
 	preparationTime: { type: Number, default: 3 },
