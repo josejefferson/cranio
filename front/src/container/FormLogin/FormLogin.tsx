@@ -75,7 +75,7 @@ export default function LoginChallenge(): JSX.Element {
           query: { slug: data.registration }
         }).then(() => loading(false))
       } else {
-        Swal.fire({
+        await Swal.fire({
           title: 'Ops, você já jogou hoje!',
           text: 'Por favor, volte amanhã para mais desafios',
           icon: 'info',
@@ -83,9 +83,10 @@ export default function LoginChallenge(): JSX.Element {
           timer: 3000,
           timerProgressBar: true
         })
+        setIsActive(true)
       }
     } catch (error: any) {
-      Swal.fire({
+      await Swal.fire({
         title: 'Ops, estudante não encontrado!',
         text: 'Verifique se a sua matrícula está correta',
         icon: 'info',
@@ -93,6 +94,7 @@ export default function LoginChallenge(): JSX.Element {
         timer: 3000,
         timerProgressBar: true
       })
+      setIsActive(true)
     } finally {
       setSearchLoading(false)
     }
