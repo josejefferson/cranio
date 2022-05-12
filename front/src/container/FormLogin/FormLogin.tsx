@@ -7,24 +7,28 @@ import {
   Input,
   Stack,
   Progress,
-  Text
+  Text,
+  Center,
+  Box,
+  Container
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { BsAsterisk } from 'react-icons/bs'
 import _Swal from 'sweetalert2'
 import swalReact from 'sweetalert2-react-content'
-const Swal = swalReact(_Swal)
+import QRCode from "react-qr-code";
 import axios from '@/api/index'
 import { Header } from '@/components/index'
 import { Iuser } from '@/interface/index'
 import { useLoadingContext } from '@/contexts/loading'
 
 export default function LoginChallenge(): JSX.Element {
+  const Swal = swalReact(_Swal)
   const router = useRouter()
   const { test } = router.query
   const loading = useLoadingContext()
 
-  const TIME: number = 30
+  const TIME: number = 60
   const [registration, setRegistration] = React.useState('')
   const [time, setTime] = React.useState(TIME)
   const [isActive, setIsActive] = React.useState(true)
@@ -127,23 +131,27 @@ export default function LoginChallenge(): JSX.Element {
     <>
       <Header />
       <Flex
-        minH={'100vh'}
+        minH={'73vh'}
+        h='100%'
         align={'center'}
         justify={'center'}
-        bg="gray.600"
         overflow={'hidden'}
+        direction='column'
+        mb={10}
       >
         <Stack
+          id="loginAnimation"
           as="form"
           spacing={4}
-          w={'full'}
+          w={'fit-content'}
           maxW={'md'}
           bg="gray.800"
           rounded={'xl'}
           boxShadow={'lg'}
           p={6}
           onSubmit={onSubmitHandler}
-          my={12}>
+          mt={7}
+        >
           <Heading lineHeight={1.1} color="white" fontSize={{ base: '2xl', md: '3xl' }}>
             Digite sua matrícula
           </Heading>
@@ -179,6 +187,22 @@ export default function LoginChallenge(): JSX.Element {
           </Stack>
           <Progress max={TIME} value={TIME - time} hasStripe colorScheme="green" rounded="base" className="progress" />
         </Stack>
+        <Container as='footer' mt={1}>
+          <Text color="white" fontSize='xl' mb={7} textAlign='center'>
+            Feitor por Jefferson & Kayo
+            Qr code para sugestões:
+
+          </Text>
+          <Center>
+            <QRCode
+              title='Sugestão para o Quiz'
+              value='https://forms.gle/hMRSsqDB7yiTQb1j8'
+              style={{
+                bottom: '0',
+              }}
+            />
+          </Center>
+        </Container>
       </Flex>
     </>
   )

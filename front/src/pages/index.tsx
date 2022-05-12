@@ -3,12 +3,13 @@ import type { NextPage, GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import axios from '../api/'
-import { Box, Heading, chakra } from '@chakra-ui/react'
+import { Box, Heading, chakra, Container, Text, Center, Flex, Image } from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Carousel from 'react-bootstrap/Carousel'
 import { useLoadingContext } from '@/contexts/loading'
 import Marquee from 'react-fast-marquee'
 import { IAds, Props } from '../interface'
+import QRCode from 'react-qr-code'
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data: ads } = await axios.get<IAds>('/ad/active')
@@ -75,7 +76,7 @@ const Home: NextPage<Props> = (props) => {
         pause={false}
         controls={false}
         interval={10000}
-        onClick={handleClick}
+      // onClick={handleClick}
       >
         {props.ads?.map((ad: IAds, index: number) => {
           return (
@@ -116,6 +117,39 @@ const Home: NextPage<Props> = (props) => {
             </Carousel.Item>
           )
         })}
+        <Carousel.Item style={{
+          backgroundImage: 'url("/img/preparation-background.svg")',
+          backgroundSize: 'cover'
+        }}>
+          <>
+            <Center alignItems={'center'} mt={7}>
+              <QRCode
+                title='Sugestão para o Quiz'
+                value='https://forms.gle/hMRSsqDB7yiTQb1j8'
+              />
+            </Center>
+            {/* <img src='/img/QRCode.png' alt='QRCode' width='150px' height='150px' /> */}
+            <Carousel.Caption>
+              <Heading
+                py={2}
+                textAlign="center"
+                fontWeight="bold"
+                textTransform="uppercase"
+                color="white"
+                letterSpacing={1}
+              >
+                Feitor por Jefferson & Kayo
+              </Heading>
+              <chakra.span
+                fontWeight="bold"
+                color="gray.200"
+                textAlign={'center'}
+              >
+                Qr code para sugestões:
+              </chakra.span>
+            </Carousel.Caption>
+          </>
+        </Carousel.Item>
       </Carousel>
       <Marquee
         style={{ color: 'white', fontSize: '2vh', backgroundColor: '#2c373d4d' }}
