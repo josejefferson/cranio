@@ -143,7 +143,7 @@ export default function LoginChallenge(): JSX.Element {
           id="loginAnimation"
           as="form"
           spacing={4}
-          w={'fit-content'}
+          w={'full'}
           maxW={'md'}
           bg="gray.800"
           rounded={'xl'}
