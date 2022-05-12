@@ -76,7 +76,7 @@ const Home: NextPage<Props> = (props) => {
         pause={false}
         controls={false}
         interval={10000}
-      // onClick={handleClick}
+        onClick={handleClick}
       >
         {props.ads?.map((ad: IAds, index: number) => {
           return (
@@ -138,7 +138,7 @@ const Home: NextPage<Props> = (props) => {
                 color="white"
                 letterSpacing={1}
               >
-                Feitor por Jefferson & Kayo
+                Feito por Jefferson & Kayo
               </Heading>
               <chakra.span
                 fontWeight="bold"
