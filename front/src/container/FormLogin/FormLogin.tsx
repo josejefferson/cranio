@@ -189,7 +189,7 @@ export default function LoginChallenge(): JSX.Element {
         </Stack>
         <Container as='footer' mt={1}>
           <Text color="white" fontSize='xl' mb={7} textAlign='center'>
-            Feitor por Jefferson & Kayo
+            Feito por Jefferson & Kayo
             Qr code para sugestões:
 
           </Text>
