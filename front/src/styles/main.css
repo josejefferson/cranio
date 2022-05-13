@@ -139,3 +139,19 @@ body {
       opacity: 1;
   }
 }
+
+.swal2-popup {
+  border-radius: 0.5em !important;
+}
+
+@media (min-width: 720px) {
+  .swal2-popup {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (min-width: 1080px) {
+  .swal2-popup {
+    font-size: 2rem !important;
+  }
+}

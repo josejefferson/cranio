@@ -48,7 +48,7 @@ const Home: NextPage<Props> = (props) => {
   })
 
   const handleKeyUp = (event: any) => {
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+    if (event.altKey || event.ctrlKey || event.metaKey) return
     const KEYS = '0123456789*# '.split('')
     if (!KEYS.includes(event.key)) return
     loading(true)

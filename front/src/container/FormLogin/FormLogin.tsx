@@ -106,7 +106,7 @@ export default function LoginChallenge(): JSX.Element {
 
   // Tecla pressionada
   const handleKeyUp = (event: any) => {
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+    if (event.altKey || event.ctrlKey || event.metaKey) return
     if (Swal.isVisible()) {
       if (event.key === '*') Swal.clickConfirm()
       if (event.key === '#') {

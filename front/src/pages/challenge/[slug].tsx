@@ -76,7 +76,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
           text: data.message || STATUS[data.status][1],
           icon: STATUS[data.status][2],
           imageUrl: STATUS[data.status][4],
-          imageHeight: 128,
+          imageHeight: '8em',
           showConfirmButton: false
         })
 
@@ -104,7 +104,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
   // Quando a tecla for apertada
   const handleKeyDown = (e: any) => {
     if (answered || !started) return
-    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return
+    if (e.altKey || e.ctrlKey || e.metaKey) return
     const key = parseInt(e.key)
     if (key > api.alternatives.length) return
     if (key) setSelectedAlternatives([...selectedAlternatives, key])
@@ -113,7 +113,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
   // Quando a tecla for desapertada
   const handleKeyUp = (e: any) => {
     if (answered || !started) return
-    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return
+    if (e.altKey || e.ctrlKey || e.metaKey) return
     const key = parseInt(e.key)
     if (key > api.alternatives.length) return
     const alternatives = selectedAlternatives.filter(a => a !== key)
