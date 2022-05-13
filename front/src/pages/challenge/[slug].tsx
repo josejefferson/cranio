@@ -13,11 +13,11 @@ import Head from 'next/head'
 import { Preparation } from '@/components/index'
 import styles from '@/styles/Challenge.module.css'
 
-function getMusic(time) {
+function getMusic(time:any) {
   const random = Math.floor(Math.random() * 3)
   const musicTime = getTime(time)
 
-  function getTime(time) {
+  function getTime(time:any) {
     if (time <= 5) return 5
     else if (time > 5 && time <= 10) return 10
     else if (time > 10 && time <= 20) return 20
@@ -104,7 +104,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
   // Quando a tecla for apertada
   const handleKeyDown = (e: any) => {
     if (answered || !started) return
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return
     const key = parseInt(e.key)
     if (key > api.alternatives.length) return
     if (key) setSelectedAlternatives([...selectedAlternatives, key])
@@ -113,7 +113,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
   // Quando a tecla for desapertada
   const handleKeyUp = (e: any) => {
     if (answered || !started) return
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return
     const key = parseInt(e.key)
     if (key > api.alternatives.length) return
     const alternatives = selectedAlternatives.filter(a => a !== key)
