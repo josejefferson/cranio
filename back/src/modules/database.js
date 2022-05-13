@@ -20,15 +20,7 @@ function mongoConnect() {
 
 mongoConnect()
 
-const models = [
-	require('../models/Ad'),
-	require('../models/Challenge'),
-	require('../models/Log'),
-	require('../models/Student')
-]
-
-for (const model of models) {
-	// model.schema.post('save', (doc) => {
-	// 	console.log('salvo ' + doc._id)
-	// })
-}
+require('../models/Ad')
+require('../models/Challenge')
+require('../models/Log')
+require('../models/Student')

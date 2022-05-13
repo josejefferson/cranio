@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const sendChallengeWonEmail = require('../modules/email/challenge-won')
+const dbLogger = require('../helpers/db-logger')
 
 const options = { timestamps: true }
 
@@ -61,5 +62,7 @@ schema.methods.won = function (student) {
 	this.active = false
 	return this.save()
 }
+
+dbLogger(schema, 'Challenge')
 
 module.exports = mongoose.model('Challenge', schema)

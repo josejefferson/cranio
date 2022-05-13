@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const dbLogger = require('../helpers/db-logger')
 
 const options = {
 	timestamps: true,
@@ -40,5 +41,7 @@ schema.methods.playedToday = function () {
 	this.canPlayIn = canPlayIn
 	return this.save()
 }
+
+dbLogger(schema, 'Student')
 
 module.exports = mongoose.model('Student', schema)

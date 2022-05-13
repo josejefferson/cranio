@@ -16,15 +16,18 @@ class Logs {
 			this.logs.unshift(...logs)
 			return logs
 		}).catch((err) => {
+			console.error(err)
 			return err
 		})
 	}
 
-	async save() {
+	save() {
+		if (!this.logsForUpload.length) return false
 		return Log.create(this.logsForUpload).then(() => {
 			this.logsForUpload = []
 			return true
 		}).catch((err) => {
+			console.error(err)
 			return err
 		})
 	}

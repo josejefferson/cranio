@@ -16,5 +16,5 @@ function Logger(...args) {
 	return log
 }
 
-Logger.getLogs = Logs.getLogs
+Logger.getLogs = Logs.getLogs.bind(Logs)
 module.exports = Logger
