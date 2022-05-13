@@ -39,11 +39,7 @@ function Pill({ level, children }: any) {
 }
 
 function App({ logs }: any) {
-  console.log(logs)
-  const data = React.useMemo(
-    () => logs,
-    [logs]
-  )
+  const data = React.useMemo(() => logs, [logs])
 
   const columns = React.useMemo(
     () => [
