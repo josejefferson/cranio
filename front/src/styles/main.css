@@ -126,3 +126,16 @@ body {
 .progress > div {
   transition: width 1s linear;
 }
+
+#loginAnimation {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: loginAnimation 0.3s forwards;
+}
+
+@keyframes loginAnimation {
+  to {
+      transform: initial;
+      opacity: 1;
+  }
+}
