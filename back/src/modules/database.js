@@ -3,13 +3,14 @@ const log = require('../helpers/logger')
 
 let mongoDBURL = process.env.MONGO_DB || 'mongodb://localhost'
 
-mongoose.connection.on('connecting', () => log('yellowBright', 'MongoDB')('Conectando...'))
-mongoose.connection.on('connected', () => log('greenBright', 'MongoDB')('Conectado'))
-mongoose.connection.on('disconnected', () => log('redBright', 'MongoDB')('Desconectado'))
+mongoose.connection.on('connecting', () => log('MongoDB', 'CONNECTING').info('Conectando...'))
+mongoose.connection.on('connected', () => log('MongoDB', 'CONNECTED', true).success('Conectado'))
+mongoose.connection.on('disconnected', () => log('MongoDB', 'DISCONNECTED', true).error('Desconectado'))
 mongoose.connection.on('error', (err) => {
-	log('redBright', 'MongoDB')('Falha ao conectar', err)
+	log('MongoDB', true).error('Falha ao conectar', err)
 	setTimeout(mongoConnect, 5000)
 })
+
 function mongoConnect() {
 	mongoose.connect(mongoDBURL, {
 		useNewUrlParser: true,
@@ -19,6 +20,15 @@ function mongoConnect() {
 
 mongoConnect()
 
-require('../models/Ad')
-require('../models/Challenge')
-require('../models/Student')
+const models = [
+	require('../models/Ad'),
+	require('../models/Challenge'),
+	require('../models/Log'),
+	require('../models/Student')
+]
+
+for (const model of models) {
+	// model.schema.post('save', (doc) => {
+	// 	console.log('salvo ' + doc._id)
+	// })
+}
