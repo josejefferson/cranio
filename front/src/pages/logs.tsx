@@ -50,7 +50,7 @@ function App({ logs }: any) {
       {
         Header: 'Tempo',
         accessor: 'date',
-        Cell: ({ value }: any) => <>new Date(value).toLocaleString()</>
+        Cell: ({ value }: any) => <>{new Date(value).toLocaleString()}</>
       },
       {
         Header: 'Nível',
