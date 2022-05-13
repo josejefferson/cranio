@@ -78,7 +78,7 @@ function App({ logs }: any) {
   } = useTable({ columns, data })
 
   return (
-    <table {...getTableProps()} style={{ border: '0' }}>
+    <table {...getTableProps()} style={{ border: '0', color: 'black' }}>
       <thead>
         {headerGroups.map((headerGroup: any, i: number) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={i}>
