@@ -5,7 +5,7 @@ const { isColor, isLevel } = require('./helpers')
  */
 function getOptions(...args) {
 	const options = {
-		date: Date.now()
+		date: new Date().toISOString()
 	}
 
 	/**
