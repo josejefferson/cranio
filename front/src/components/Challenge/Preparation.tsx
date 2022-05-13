@@ -16,7 +16,7 @@ export default function Preparation({ topic, time, preparationTime, preparationM
     <div className={`${styles.container} ${!active ? styles.hidden : ''}`}>
       <Header />
       <div className={styles.body}>
-        <div className={styles.title}>Prepare-se!</div>
+        <div className={styles.title}>{time > 10 ? 'Prepare-se!' : '⚡ Pense rápido!'}</div>
         <div className={styles.message}>{preparationMessage}</div>
 
         <div className={styles.columns}>

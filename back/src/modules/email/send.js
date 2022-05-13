@@ -20,7 +20,7 @@ async function createTransporter() {
 			resolve(token)
 		})
 	}).catch((err) => {
-		log('redBright', 'E-mail')('Falha ao usar OAuth2 como autenticação', `(${err.message})`)
+		log('E-mail', true).error('Falha ao usar OAuth2 como autenticação', `(${err.message})`)
 		return null
 	})
 
@@ -54,8 +54,8 @@ const transporter = createTransporter()
 // Testa o e-mail
 transporter
 	.then((transporter) => transporter.verify())
-	.then(() => log('greenBright', 'E-mail')('E-mail testado e funcionando'))
-	.catch((err) => log('redBright', 'E-mail')('Falha no e-mail', `(${err.message})`))
+	.then(() => log('E-mail', true).success('E-mail testado e funcionando'))
+	.catch((err) => log('E-mail', true).error('Falha no e-mail', `(${err.message})`))
 
 async function send(options) {
 	const emailTransporter = await transporter
