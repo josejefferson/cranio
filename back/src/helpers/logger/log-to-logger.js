@@ -7,7 +7,7 @@ class Logs {
 		this.load()
 
 		if (process.env.NODE_ENV === 'production') {
-			setInterval(this.save.bind(this), 10000)
+			setInterval(this.save.bind(this), 60000)
 		}
 	}
 
