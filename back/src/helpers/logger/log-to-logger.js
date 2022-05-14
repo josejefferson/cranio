@@ -7,7 +7,7 @@ class Logs {
 		this.load()
 
 		if (process.env.NODE_ENV === 'production') {
-			setInterval(this.save.bind(this), 60000)
+			setInterval(this.save.bind(this), 10000)
 		}
 	}
 
@@ -22,6 +22,7 @@ class Logs {
 	}
 
 	save() {
+		if (process.env.LOG_ALL) console.log(`>>> Enviando ${this.logsForUpload.length} logs para o banco de dados...`)
 		if (!this.logsForUpload.length) return false
 		return Log.create(this.logsForUpload).then(() => {
 			this.logsForUpload = []
