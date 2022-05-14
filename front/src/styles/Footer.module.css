@@ -1,0 +1,41 @@
+.footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1vh;
+  font-size: 1vh;
+  gap: 1vh;
+  position: absolute;
+  bottom: 0;
+}
+
+.avatars {
+  white-space: nowrap;
+}
+
+.avatars span:not(:last-child) {
+  margin-right: .5vh;
+}
+
+.avatars span {
+  width: 2.5vh;
+	height: 2.5vh;
+}
+
+.developedBy {
+  flex: 1;
+}
+
+.formText {
+  text-align: right;
+  flex: 0.7;
+}
+
+.formQRCode {
+
+}
+
+.formQRCode img {
+  width: 5vh;
+  border-radius: 0.5vh;
+}

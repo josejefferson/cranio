@@ -43,6 +43,10 @@ export default class MyDocument extends Document {
           <meta property="og:site_name" content="O Crânio" />
           <meta property="twitter:title" content="O Crânio" />
           <meta property="twitter:description" content="O Crânio" />
+          <link rel="preload" href="/fonts/Bungee.otf" as="font" type="font/otf" />
+          <link rel="preload" href="/fonts/CherryBomb.ttf" as="font" type="font/ttf" />
+          <link rel="preload" href="/fonts/DaysOne.ttf" as="font" type="font/ttf" />
+          <link rel="preload" href="/fonts/VarelaRound.ttf" as="font" type="font/ttf" />
         </Head>
         <body>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />

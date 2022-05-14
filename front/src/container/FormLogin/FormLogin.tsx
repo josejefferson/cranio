@@ -13,14 +13,15 @@ import {
   Container
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { BsAsterisk } from 'react-icons/bs'
+import { BsAsterisk, BsHash } from 'react-icons/bs'
 import _Swal from 'sweetalert2'
 import swalReact from 'sweetalert2-react-content'
-import QRCode from "react-qr-code";
+import QRCode from 'react-qr-code'
 import axios from '@/api/index'
-import { Header } from '@/components/index'
+import { Header, Footer } from '@/components/index'
 import { Iuser } from '@/interface/index'
 import { useLoadingContext } from '@/contexts/loading'
+import SplashScreen from './SplashScreen'
 
 export default function LoginChallenge(): JSX.Element {
   const Swal = swalReact(_Swal)
@@ -28,7 +29,7 @@ export default function LoginChallenge(): JSX.Element {
   const { test } = router.query
   const loading = useLoadingContext()
 
-  const TIME: number = 60
+  const TIME: number = 30
   const [registration, setRegistration] = React.useState('')
   const [time, setTime] = React.useState(TIME)
   const [isActive, setIsActive] = React.useState(true)
@@ -55,14 +56,14 @@ export default function LoginChallenge(): JSX.Element {
       const { data } = await axios.get<Iuser>(`/student/find/${registration}`)
 
       const { isConfirmed } = await Swal.fire({
-        title: `Você é ${data.shortName}?`,
+        title: `Você é <u>${data.shortName}</u>?`,
         html: `Você digitou a matrícula <b>${data.registration}</b> correspondente a(o) aluno(a) ` +
           `<b>${data.shortName}</b> do curso de <b>${data.courseName}</b>.<br><br>Caso esteja correta, ` +
           'pressione <b>*</b><br>Se você deseja corrigir, pressione <b>#</b>',
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: '* Confirmar',
-        cancelButtonText: '# Corrigir',
+        confirmButtonText: <Center><BsAsterisk /> Confirmar</Center>,
+        cancelButtonText: <Center><BsHash /> Corrigir</Center>,
         timer: 10000,
         timerProgressBar: true
       })
@@ -131,14 +132,14 @@ export default function LoginChallenge(): JSX.Element {
   return (
     <>
       <Header />
+      <Progress max={TIME} value={time} size="xs" colorScheme="blue" className="progress" />
       <Flex
         minH={'73vh'}
-        h='100%'
+        h="93vh"
         align={'center'}
         justify={'center'}
         overflow={'hidden'}
-        direction='column'
-        mb={10}
+        direction="column"
       >
         <Stack
           id="loginAnimation"
@@ -157,12 +158,12 @@ export default function LoginChallenge(): JSX.Element {
             Digite sua matrícula
           </Heading>
           <Text color="white" fontSize={{ base: '1xl', md: '2xl' }}>
-            Resolva um desafio para testar seus conhecimentos
+            Resolva um desafio para testar seus conhecimentos!
           </Text>
 
           <FormControl>
             <Input
-              placeholder="Usuário"
+              placeholder="Sua matrícula..."
               type="number"
               autoFocus
               value={registration}
@@ -186,25 +187,10 @@ export default function LoginChallenge(): JSX.Element {
               Confirmar
             </Button>
           </Stack>
-          <Progress max={TIME} value={TIME - time} hasStripe colorScheme="green" rounded="base" className="progress" />
         </Stack>
-        <Container as='footer' mt={1}>
-          <Text color="white" fontSize='xl' mb={7} textAlign='center'>
-            Feito por Jefferson & Kayo
-            Qr code para sugestões:
-
-          </Text>
-          <Center>
-            <QRCode
-              title='Sugestão para o Quiz'
-              value='https://forms.gle/hMRSsqDB7yiTQb1j8'
-              style={{
-                bottom: '0',
-              }}
-            />
-          </Center>
-        </Container>
+        <Footer />
       </Flex>
+      <SplashScreen />
     </>
   )
 }

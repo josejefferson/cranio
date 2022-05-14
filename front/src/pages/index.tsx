@@ -77,11 +77,10 @@ const Home: NextPage<Props> = (props) => {
         pause={false}
         controls={false}
         interval={10000}
-        onClick={handleClick}
       >
         {props.ads?.map((ad: IAds, index: number) => {
           return (
-            <Carousel.Item key={index}>
+            <Carousel.Item key={index} onClick={handleClick}>
               <img className="background-img" src={ad.image} alt={ad.title} />
               <img src={ad.image} alt={ad.title} />
               {!ad.title && !ad.description ? (
@@ -118,40 +117,13 @@ const Home: NextPage<Props> = (props) => {
             </Carousel.Item>
           )
         })}
-        <Carousel.Item style={{
-          backgroundImage: 'url("/img/preparation-background.svg")',
-          backgroundSize: 'cover'
-        }}>
-          <>
-            <Center alignItems={'center'} mt={7}>
-              <QRCode
-                title='Sugestão para o Quiz'
-                value='https://forms.gle/hMRSsqDB7yiTQb1j8'
-              />
-            </Center>
-            {/* <img src='/img/QRCode.png' alt='QRCode' width='150px' height='150px' /> */}
-            <Carousel.Caption>
-              <Heading
-                py={2}
-                textAlign="center"
-                fontWeight="bold"
-                textTransform="uppercase"
-                color="white"
-                letterSpacing={1}
-              >
-                Feito por Jefferson & Kayo
-              </Heading>
-              <chakra.span
-                fontWeight="bold"
-                color="gray.200"
-                textAlign={'center'}
-              >
-                Qr code para sugestões:
-              </chakra.span>
-            </Carousel.Caption>
-          </>
+
+        <Carousel.Item>
+          <img className="background-img" src="/img/contact.png" alt="Contato" />
+          <img src="/img/contact.png" alt="Contato" />
         </Carousel.Item>
       </Carousel>
+
       <Marquee
         style={{ color: 'white', fontSize: '2vh', backgroundColor: '#2c373d4d' }}
         speed={100}

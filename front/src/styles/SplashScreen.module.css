@@ -1,0 +1,41 @@
+.splashScreen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-direction: column;
+  animation: zoomOut 1s ease;
+  pointer-events: none;
+  animation-fill-mode: forwards;
+}
+
+.image {
+  width: 30vh;
+}
+
+.title {
+  font-size: 10vh;
+  margin-top: 3vh;
+  font-family: "Cherry Bomb";
+}
+
+@keyframes zoomOut {
+  from,
+  25% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    transform: scale(5);
+    opacity: 0;
+  }
+}

@@ -1,3 +1,4 @@
+/* Variáveis */
 :root {
   --color-header: #000000;
   --color-highlight: #9e2a2b;
@@ -18,8 +19,10 @@
 
 body {
   font-size: 2vh !important;
+  overflow: hidden;
 }
 
+/* Fontes */
 @font-face {
   font-family: "Bungee";
   src: url("/fonts/Bungee.otf") format("opentype");
@@ -40,6 +43,7 @@ body {
   src: url("/fonts/VarelaRound.ttf") format("truetype");
 }
 
+/* Carrossel */
 .carousel.ads-carousel {
   background-color: black;
   height: 100vh;
@@ -114,6 +118,7 @@ body {
   transform: scale(1.5);
 }
 
+/* Texto deslizante */
 .marquee-container {
   background: linear-gradient(0deg, #000000c4, transparent);
   bottom: 0;
@@ -123,35 +128,86 @@ body {
   z-index: 1;
 }
 
+/* Barra de progresso (página login) */
+.progress {
+  background: none !important;
+}
+
 .progress > div {
   transition: width 1s linear;
 }
 
-#loginAnimation {
-  opacity: 0;
-  transform: translateX(-10px);
-  animation: loginAnimation 0.3s forwards;
-}
-
-@keyframes loginAnimation {
-  to {
-      transform: initial;
-      opacity: 1;
-  }
-}
-
+/* SweetAlert2 */
 .swal2-popup {
   border-radius: 0.5em !important;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 720px) and (min-height: 1280px) {
   .swal2-popup {
     font-size: 1.5rem !important;
   }
 }
 
-@media (min-width: 1080px) {
+@media (min-width: 1080px) and (min-height: 1920px) {
   .swal2-popup {
     font-size: 2rem !important;
   }
+}
+
+.swal2-styled svg {
+  display: inline-block;
+  margin-right: 1vh;
+}
+
+/* Página login */
+#loginAnimation {
+  animation: loginAnimation 0.3s forwards;
+  opacity: 0;
+  transform: translateX(-10px);
+  border-radius: 1vh;
+  margin: 0 !important;
+  max-width: 45vh !important;
+  padding: 2vh 1.4vh !important;
+  width: 100% !important;
+}
+
+@keyframes loginAnimation {
+  to {
+    opacity: 1;
+    transform: initial;
+  }
+}
+
+#loginAnimation h2 {
+  font-size: 3vh !important;
+}
+
+#loginAnimation p {
+  font-size: 2vh !important;
+  margin-top: 1.2vh !important;
+}
+
+#loginAnimation .chakra-form-control {
+  margin-top: 1.2vh !important;
+}
+
+#loginAnimation .chakra-stack {
+  margin-top: 1.2vh !important;
+}
+
+#loginAnimation input {
+  border-radius: 0.7vh !important;
+  font-size: 2vh !important;
+  height: 5vh !important;
+  padding: 0 1.4vh !important;
+}
+
+#loginAnimation .chakra-button__icon {
+  margin-right: 1.3vh !important;
+}
+
+#loginAnimation button.chakra-button {
+  border-radius: 0.7vh !important;
+  font-size: 2vh !important;
+  height: 5vh !important;
 }
