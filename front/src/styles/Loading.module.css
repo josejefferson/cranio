@@ -1,9 +1,9 @@
 .loadingScreen {
   align-items: center;
-  backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
+  font-family: 'Varela Round';
   height: 100%;
   justify-content: center;
   left: 0;
@@ -29,27 +29,11 @@
 
 .loadingScreenIcon {
   align-items: center;
-  animation: sandClock 3s ease infinite;
-  border-radius: 50%;
-  border: white 2vmin solid;
   display: flex;
   font-size: 25vmin;
-  height: 40vmin;
   justify-content: center;
-  width: 40vmin;
 }
 
 .loadingScreenIcon .loadingScreenIconImg {
   width: 25vmin;
-}
-
-@keyframes sandClock {
-  from {
-    transform: rotate(0deg);
-  }
-
-  50%,
-  to {
-    transform: rotate(360deg);
-  }
 }

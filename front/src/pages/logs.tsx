@@ -40,6 +40,7 @@ function Pill({ level, children }: any) {
 
 function App({ logs }: any) {
   const data = React.useMemo(() => logs, [logs])
+  console.log(data)
 
   const columns = React.useMemo(
     () => [
@@ -59,7 +60,13 @@ function App({ logs }: any) {
       },
       {
         Header: 'Conteúdo',
-        accessor: 'contents'
+        accessor: 'contents',
+        Cell: ({ value }: any) => {
+          return value.map((content:any) => {
+            if (typeof content === 'object') return JSON.stringify(content)
+            return content
+          })
+        }
       }
     ],
     []
