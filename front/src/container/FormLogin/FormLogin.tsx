@@ -135,7 +135,7 @@ export default function LoginChallenge(): JSX.Element {
       <Progress max={TIME} value={time} size="xs" colorScheme="blue" className="progress" />
       <Flex
         minH={'73vh'}
-        h="93vh"
+        h="calc(93vh - 0.25rem)"
         align={'center'}
         justify={'center'}
         overflow={'hidden'}

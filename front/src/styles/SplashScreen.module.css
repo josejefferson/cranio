@@ -10,9 +10,10 @@
   justify-content: center;
   color: white;
   flex-direction: column;
-  animation: zoomOut 1s ease;
+  animation: zoomIn 1s ease;
   pointer-events: none;
-  animation-fill-mode: forwards;
+  transform: scale(1);
+  opacity: 0;
 }
 
 .image {
@@ -25,7 +26,7 @@
   font-family: "Cherry Bomb";
 }
 
-@keyframes zoomOut {
+@keyframes zoomIn {
   from,
   25% {
     transform: scale(1);
