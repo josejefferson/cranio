@@ -1,9 +1,20 @@
 import React from 'react'
 import { useTable } from 'react-table'
 import type { GetServerSideProps } from 'next'
-import { Input, InputGroup, InputRightElement, Button, Heading, Container, Textarea, Center, Box, Flex, Select } from '@chakra-ui/react'
+import {
+  Input,
+  Button,
+  Heading,
+  Container,
+  Textarea,
+  Center,
+  Box,
+  Flex,
+  Select
+} from '@chakra-ui/react'
 import axios from '../api/'
 import { Header } from '../components'
+import { FaTrash } from 'react-icons/fa'
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data: logs } = await axios.get('/logs')
@@ -16,11 +27,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 function Pill({ level, children }: any) {
   const LEVELS: any = {
-    'SUCCESS': 'green',
-    'WARNING': 'yellow',
-    'ERROR': 'red',
-    'INFO': 'blue',
-    'DEBUG': 'black'
+    'SUCCESS': '#198754',
+    'WARNING': '#ffc107',
+    'ERROR': '#dc3545',
+    'INFO': '#0d6efd',
+    'DEBUG': '#111111'
   }
 
   return (
@@ -114,10 +125,7 @@ function App({ logs: allLogs }: any) {
     setLoading(false)
   }
 
-  const [conditions, setConditions] = React.useState([
-    { property: 'date', comparation: '$gt', valueType: 'Date', value: new Date().toISOString().substring(0, 16) },
-    { property: 'date', comparation: '$gt', valueType: 'Boolean', value: false }
-  ])
+  const [conditions, setConditions] = React.useState<any[]>([])
 
   const inputTypes: any = {
     String: (value: any, onChange: any) => <Input type="text" width="23%" value={value} onChange={onChange} />,
@@ -172,6 +180,7 @@ function App({ logs: allLogs }: any) {
               <Flex gap="1" mb="1" key={i}>
                 <Input
                   type="text"
+                  list="properties"
                   width="23%"
                   value={condition.property}
                   onChange={(e) => {
@@ -180,6 +189,16 @@ function App({ logs: allLogs }: any) {
                       return [...conditions]
                     })
                   }} />
+
+                <datalist id="properties">
+                  <option value="date" />
+                  <option value="level" />
+                  <option value="title" />
+                  <option value="content" />
+                  <option value="details.status" />
+                  <option value="details.method" />
+                  <option value="details.url" />
+                </datalist>
 
                 <Select
                   width="23%"
@@ -228,7 +247,7 @@ function App({ logs: allLogs }: any) {
                     conditions.splice(i, 1)
                     return conditions
                   })
-                }}>X</Button>
+                }}><FaTrash /></Button>
               </Flex>
             )
           })}
@@ -249,6 +268,13 @@ function App({ logs: allLogs }: any) {
             Gerar filtro
           </Button>
           <Button
+            colorScheme="red"
+            onClick={() => setFilter('{}')}
+            mr="2"
+          >
+            Limpar filtros
+          </Button>
+          <Button
             colorScheme="blue"
             disabled={loading}
             onClick={() => filterResults()}
@@ -260,7 +286,7 @@ function App({ logs: allLogs }: any) {
         <Heading as="h5" size="sm" mt="3" textAlign="center">{logs.length} LOGS</Heading>
       </Container>
 
-      <table {...getTableProps()} style={{ border: '0', color: 'black', width: '100%' }}>
+      <table {...getTableProps()} style={{ border: '0', color: 'black', width: '100%', userSelect: 'text' }}>
         <thead>
           {headerGroups.map((headerGroup: any, i: number) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={i}>

@@ -13,12 +13,12 @@
   -webkit-tap-highlight-color: transparent;
   letter-spacing: initial !important;
   line-height: initial !important;
-  user-select: none;
   word-break: break-word !important;
 }
 
 body {
   font-size: 2vh !important;
+  user-select: none;
 }
 
 /* Fontes */
