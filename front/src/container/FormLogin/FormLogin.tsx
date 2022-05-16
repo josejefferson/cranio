@@ -21,7 +21,6 @@ import axios from '@/api/index'
 import { Header, Footer } from '@/components/index'
 import { Iuser } from '@/interface/index'
 import { useLoadingContext } from '@/contexts/loading'
-import SplashScreen from './SplashScreen'
 
 export default function LoginChallenge(): JSX.Element {
   const Swal = swalReact(_Swal)
@@ -190,7 +189,6 @@ export default function LoginChallenge(): JSX.Element {
         </Stack>
         <Footer />
       </Flex>
-      <SplashScreen />
     </>
   )
 }

@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { FormLogin } from 'src/container'
+import { SplashScreen } from '@/components/index'
 
 const Login = () => {
   return (
@@ -8,6 +9,7 @@ const Login = () => {
         <title>O Crânio | Login</title>
       </Head>
       <FormLogin />
+      <SplashScreen />
     </>
   )
 }
