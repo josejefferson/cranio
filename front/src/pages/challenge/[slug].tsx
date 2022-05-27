@@ -13,11 +13,11 @@ import Head from 'next/head'
 import { Preparation } from '@/components/index'
 import styles from '@/styles/Challenge.module.css'
 
-function getMusic(time:any) {
+function getMusic(time: any) {
   const random = Math.floor(Math.random() * 3)
   const musicTime = getTime(time)
 
-  function getTime(time:any) {
+  function getTime(time: any) {
     if (time <= 5) return 5
     else if (time > 5 && time <= 10) return 10
     else if (time > 10 && time <= 20) return 20
@@ -181,11 +181,34 @@ const Challenge: NextPage<Props> = ({ api }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
-  console.log(params.slug)
-  const { data } = await axios.get<Props>(`/challenge/start/${params.slug}`)
-  return {
-    props: {
-      api: data
+  
+  try {
+    const { data } = await axios.get<Props>(`/challenge/start/${params.slug}`)
+    return {
+      props: {
+        api: data
+      }
+    }
+  } catch (err: any) {
+    const ERRORS: any = {
+      // Code: [Title, Description]
+      'NO_CHALLENGES': ['Sem desafios 🙀', 'Desculpe-nos, mas não há desafios disponíveis para o seu curso no momento 😢. Por favor, tente novamente outro dia!'],
+      'STUDENT_NOT_FOUND': ['Estudante não encontrado', `Não encontramos um estudante com esta matrícula (${params.slug}) no nosso banco de dados`],
+      'CANT_PLAY_TODAY': ['Você já jogou hoje', 'Desculpe-nos, mas você só pode jogar uma vez por dia, volte amanhã para mais!'],
+      500: ['500 | Erro do servidor backend']
+    }
+    const error = ERRORS[err?.response?.data?.code]
+    if (!error) throw err
+
+    const query = new URLSearchParams()
+    if (error && error[0]) query.set('title', error[0])
+    if (error && error[1]) query.set('description', error[1])
+
+    return {
+      redirect: {
+        permanent: true,
+        destination: '/500?' + query
+      }
     }
   }
 }

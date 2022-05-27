@@ -9,7 +9,6 @@ import Carousel from 'react-bootstrap/Carousel'
 import { useLoadingContext } from '@/contexts/loading'
 import Marquee from 'react-fast-marquee'
 import { IAds, Props } from '../interface'
-import QRCode from 'react-qr-code'
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data: ads } = await axios.get<IAds>('/ad/active')

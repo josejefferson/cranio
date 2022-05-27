@@ -3,10 +3,11 @@ import Head from 'next/head'
 import React from 'react'
 import { useRouter } from 'next/router'
 import { VStack, Heading, Text, Center, Img as Image, Box, Flex } from '@chakra-ui/react'
-import { MotionBox } from '@/components/index'
+import { MotionBox, Header } from '@/components/index'
 
 const Page500: NextPage = () => {
   const router = useRouter()
+  const { title, description } = router.query
 
   // Redireciona para a página inicial
   React.useEffect(() => {
@@ -18,9 +19,10 @@ const Page500: NextPage = () => {
   return (
     <React.Fragment>
       <Head>
-        <title>500 | Tudo na vida tem um limite...</title>
+        <title>{title || '500 | Tudo na vida tem um limite...'}</title>
       </Head>
-      <Flex color="white" flexDirection="column" minHeight="100vh" width="full" align="center" justifyContent="center">
+      <Header />
+      <Flex color="white" flexDirection="column" minHeight="calc(100vh - 7vh)" width="full" align="center" justifyContent="center">
         <Box
           px={4}
           width="94%"
@@ -48,9 +50,9 @@ const Page500: NextPage = () => {
               </Center>
             </MotionBox>
             <VStack justify="center" spacing="4" textAlign="center" as="article" mt={5}>
-              <Heading fontSize="3xl">500 | Desafio não encontrado :(</Heading>
+              <Heading fontSize="3xl">{title || '500 | Erro do servidor'}</Heading>
               <Text fontSize={{ md: 'xl' }}>
-                Desculpe-nos, mas não encontramos nenhum desafio para você resolver
+                {description || 'Desculpe-nos, mas estamos com problemas para responder a sua requisição'}
               </Text>
             </VStack>
           </Box>
