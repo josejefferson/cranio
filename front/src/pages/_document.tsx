@@ -44,10 +44,12 @@ export default class MyDocument extends Document {
           <meta property="twitter:title" content="O Crânio" />
           <meta property="twitter:description" content="O Crânio" />
           <link rel="shortcut icon" href="/favicon.png" type="image/png" />
-          <link rel="preload" href="/fonts/Bungee.otf" as="font" type="font/otf" />
-          <link rel="preload" href="/fonts/CherryBomb.ttf" as="font" type="font/ttf" />
-          <link rel="preload" href="/fonts/DaysOne.ttf" as="font" type="font/ttf" />
-          <link rel="preload" href="/fonts/VarelaRound.ttf" as="font" type="font/ttf" />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="preload" crossOrigin="anonymous" href="/img/skull.svg" as="image" type="image/svg+xml" />
+          <link rel="preload" crossOrigin="anonymous" href="/fonts/Bungee.otf" as="font" type="font/otf" />
+          <link rel="preload" crossOrigin="anonymous" href="/fonts/CherryBomb.ttf" as="font" type="font/ttf" />
+          <link rel="preload" crossOrigin="anonymous" href="/fonts/DaysOne.ttf" as="font" type="font/ttf" />
+          <link rel="preload" crossOrigin="anonymous" href="/fonts/VarelaRound.ttf" as="font" type="font/ttf" />
         </Head>
         <body>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
