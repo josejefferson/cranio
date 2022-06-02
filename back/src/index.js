@@ -32,6 +32,7 @@ app.use(['/ad', '/ads'], require('./routes/ad'))
 app.use(['/challenge', '/challenges'], require('./routes/challenge'))
 app.use(['/log', '/logs'], require('./routes/log'))
 app.use(['/student', '/students'], require('./routes/student'))
+app.use(['/auth'], require('./routes/auth'))
 
 app.use((req, res) => {
 	if (res.headersSent) return
