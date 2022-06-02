@@ -55,7 +55,9 @@ const Challenge: NextPage<Props> = ({ api }) => {
     if (key) Swal.fire({
       imageUrl: '/img/drum.gif',
       text: 'Que rufem os tambores...',
-      showConfirmButton: false
+      showConfirmButton: false,
+      allowOutsideClick: !!test || false,
+      allowEscapeKey: !!test || false
     })
     try {
       if (key) {
@@ -77,7 +79,9 @@ const Challenge: NextPage<Props> = ({ api }) => {
           icon: STATUS[data.status][2],
           imageUrl: STATUS[data.status][4],
           imageHeight: '8em',
-          showConfirmButton: false
+          showConfirmButton: false,
+          allowOutsideClick: !!test || false,
+          allowEscapeKey: !!test || false
         })
 
       }, key ? 2000 : 0)
@@ -86,7 +90,9 @@ const Challenge: NextPage<Props> = ({ api }) => {
       Swal.fire({
         title: 'Ocorreu um erro',
         icon: 'error',
-        showConfirmButton: false
+        showConfirmButton: false,
+        allowOutsideClick: !!test || false,
+        allowEscapeKey: !!test || false
       })
     } finally {
       // Redireciona
@@ -181,7 +187,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
-  
+
   try {
     const { data } = await axios.get<Props>(`/challenge/start/${params.slug}`)
     return {
