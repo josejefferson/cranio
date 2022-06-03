@@ -12,8 +12,8 @@ import {
   Flex,
   Select
 } from '@chakra-ui/react'
-import axios from '../api/'
-import { Header } from '../components'
+import axios from '@/api/index'
+import { Header } from '@/components/index'
 import { FaTrash } from 'react-icons/fa'
 
 export const getServerSideProps: GetServerSideProps = async () => {
