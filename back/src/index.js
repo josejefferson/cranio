@@ -18,6 +18,7 @@ app.use((req, res, next) => {
 			ips: req.ips,
 			method: req.method,
 			url: req.originalUrl,
+			referer: req.headers.referrer || req.headers.referer || req.headers.origin,
 			time: res.time,
 			status: res.statusCode
 		})

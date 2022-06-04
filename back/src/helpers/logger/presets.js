@@ -19,7 +19,7 @@ function setPresets(log, Logger, opts) {
 		const status = details.status >= 400 ? chalk.white(details.status) : details.status
 		let text = `${details.method} (${status}) ${details.url} - ${details.time}ms`
 		if (details.ips.length) text += ' - ' + details.ips.join(', ')
-		if (details.hostname) text += ' - ' + details.hostname
+		if (details.referer) text += ' - ' + details.referer
 		return Logger('HTTP', 'INFO', 'gray', DEV, !(process.env.LOG_HTTP && NO_LOG), Object.assign(opts, { details }))(text)
 	}
 

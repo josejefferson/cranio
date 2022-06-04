@@ -41,9 +41,9 @@ router.get('/start/:studentRegistration', asyncRoutes(async (req, res) => {
 	if (!student.canPlayToday) return res.status(403).json({ error: true, code: 'CANT_PLAY_TODAY', message: 'Você só pode jogar amanhã' })
 
 	const challenge = await Challenge.findRandom(student.course, student.testUser)
-	if (!challenge) return res.status(404).json({ error: true, code: 'NO_CHALLENGES', message: 'Não tem desafios disponíveis para o seu curso' })
+	if (!challenge) return res.status(404).json({ error: true, code: 'NO_CHALLENGES', message: 'Não há desafios disponíveis para o seu curso' })
 
-	if (!student.testUser && challenge) student.playedToday()
+	if (!student.testUser) student.playedToday()
 	res.json(challenge || null)
 }))
 
@@ -53,11 +53,11 @@ router.get('/start/:studentRegistration', asyncRoutes(async (req, res) => {
 router.post('/check', asyncRoutes(async (req, res) => {
 	const { studentRegistration, challengeID, choiceID } = req.body
 
-	const student = await Student.findOne({ registration: studentRegistration })
+	if (!choiceID) return res.json({ status: 'TIMEOUT', message: challenge.timeOutMessage })
 	const challenge = await Challenge.findById(challengeID)
 	if (!challenge) res.status(400).json({ error: true, code: 'CHALLENGE_NOT_FOUND', message: 'Desafio não encontrado' })
+	const student = await Student.findOne({ registration: studentRegistration })
 	if (!student) res.status(400).json({ error: true, code: 'STUDENT_NOT_FOUND', message: 'Estudante não encontrado' })
-	if (!choiceID) return res.json({ status: 'TIMEOUT', message: challenge.timeOutMessage })
 
 	if (challenge.checkCorrect(choiceID)) {
 		res.json({ status: 'CORRECT', message: challenge.correctMessage })

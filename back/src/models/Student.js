@@ -38,6 +38,7 @@ schema.methods.playedToday = function () {
 	canPlayIn.setHours(0)
 	canPlayIn.setMinutes(0)
 	canPlayIn.setSeconds(0)
+	canPlayIn.setMilliseconds(0)
 	this.canPlayIn = canPlayIn
 	return this.save()
 }
