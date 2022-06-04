@@ -8,9 +8,7 @@ import {
   Stack,
   Progress,
   Text,
-  Center,
-  Box,
-  Container
+  Center
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { BsAsterisk, BsHash } from 'react-icons/bs'
@@ -60,8 +58,8 @@ export default function LoginChallenge(): JSX.Element {
           'pressione <b>*</b><br>Se você deseja corrigir, pressione <b>#</b>',
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: <Center><BsAsterisk /> Confirmar</Center>,
-        cancelButtonText: <Center><BsHash /> Corrigir</Center>,
+        confirmButtonText: <Center><BsAsterisk /> SIM</Center>,
+        cancelButtonText: <Center><BsHash /> NÃO</Center>,
         timer: 10000,
         timerProgressBar: true
       })
