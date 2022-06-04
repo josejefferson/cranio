@@ -10,6 +10,6 @@ const schema = new mongoose.Schema({
 	endDate: { type: Date }
 }, options)
 
-dbLogger(schema, 'Ad')
+dbLogger(schema, 'Highlight')
 
-module.exports = mongoose.model('Ad', schema)
+module.exports = mongoose.model('Highlight', schema)
