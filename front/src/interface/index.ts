@@ -42,7 +42,7 @@ export type Iuser = {
   canPlayToday?: any
 }
 
-export interface IAds  {
+export interface IHighlights  {
   _id: string
   title?: string
   description?: string
@@ -50,7 +50,7 @@ export interface IAds  {
 }
 
 export interface Props  {
-  ads: IAds[]
+  highlights: IHighlights[]
   challenges: any
 }
 

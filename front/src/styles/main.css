@@ -43,7 +43,7 @@ body {
 }
 
 /* Carrossel */
-.carousel.ads-carousel {
+.carousel.highlights-carousel {
   background-color: black;
   height: 100vh;
   overflow: hidden;
