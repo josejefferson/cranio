@@ -135,7 +135,10 @@ const Home: NextPage<Props> = (props) => {
             <div style={{ width: '20vh' }} />
           </>
         ) : (
-          <>Nenhum desafio aberto no momento. Por favor, volte mais tarde</>
+          <>
+            Nenhum desafio aberto no momento. Por favor, volte mais tarde
+            <div style={{ width: '20vh' }} />
+          </>
         )}
 
         Pronto para um desafio? Aperte qualquer tecla...
