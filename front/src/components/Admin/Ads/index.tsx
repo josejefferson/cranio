@@ -35,7 +35,7 @@ export default function Ad({ ad }: any) {
         <Card.Text>{ad.description}</Card.Text>
         <Stack direction="row" spacing={4} mt={2}>
           <Center>
-            <Button variant="outline-primary" colorScheme="teal" onClick={onOpen}><MdEdit /></Button>
+            <Button variant="outline-primary" onClick={onOpen}><MdEdit /></Button>
             <Button variant="outline-danger"><MdDelete /></Button>
           </Center>
         </Stack>
@@ -63,7 +63,7 @@ export default function Ad({ ad }: any) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button>
               Save
             </Button>
             <Button onClick={onClose}>Cancel</Button>
