@@ -1,6 +1,52 @@
 import React from 'react'
+import { useTable } from 'react-table'
+import Pill from '@/components/Admin/Logs/Pill'
 
-function Table({ getTableProps, headerGroups, getTableBodyProps, rows, prepareRow }: any) {
+function Table({ logs }: any) {
+  const data = React.useMemo(() => logs, [logs])
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'Tempo',
+        accessor: 'date',
+        width: 150,
+        Cell: ({ value }: any) => <>{new Date(value).toLocaleString()}</>
+      },
+      {
+        Header: 'Nível',
+        accessor: 'level',
+        width: 80,
+        Cell: ({ value }: any) => <Pill level={value}>{value}</Pill>
+      },
+      {
+        Header: 'Título',
+        accessor: 'title',
+        minWidth: 80
+      },
+      {
+        Header: 'Conteúdo',
+        accessor: 'contents',
+        width: 'auto',
+        Cell: ({ value }: any) => {
+          return value.map((content: any) => {
+            if (typeof content === 'object') return JSON.stringify(content)
+            return content
+          })
+        }
+      }
+    ],
+    []
+  )
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow
+  } = useTable({ columns, data })
+
   return (
     <table {...getTableProps()} style={{ border: '0', color: 'black', width: '100%', userSelect: 'text' }}>
       <thead>
@@ -54,4 +100,6 @@ function Table({ getTableProps, headerGroups, getTableBodyProps, rows, prepareRo
   )
 }
 
-export default React.memo(Table)
+export default React.memo(Table, (prevProps, nextProps) => {
+  return prevProps.logs === nextProps.logs
+})
