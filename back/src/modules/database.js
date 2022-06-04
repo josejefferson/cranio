@@ -20,7 +20,7 @@ function mongoConnect() {
 
 mongoConnect()
 
-require('../models/Ad')
+require('../models/Highlight')
 require('../models/Challenge')
 require('../models/Log')
 require('../models/Student')

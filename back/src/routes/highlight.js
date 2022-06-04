@@ -3,21 +3,21 @@ const router = express.Router()
 const asyncRoutes = require('../helpers/async-routes')
 const Restrictions = require('./_restrictions')
 
-const Ad = require('../models/Ad')
-const databaseRoutes = require('./_database')(Ad)
+const Highlight = require('../models/Highlight')
+const databaseRoutes = require('./_database')(Highlight)
 
 /**
  * Retorna as propagandas ativas
  */
 router.get('/active', asyncRoutes(async (req, res) => {
 	const currentDate = new Date().toISOString()
-	const ads = await Ad.find({
+	const highlights = await Highlight.find({
 		$or: [
 			{ endDate: { $gte: currentDate } },
 			{ endDate: null }
 		]
 	})
-	res.json(ads)
+	res.json(highlights)
 }))
 
 /**
