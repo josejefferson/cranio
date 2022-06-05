@@ -19,6 +19,26 @@ router.get('/find/:registration', asyncRoutes(async (req, res) => {
 }))
 
 /**
+ * Retorna o ranking
+ */
+router.get('/ranking', asyncRoutes(async (req, res) => {
+	let students = await Student
+		.find({ challengesCompleted: { $gt: 0 } })
+		.sort({ challengesCompleted: -1, name: 1 })
+
+	let i = 0
+	let lastChallengesCompleted = null
+	students = students.map((student) => {
+		student = student.toObject()
+		student.place = lastChallengesCompleted === student.challengesCompleted ? i : ++i
+		lastChallengesCompleted = student.challengesCompleted
+		return student
+	})
+
+	res.json(students)
+}))
+
+/**
  * Rotas do banco de dados
  */
 router.use(Restrictions.admin, databaseRoutes.all)
