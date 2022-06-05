@@ -4,15 +4,15 @@ import { Heading, Center, SimpleGrid, Spinner } from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap'
 import React from 'react'
-import Ad from '@/components/Admin/Ads'
+import Highlight from '@/components/Admin/Highlights'
 import { loginAndGetData } from '@/utils/login-and-get-data'
 
-export default function Ads() {
-  const [ads, setAds] = React.useState<any>(null)
-  if (!ads) loginAndGetData('/ads', ads, setAds)
+export default function Highlights() {
+  const [highlights, setHighlights] = React.useState<any>(null)
+  if (!highlights) loginAndGetData('/highlight', highlights, setHighlights)
 
-  const activeAds = ads?.filter((ad: any) => new Date(ad.endDate) > new Date())
-  const inactiveAds = ads?.filter((ad: any) => new Date(ad.endDate) <= new Date())
+  const activeAds = highlights?.filter((h: any) => new Date(h.endDate) > new Date())
+  const inactiveAds = highlights?.filter((h: any) => new Date(h.endDate) <= new Date())
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function Ads() {
         <Heading as="h3" size="lg" mt={5} mb={2} p={0}>Anúncios ativos ({activeAds?.length || '-'})</Heading>
         <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2}>
           {
-            activeAds?.map((ad: any, i: number) => <Ad ad={ad} key={i} />) ||
+            activeAds?.map((highlight: any, i: number) => <Highlight highlight={highlight} key={i} />) ||
             <><Spinner /></>
           }
         </SimpleGrid>
@@ -39,7 +39,7 @@ export default function Ads() {
         <Heading as="h3" size="lg" mt={5} mb={2} p={0}>Anúncios passados ({inactiveAds?.length || '-'})</Heading>
         <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2}>
           {
-            inactiveAds?.map((ad: any, i: number) => <Ad ad={ad} key={i} />) ||
+            inactiveAds?.map((highlight: any, i: number) => <Highlight highlight={highlight} key={i} />) ||
             <><Spinner /></>
           }
         </SimpleGrid>

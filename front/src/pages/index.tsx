@@ -8,14 +8,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Carousel from 'react-bootstrap/Carousel'
 import { useLoadingContext } from '@/contexts/loading'
 import Marquee from 'react-fast-marquee'
-import { IAds, Props } from '../interface'
+import { IHighlights, Props } from '../interface'
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data: ads } = await axios.get<IAds>('/ad/active')
-  const { data: challenges } = await axios.get<IAds>('/challenge/active')
+  const { data: highlights } = await axios.get<IHighlights>('/highlight/active')
+  const { data: challenges } = await axios.get<IHighlights>('/challenge/active')
   return {
     props: {
-      ads,
+      highlights,
       challenges
     }
   }
@@ -72,17 +72,17 @@ const Home: NextPage<Props> = (props) => {
       </Head>
 
       <Carousel
-        className="ads-carousel"
+        className="highlights-carousel"
         pause={false}
         controls={false}
         interval={10000}
       >
-        {props.ads?.map((ad: IAds, index: number) => {
+        {props.highlights?.map((highlight: IHighlights, index: number) => {
           return (
             <Carousel.Item key={index} onClick={handleClick}>
-              <img className="background-img" src={ad.image} alt={ad.title} />
-              <img src={ad.image} alt={ad.title} />
-              {!ad.title && !ad.description ? (
+              <img className="background-img" src={highlight.image} alt={highlight.title} />
+              <img src={highlight.image} alt={highlight.title} />
+              {!highlight.title && !highlight.description ? (
                 <React.Fragment />
               ) : (
                 <Carousel.Caption>
@@ -99,16 +99,16 @@ const Home: NextPage<Props> = (props) => {
                       textTransform="uppercase"
                       color="white"
                       letterSpacing={1}
-                      hidden={!ad.title}
+                      hidden={!highlight.title}
                     >
-                      {ad.title}
+                      {highlight.title}
                     </Heading>
                     <chakra.span
                       fontWeight="bold"
                       color="gray.200"
                       textAlign={'center'}
                     >
-                      {ad.description}
+                      {highlight.description}
                     </chakra.span>
                   </Box>
                 </Carousel.Caption>

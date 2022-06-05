@@ -17,22 +17,22 @@ import React from 'react'
 import { Button, ButtonGroup, Card, Ratio } from 'react-bootstrap'
 import { MdDelete, MdEdit } from 'react-icons/md'
 
-export default function Ad({ ad }: any) {
+export default function Highlight({ highlight }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
-  const [title, setTitle] = React.useState(ad.title)
+  const [title, setTitle] = React.useState(highlight.title)
   return (
     <Card style={{ width: '100%', height: '100%' }}>
       <Ratio aspectRatio="16x9">
-        <Card.Img variant="top" src={ad.image} style={{ objectFit: 'cover' }} />
+        <Card.Img variant="top" src={highlight.image} style={{ objectFit: 'cover' }} />
       </Ratio>
       <Card.Body className="d-flex flex-column">
-        <Heading as="h2" size="lg">{ad.title || '(Sem título)'}</Heading>
+        <Heading as="h2" size="lg">{highlight.title || '(Sem título)'}</Heading>
         <Card.Subtitle className="mb-2">
-          <Badge>Até {new Date(ad.endDate).toLocaleString()}</Badge>
+          <Badge>Até {new Date(highlight.endDate).toLocaleString()}</Badge>
         </Card.Subtitle>
-        <Card.Text>{ad.description}</Card.Text>
+        <Card.Text>{highlight.description}</Card.Text>
         <Stack direction="row" spacing={4} mt={2}>
           <Center>
             <Button variant="outline-primary" onClick={onOpen}><MdEdit /></Button>
@@ -73,14 +73,14 @@ export default function Ad({ ad }: any) {
     </Card>
     // <Card style={{ width: '100%', height: '100%' }}>
     //   <Ratio aspectRatio="16x9">
-    //     <Card.Img variant="top" src={ad.image} style={{ objectFit: 'cover' }} />
+    //     <Card.Img variant="top" src={highlight.image} style={{ objectFit: 'cover' }} />
     //   </Ratio>
     //   <Card.Body className="d-flex flex-column">
-    //     <Card.Title>{ad.title || '(Sem título)'}</Card.Title>
+    //     <Card.Title>{highlight.title || '(Sem título)'}</Card.Title>
     //     <Card.Subtitle className="mb-2">
-    //       <Badge>Até {new Date(ad.endDate).toLocaleString()}</Badge>
+    //       <Badge>Até {new Date(highlight.endDate).toLocaleString()}</Badge>
     //     </Card.Subtitle>
-    //     <Card.Text>{ad.description}</Card.Text>
+    //     <Card.Text>{highlight.description}</Card.Text>
     //     <div className="d-inline-flex flex-grow-1 align-items-end mt-3">
     //       <ButtonGroup>
     //         <Button variant="outline-primary"><MdEdit /></Button>
