@@ -117,7 +117,7 @@ const Home: NextPage<Props> = (props) => {
           )
         })}
 
-        <Carousel.Item>
+        <Carousel.Item onClick={handleClick}>
           <img className="background-img" src="/img/contact.png" alt="Contato" />
           <img src="/img/contact.png" alt="Contato" />
         </Carousel.Item>
