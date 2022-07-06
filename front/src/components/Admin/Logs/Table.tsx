@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTable } from 'react-table'
 import Pill from '@/components/Admin/Logs/Pill'
+import { ObjectInspector, chromeLight } from 'react-inspector'
 
 function Table({ logs }: any) {
   const data = React.useMemo(() => logs, [logs])
@@ -33,6 +34,23 @@ function Table({ logs }: any) {
             if (typeof content === 'object') return JSON.stringify(content)
             return content
           })
+        }
+      },
+      {
+        Header: 'Detalhes',
+        accessor: 'details',
+        width: '400px',
+        Cell: ({ value }: any) => {
+          return value === undefined
+            ? <></> :
+            <ObjectInspector
+              // @ts-ignore
+              theme={{
+                ...chromeLight,
+                ...({ BASE_BACKGROUND_COLOR: 'transparent' })
+              }}
+              data={value}
+            />
         }
       }
     ],
@@ -82,6 +100,7 @@ function Table({ logs }: any) {
                   <td
                     {...cell.getCellProps()}
                     key={i}
+                    title={['date', 'title', 'contents'].includes(cell.column.id) && cell.value}
                     style={{
                       padding: '5px',
                       border: '0',
