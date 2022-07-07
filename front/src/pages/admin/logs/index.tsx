@@ -1,33 +1,90 @@
 import React from 'react'
-import { Heading } from '@chakra-ui/react'
+import { ThemeProvider, createTheme, Button } from '@mui/material'
 import axios from '@/api/index'
-import { Header } from '@/components/index'
-import Table from '@/components/Admin/Logs/Table'
-import Filter from '@/components/Admin/Logs/Filter'
+import MUIDataTable from 'mui-datatables'
+import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import HeightIcon from '@mui/icons-material/Height'
+import { lang } from '@/components/Admin/Logs/lang'
+import { columns } from '@/components/Admin/Logs/columns'
 
-function App() {
-  const defaultLog = {
-    date: Date.now(),
-    title: 'Carregando',
-    level: 'LOADING',
-    contents: ['Carregando logs, aguarde...']
+const defaultMaterialTheme = createTheme({
+  palette: { mode: 'dark' },
+  components: {
+    // @ts-ignore
+    MUIDataTableBodyCell: {
+      styleOverrides: {
+        root: {
+          padding: '3px 10px'
+        }
+      }
+    }
   }
-  const [logs, setLogs] = React.useState([defaultLog])
-  React.useEffect(() => {
-    axios.get('/logs').then((res) => {
-      setLogs(res.data.reverse())
-    })
-  }, [])
+})
+
+const customFilterDialogFooter = (currentFilterList: any, applyNewFilters: any) => {
+  return (
+    <div style={{ marginTop: '40px' }}>
+      <Button variant="contained" onClick={applyNewFilters}>{lang.filter.apply}</Button>
+    </div>
+  )
+}
+
+const Logs = ({ data }: any) => {
+  const [resizableColumns, setResizableColumns] = React.useState(false)
+
+  const customToolbar = () => {
+    return (
+      <Tooltip title={lang.toolbar.adjustColumnWidth} disableFocusListener>
+        <IconButton
+          aria-label={lang.toolbar.adjustColumnWidth}
+          onClick={() => setResizableColumns(!resizableColumns)}
+        >
+          <HeightIcon style={{ transform: 'rotate(90deg)' }} />
+        </IconButton>
+      </Tooltip>
+    )
+  }
+
+  const options = {
+    confirmFilters: true,
+    customFilterDialogFooter,
+    customToolbar,
+    filterType: 'dropdown',
+    fixedHeader: true,
+    resizableColumns: resizableColumns,
+    rowsPerPage: 50,
+    rowsPerPageOptions: [10, 50, 100, 200, 500, 1000],
+    selectableRows: 'none',
+    sortOrder: { name: 'date', direction: 'desc' },
+    tableBodyHeight: 'calc(100vh - 64px - 53px)',
+    textLabels: lang
+  }
 
   return (
     <>
-      <style>{'body{ background: white; color: black; }'}</style>
-      <Header />
-      <Heading as="h1" my="3" textAlign="center">Logs do site</Heading>
-      <Filter logs={logs} setLogs={setLogs} />
-      <Table logs={logs} />
+      <ThemeProvider theme={defaultMaterialTheme}>
+        <MUIDataTable
+          title={'Logs do Crânio'}
+          data={data}
+          // @ts-ignore
+          columns={columns}
+          // @ts-ignore
+          options={options}
+          className="no-border-radius"
+        />
+      </ThemeProvider>
     </>
   )
 }
 
-export default App
+export async function getServerSideProps() {
+  const { data } = await axios.get('/logs')
+  return {
+    props: {
+      data
+    }
+  }
+}
+
+export default Logs

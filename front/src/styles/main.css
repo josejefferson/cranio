@@ -42,6 +42,10 @@ body {
   src: url("/fonts/VarelaRound.ttf") format("truetype");
 }
 
+.no-border-radius {
+  border-radius: 0 !important;
+}
+
 /* Carrossel */
 .carousel.highlights-carousel {
   background-color: black;
