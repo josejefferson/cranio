@@ -11,6 +11,7 @@ import RefreshIcon from '@mui/icons-material/Refresh'
 import { lang } from '@/components/Admin/Logs/lang'
 import { columns } from '@/components/Admin/Logs/columns'
 
+// CSS personalizados
 const defaultMaterialTheme = createTheme({
   palette: { mode: 'dark' },
   components: {
@@ -21,10 +22,26 @@ const defaultMaterialTheme = createTheme({
           padding: '3px 10px'
         }
       }
+    },
+    MUIDataTableToolbar: {
+      styleOverrides: {
+        filterPaper: {
+          '@media (max-width: 450px)': {
+            width: '100vw !important',
+            left: '0 !important',
+            top: '0 !important',
+            maxWidth: '100vw !important'
+          },
+          '@media (min-width: 451px)': {
+            minWidth: '450px !important'
+          }
+        }
+      }
     }
   }
 })
 
+// Rodapé personalizado do diálogo de filtro
 const customFilterDialogFooter = (currentFilterList: any, applyNewFilters: any) => {
   return (
     <div style={{ marginTop: '40px' }}>
@@ -33,9 +50,8 @@ const customFilterDialogFooter = (currentFilterList: any, applyNewFilters: any) 
   )
 }
 
+// Dados em carregamento
 const defaultData = {
-  // date: new Date().toISOString(),
-  // level: <LinearProgress />
   date: <LinearProgress />,
   level: <LinearProgress />,
   title: <LinearProgress />,
@@ -43,6 +59,7 @@ const defaultData = {
   details: <LinearProgress />
 }
 
+// Baixa/atualiza os dados
 async function fetchData(setData: Function) {
   setData([defaultData])
   const { data } = await axios.get('/logs')
@@ -50,28 +67,28 @@ async function fetchData(setData: Function) {
 }
 
 const Logs = () => {
-  const [resizableColumns, setResizableColumns] = React.useState(false)
   const [data, setData] = React.useState([defaultData])
+  const [resizableColumns, setResizableColumns] = React.useState(false)
 
-  React.useEffect(() => { fetchData(setData) }, [])
+  // Baixa os dados
+  React.useEffect(() => {
+    fetchData(setData)
+  }, [])
 
+  // Adiciona mais botões na barra de ferramentas
   const customToolbar = () => {
     return (
       <>
+        {/* Botão de redimensionar colunas */}
         <Tooltip title={lang.toolbar.adjustColumnWidth} disableFocusListener>
-          <IconButton
-            aria-label={lang.toolbar.adjustColumnWidth}
-            onClick={() => setResizableColumns(!resizableColumns)}
-          >
+          <IconButton aria-label={lang.toolbar.adjustColumnWidth} onClick={() => setResizableColumns(!resizableColumns)}>
             <HeightIcon style={{ transform: 'rotate(90deg)' }} />
           </IconButton>
         </Tooltip>
 
+        {/* Botão de atualizar dados */}
         <Tooltip title={lang.toolbar.refresh} disableFocusListener>
-          <IconButton
-            aria-label={lang.toolbar.refresh}
-            onClick={() => fetchData(setData)}
-          >
+          <IconButton aria-label={lang.toolbar.refresh} onClick={() => fetchData(setData)}>
             <RefreshIcon />
           </IconButton>
         </Tooltip>
@@ -99,25 +116,16 @@ const Logs = () => {
       <ThemeProvider theme={defaultMaterialTheme}>
         <MUIDataTable
           title={'Logs do Crânio'}
+          className="no-border-radius"
           data={data}
           // @ts-ignore
           columns={columns}
           // @ts-ignore
           options={options}
-          className="no-border-radius"
         />
       </ThemeProvider>
     </>
   )
-}
-
-export async function getServerSideProps() {
-  const { data } = await axios.get('/logs')
-  return {
-    props: {
-      data
-    }
-  }
 }
 
 export default Logs
