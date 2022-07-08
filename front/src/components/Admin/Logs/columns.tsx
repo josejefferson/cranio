@@ -1,15 +1,21 @@
 import { ObjectInspector, chromeDark } from 'react-inspector'
 import Pill from '@/components/Admin/Logs/Pill'
+import React from 'react'
+import { customDateFilter } from './custom-filters'
 
 export const columns = [
   {
     label: 'Tempo',
     name: 'date',
     options: {
-      setCellProps: () => ({ style: { minWidth: '180px', maxWidth: '180px' } }),
+      filterType: 'custom',
+      setCellProps: () => ({ style: { whiteSpace: 'nowrap' } }),
       customBodyRender: (value: any) => {
+        if (isNaN(Number(new Date(value)))) return value
         return new Date(value).toLocaleString()
-      }
+      },
+      customFilterListOptions: customDateFilter.customFilterListOptions,
+      filterOptions: customDateFilter.filterOptions
     }
   },
   {
@@ -17,8 +23,9 @@ export const columns = [
     name: 'level',
     filterList: ['SUCCESS', 'ERROR', 'DEBUG', 'INFO', 'WARNING'],
     options: {
-      setCellProps: () => ({ style: { minWidth: '110px', maxWidth: '110px' } }),
+      setCellProps: () => ({ style: { whiteSpace: 'nowrap' } }),
       customBodyRender: (value: any) => {
+        if (value === undefined) return <></>
         return <Pill level={value}>{value}</Pill>
       }
     }
@@ -27,7 +34,10 @@ export const columns = [
     label: 'Título',
     name: 'title',
     options: {
-      setCellProps: () => ({ style: { minWidth: '110px', maxWidth: '110px' } })
+      setCellProps: () => ({ style: { whiteSpace: 'nowrap' } }),
+      customHeadLabelRender: (columnMeta: any) => (
+        <div style={{ whiteSpace: 'nowrap' }}>{columnMeta.label}</div>
+      )
     }
   },
   {
@@ -35,8 +45,9 @@ export const columns = [
     name: 'contents',
     options: {
       filterType: 'textField',
-      setCellProps: () => ({ style: {} }),
       customBodyRender: (value: any) => {
+        if (value === undefined) return <></>
+        if (!Array.isArray(value)) return value
         return value.map((content: any) => {
           if (typeof content === 'object') return JSON.stringify(content)
           return content
@@ -50,18 +61,19 @@ export const columns = [
     sort: false,
     options: {
       filterType: 'textField',
-      setCellProps: () => ({ style: { minWidth: '400px', maxWidth: '400px' } }),
       customBodyRender: (value: any) => {
-        return value === undefined
-          ? <></>
-          : <ObjectInspector
+        if (value === undefined) return <></>
+        if (React.isValidElement(value)) return value
+        return (
+          <ObjectInspector
+            data={value}
             // @ts-ignore
             theme={{
               ...chromeDark,
               ...({ BASE_BACKGROUND_COLOR: 'transparent' })
             }}
-            data={value}
           />
+        )
       }
     }
   }

@@ -1,10 +1,13 @@
 import React from 'react'
-import { ThemeProvider, createTheme, Button } from '@mui/material'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import Button from '@mui/material/Button'
+import LinearProgress from '@mui/material/LinearProgress'
 import axios from '@/api/index'
 import MUIDataTable from 'mui-datatables'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import HeightIcon from '@mui/icons-material/Height'
+import RefreshIcon from '@mui/icons-material/Refresh'
 import { lang } from '@/components/Admin/Logs/lang'
 import { columns } from '@/components/Admin/Logs/columns'
 
@@ -30,19 +33,49 @@ const customFilterDialogFooter = (currentFilterList: any, applyNewFilters: any) 
   )
 }
 
-const Logs = ({ data }: any) => {
+const defaultData = {
+  // date: new Date().toISOString(),
+  // level: <LinearProgress />
+  date: <LinearProgress />,
+  level: <LinearProgress />,
+  title: <LinearProgress />,
+  contents: <LinearProgress />,
+  details: <LinearProgress />
+}
+
+async function fetchData(setData: Function) {
+  setData([defaultData])
+  const { data } = await axios.get('/logs')
+  setData(data)
+}
+
+const Logs = () => {
   const [resizableColumns, setResizableColumns] = React.useState(false)
+  const [data, setData] = React.useState([defaultData])
+
+  React.useEffect(() => { fetchData(setData) }, [])
 
   const customToolbar = () => {
     return (
-      <Tooltip title={lang.toolbar.adjustColumnWidth} disableFocusListener>
-        <IconButton
-          aria-label={lang.toolbar.adjustColumnWidth}
-          onClick={() => setResizableColumns(!resizableColumns)}
-        >
-          <HeightIcon style={{ transform: 'rotate(90deg)' }} />
-        </IconButton>
-      </Tooltip>
+      <>
+        <Tooltip title={lang.toolbar.adjustColumnWidth} disableFocusListener>
+          <IconButton
+            aria-label={lang.toolbar.adjustColumnWidth}
+            onClick={() => setResizableColumns(!resizableColumns)}
+          >
+            <HeightIcon style={{ transform: 'rotate(90deg)' }} />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title={lang.toolbar.refresh} disableFocusListener>
+          <IconButton
+            aria-label={lang.toolbar.refresh}
+            onClick={() => fetchData(setData)}
+          >
+            <RefreshIcon />
+          </IconButton>
+        </Tooltip>
+      </>
     )
   }
 

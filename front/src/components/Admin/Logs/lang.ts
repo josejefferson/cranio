@@ -7,7 +7,7 @@ export const lang = {
   pagination: {
     next: 'Próxima página',
     previous: 'Página anterior',
-    rowsPerPage: 'Linhas por página:',
+    rowsPerPage: 'Logs por página:',
     displayRows: 'de'
   },
   toolbar: {
@@ -16,13 +16,17 @@ export const lang = {
     print: 'Imprimir',
     viewColumns: 'Colunas visíveis',
     filterTable: 'Filtrar tabela',
-    adjustColumnWidth: 'Ajustar largura das colunas'
+    adjustColumnWidth: 'Ajustar largura das colunas',
+    refresh: 'Atualizar logs'
   },
   filter: {
     all: 'Todos',
     title: 'FILTROS',
     reset: 'REDEFINIR',
-    apply: 'Filtrar'
+    apply: 'Filtrar',
+    dateTime: 'Data/hora',
+    before: 'Antes de',
+    after: 'Depois de'
   },
   viewColumns: {
     title: 'Colunas visíveis',
