@@ -136,6 +136,7 @@ export default function LoginChallenge(): JSX.Element {
         justify={'center'}
         overflow={'hidden'}
         direction="column"
+        style={{ backgroundColor: '#202024' }}
       >
         <Stack
           id="loginAnimation"

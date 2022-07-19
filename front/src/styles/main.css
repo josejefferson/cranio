@@ -11,14 +11,14 @@
 
 * {
   -webkit-tap-highlight-color: transparent;
-  letter-spacing: initial !important;
+  /* letter-spacing: initial !important;
   line-height: initial !important;
-  word-break: break-word !important;
+  word-break: break-word !important; */
 }
 
 body {
-  font-size: 2vh !important;
-  user-select: none;
+  /* font-size: 2vh !important; */
+  /* user-select: none; */
 }
 
 /* Fontes */
