@@ -33,10 +33,10 @@ export default function Alternatives() {
 export function Alternative(array: any, isSubmitting: boolean) {
   return ({ title, correct }: any, i: number) => (
     <HStack spacing={3} w="100%" key={i}>
-      <Stack direction={['column', 'row']} w="100%">
         <Box w="100%">
           <FormField
             name={`alternatives.${i}.title`}
+            placeholder="Resposta"
             isRequired
             size="sm"
           />
@@ -63,7 +63,6 @@ export function Alternative(array: any, isSubmitting: boolean) {
             />
           </label>
         </Box>
-      </Stack>
 
       <Box>
         <IconButton

@@ -136,7 +136,7 @@ body {
   background: none !important;
 }
 
-.progress > div {
+.progress>div {
   transition: width 1s linear;
 }
 
@@ -213,4 +213,23 @@ body {
   border-radius: 0.7vh !important;
   font-size: 2vh !important;
   height: 5vh !important;
+}
+
+
+
+/* Modal do Chakra */
+@media screen and (max-width: 30em) {
+  .chakra-modal__content {
+    max-height: none !important;
+    height: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+@media screen and (max-width: 30em) and (max-height: 300px) {
+
+  .chakra-modal__footer,
+  .chakra-modal__header {
+    padding: 0.25rem 0.5rem !important;
+  }
 }

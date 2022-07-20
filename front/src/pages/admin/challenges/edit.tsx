@@ -6,8 +6,10 @@ import axios from '@/api/index'
 
 export default function EditChallenge() {
   const [open, setOpen] = React.useState(true)
+  const [error, setError] = React.useState('')
   const handleClose = () => {
     setOpen(false)
+    setError('')
     setTimeout(() => setOpen(true), 1000)
   }
 
@@ -22,7 +24,7 @@ export default function EditChallenge() {
     if (!data.timeOutMessage?.trim()) data.timeOutMessage = undefined
     console.log(JSON.stringify(data, null, 2))
     setSubmitting(true)
-    axios.post('/challenge', data).then(success).catch(error)
+    axios.post('/challengew', data).then(success).catch(error)
 
     function success({ data }: any) {
       setSubmitting(false)
@@ -33,11 +35,16 @@ export default function EditChallenge() {
     function error(err: any) {
       setSubmitting(false)
       console.log(err)
+      if (typeof err.response.data === 'object' && err.response.data.error) {
+        setError(`(${err.response.data.code}) ${err.response.data.message}`)
+      } else {
+        setError(err.message)
+      }
     }
   }
 
   return (
-    <EditModal data={initialValues} title="desafio" handleSubmit={handleSubmit} isOpen={open} handleClose={handleClose}>
+    <EditModal data={initialValues} title="desafio" handleSubmit={handleSubmit} isOpen={open} handleClose={handleClose} error={error}>
       <ChallengesEdit />
     </EditModal>
   )

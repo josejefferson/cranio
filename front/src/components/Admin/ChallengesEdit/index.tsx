@@ -7,7 +7,6 @@ import Creators from './Creators'
 import Courses from './Courses'
 
 export default function ChallengeEditForm() {
-
 	return (
 		<>
 			<Heading mb={2} size="md">Dados do desafio</Heading>

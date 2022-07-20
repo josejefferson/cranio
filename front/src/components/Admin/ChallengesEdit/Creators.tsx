@@ -34,16 +34,28 @@ export function Creator(array: any, isSubmitting: boolean) {
     <HStack spacing={3} w="100%" key={i}>
       <Stack direction={['column', 'row']} w="100%">
         <Box w="100%">
-          <FormField label="Nome" name={`createdBy.${i}.name`} size="sm" isRequired inputProps={{ autoComplete: 'on' }} />
+          <FormField
+            placeholder="Nome"
+            name={`createdBy.${i}.name`}
+            size="sm"
+            isRequired
+            inputProps={{ autoComplete: 'on' }}
+          />
         </Box>
 
         <Box w="100%">
-          <FormField label="E-mail" name={`createdBy.${i}.email`} type="email" size="sm" isRequired inputProps={{ autoComplete: 'on' }} />
+          <FormField
+            placeholder="E-mail"
+            name={`createdBy.${i}.email`}
+            type="email"
+            size="sm"
+            isRequired
+            inputProps={{ autoComplete: 'on' }}
+          />
         </Box>
       </Stack>
 
       <Box>
-        <FormLabel>&nbsp;</FormLabel>
         <IconButton
           aria-label="Excluir"
           size="sm"
