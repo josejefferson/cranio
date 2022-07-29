@@ -1,15 +1,28 @@
-require('dotenv/config')
-require('module-alias/register')
-require('./modules/database')
-const express = require('express')
-const cors = require('cors')
-const log = require('./helpers/logger')
-const Restrictions = require('./routes/_restrictions')
+import 'dotenv/config'
+import './config/database'
+import './config/logger'
+import express from 'express'
+import cors from 'cors'
+import log from '@josejefferson/jj-logger'
+import Restrictions from './routes/_restrictions'
+import responseTime from 'response-time'
+
+import highlightRoutes from './routes/highlight'
+import challengeRoutes from './routes/challenge'
+import logRoutes from './routes/log'
+import studentRoutes from './routes/student'
+import authRoutes from './routes/auth'
+
 const app = express()
-const responseTime = require('response-time')
+
+declare global {
+	namespace Express {
+		interface Response { time?: any }
+	}
+}
 
 app.set('trust proxy', true)
-app.use(responseTime((req, res, time) => res.time = Math.round(time)))
+app.use(responseTime((req, res, time: number) => res.time = Math.round(time)))
 app.use((req, res, next) => {
 	res.on('finish', () => {
 		log().http({
@@ -29,11 +42,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(Restrictions.user)
 app.use(cors())
-app.use(['/highlight', '/highlights'], require('./routes/highlight'))
-app.use(['/challenge', '/challenges'], require('./routes/challenge'))
-app.use(['/log', '/logs'], require('./routes/log'))
-app.use(['/student', '/students'], require('./routes/student'))
-app.use(['/auth'], require('./routes/auth'))
+app.use(['/highlight', '/highlights'], highlightRoutes)
+app.use(['/challenge', '/challenges'], challengeRoutes)
+app.use(['/log', '/logs'], logRoutes)
+app.use(['/student', '/students'], studentRoutes)
+app.use(['/auth'], authRoutes)
 
 app.use((req, res) => {
 	if (res.headersSent) return

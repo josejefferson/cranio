@@ -1,10 +1,43 @@
-const mongoose = require('mongoose')
-const sendChallengeWonEmail = require('../modules/email/challenge-won')
-const dbLogger = require('../helpers/db-logger')
+import mongoose, { Model, Document } from 'mongoose'
+import { IStudent } from './Student'
+import sendChallengeWonEmail from '../modules/email/challenge-won'
+import dbLogger from '../helpers/db-logger'
+
+export interface IChallenge extends Document {
+	active: boolean,
+	question: string,
+	topic: string,
+	course: number[],
+	courseName: string[],
+	image?: string,
+	time: number,
+	preparationTime: number,
+	createdBy: {
+		name: string,
+		email: string
+	}[],
+	alternatives: {
+		title: string,
+		subtitle: string,
+		correct: boolean
+	}[],
+	randomizeAlternatives: boolean,
+	preparationMessage: string,
+	correctMessage: string,
+	incorrectMessage: string,
+	timeOutMessage: string,
+	answeredBy: string,
+	checkCorrect(id: string): boolean
+	won(student: IStudent): Promise<IChallenge>
+}
+
+export interface IChallengeModel extends Model<IChallenge> {
+	findRandom(course: number, testUser: boolean): IChallenge
+}
 
 const options = { timestamps: true }
 
-const schema = new mongoose.Schema({
+const schema = new mongoose.Schema<IChallenge, IChallengeModel>({
 	active: { type: Boolean, default: true },
 	question: { type: String, required: true },
 	topic: { type: String, required: true },
@@ -36,7 +69,7 @@ const schema = new mongoose.Schema({
 	answeredBy: { type: String }
 }, options)
 
-schema.statics.findRandom = async function (course, testUser = false) {
+schema.statics.findRandom = async function (course: number, testUser = false) {
 	const conditions = testUser ? {} : { active: true, $or: [{ course }, { course: null }] }
 	const challenges = await this.find(conditions)
 	const challenge = challenges[Math.floor(Math.random() * challenges.length)]
@@ -46,13 +79,13 @@ schema.statics.findRandom = async function (course, testUser = false) {
 	return challenge
 }
 
-schema.methods.checkCorrect = function (id) {
+schema.methods.checkCorrect = function (id: string) {
 	const correctAlternatives = this.alternatives.filter((alternative) => alternative.correct)
 	const correct = correctAlternatives.some((alternative) => alternative._id.toString() === id.toString())
 	return correct
 }
 
-schema.methods.won = function (student) {
+schema.methods.won = function (student: IStudent) {
 	if (student.testUser) return Promise.resolve(null)
 	student.canPlayToday = false
 	student.challengesCompleted += 1
@@ -65,4 +98,4 @@ schema.methods.won = function (student) {
 
 dbLogger(schema, 'Challenge')
 
-module.exports = mongoose.model('Challenge', schema)
+export default mongoose.model<IChallenge, IChallengeModel>('Challenge', schema)

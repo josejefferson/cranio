@@ -1,7 +1,7 @@
 /**
  * Converte uma string em JSON caso seja válida
  */
-function jsonParse(text, reviver, defaultValue = {}, noDefaultValue = false) {
+export function jsonParse(text, reviver, defaultValue = {}, noDefaultValue = false) {
 	if (noDefaultValue) defaultValue = undefined
 	if (typeof text === 'object' && text !== null) {
 		return text || defaultValue
@@ -13,5 +13,3 @@ function jsonParse(text, reviver, defaultValue = {}, noDefaultValue = false) {
 		}
 	}
 }
-
-module.exports = { jsonParse }

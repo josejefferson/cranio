@@ -1,17 +1,17 @@
-const express = require('express')
-const router = express.Router()
-const asyncRoutes = require('../helpers/async-routes')
-const Restrictions = require('./_restrictions')
+import { Router } from 'express'
+import asyncRoutes from '../helpers/async-routes'
+import Restrictions from './_restrictions'
+import Challenge from '../models/Challenge'
+import Student from '../models/Student'
+import dbRoutes from './_database'
 
-const Challenge = require('../models/Challenge')
-const Student = require('../models/Student')
-const databaseRoutes = require('./_database')(Challenge)
+const router = Router()
+const databaseRoutes = dbRoutes(Challenge)
 
 /**
  * Retorna o número de desafios ativos
  */
 router.get('/active', asyncRoutes(async (req, res) => {
-	const currentDate = new Date().toISOString()
 	const challenges = await Challenge.find({ active: true })
 	let challengesPerCourse = {}
 
@@ -53,8 +53,8 @@ router.get('/start/:studentRegistration', asyncRoutes(async (req, res) => {
 router.post('/check', asyncRoutes(async (req, res) => {
 	const { studentRegistration, challengeID, choiceID } = req.body
 
-	if (!choiceID) return res.json({ status: 'TIMEOUT', message: challenge.timeOutMessage })
 	const challenge = await Challenge.findById(challengeID)
+	if (!choiceID) return res.json({ status: 'TIMEOUT', message: challenge.timeOutMessage })
 	if (!challenge) res.status(400).json({ error: true, code: 'CHALLENGE_NOT_FOUND', message: 'Desafio não encontrado' })
 	const student = await Student.findOne({ registration: studentRegistration })
 	if (!student) res.status(400).json({ error: true, code: 'STUDENT_NOT_FOUND', message: 'Estudante não encontrado' })
@@ -72,4 +72,4 @@ router.post('/check', asyncRoutes(async (req, res) => {
  */
 router.use(Restrictions.admin, databaseRoutes.all)
 
-module.exports = router
+export default router

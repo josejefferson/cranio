@@ -1,4 +1,4 @@
-module.exports = (middleware) => {
+export default function (middleware) {
 	return async (req, res, next) => {
 		try {
 			if (middleware.constructor.name === 'AsyncFunction') {

@@ -1,5 +1,18 @@
-const mongoose = require('mongoose')
-const dbLogger = require('../helpers/db-logger')
+import mongoose, { Document } from 'mongoose'
+import dbLogger from '../helpers/db-logger'
+
+export interface IStudent extends Document {
+	name: string,
+	registration: string,
+	course: number,
+	courseName: string,
+	canPlayIn: Date,
+	challengesCompleted: number,
+	testUser?: boolean,
+	canPlayToday?: boolean,
+	shortName?: string,
+	playedToday(): Promise<IStudent>
+}
 
 const options = {
 	timestamps: true,
@@ -8,7 +21,7 @@ const options = {
 	}
 }
 
-const schema = new mongoose.Schema({
+const schema = new mongoose.Schema<IStudent>({
 	name: { type: String, required: true },
 	registration: { type: String, required: true },
 	course: { type: Number, required: true },
@@ -45,4 +58,4 @@ schema.methods.playedToday = function () {
 
 dbLogger(schema, 'Student')
 
-module.exports = mongoose.model('Student', schema)
+export default mongoose.model<IStudent>('Student', schema)

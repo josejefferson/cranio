@@ -1,6 +1,6 @@
-const express = require('express')
-const router = express.Router()
-const { jsonParse } = require('../helpers/helpers')
+import { Router } from 'express'
+import { jsonParse } from '../helpers/helpers'
+const router = Router()
 
 /**
  * Verifica login e senha
@@ -34,4 +34,4 @@ router.post('/verify', (req, res) => {
 	return res.json({ success: true })
 })
 
-module.exports = router
+export default router

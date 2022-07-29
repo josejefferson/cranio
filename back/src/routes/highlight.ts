@@ -1,10 +1,11 @@
-const express = require('express')
-const router = express.Router()
-const asyncRoutes = require('../helpers/async-routes')
-const Restrictions = require('./_restrictions')
+import { Router } from 'express'
+import asyncRoutes from '../helpers/async-routes'
+import Restrictions from './_restrictions'
+import Highlight from '../models/Highlight'
+import dbRoutes from './_database'
 
-const Highlight = require('../models/Highlight')
-const databaseRoutes = require('./_database')(Highlight)
+const router = Router()
+const databaseRoutes = dbRoutes(Highlight)
 
 /**
  * Retorna as propagandas ativas
@@ -25,4 +26,4 @@ router.get('/active', asyncRoutes(async (req, res) => {
  */
 router.use(Restrictions.admin, databaseRoutes.all)
 
-module.exports = router
+export default router

@@ -1,7 +1,7 @@
-const express = require('express')
+import { Router } from 'express'
 
-module.exports = (Collection) => {
-	const router = express.Router()
+export default function (Collection) {
+	const router = Router()
 
 	const getAll = (req, res, next) => {
 		Collection.find()
@@ -51,11 +51,11 @@ module.exports = (Collection) => {
 
 	return {
 		all: router,
-		getAll: express.Router().get('/', getAll),
-		getOne: express.Router().get('/:id', getOne),
-		add: express.Router().post('/', add),
-		update: express.Router().put('/:id', update),
-		remove: express.Router().delete('/', remove)
+		getAll: Router().get('/', getAll),
+		getOne: Router().get('/:id', getOne),
+		add: Router().post('/', add),
+		update: Router().put('/:id', update),
+		remove: Router().delete('/', remove)
 	}
 }
 

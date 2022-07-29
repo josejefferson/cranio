@@ -1,7 +1,7 @@
-const sendEmail = require('./send')
-const ejs = require('ejs')
+import sendEmail from './send'
+import ejs from 'ejs'
 
-module.exports = async (challenge, student) => {
+export default async function (challenge, student) {
 	const html = await ejs.renderFile('./src/modules/email/challenge-won.ejs', { challenge, student })
 	await sendEmail({
 		to: challenge.createdBy.map((challenge) => challenge.email),

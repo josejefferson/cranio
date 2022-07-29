@@ -1,7 +1,10 @@
-const mongoose = require('mongoose')
-const log = require('../helpers/logger')
+import mongoose, { ConnectOptions } from 'mongoose'
+import log from '@josejefferson/jj-logger'
 
-let mongoDBURL = process.env.MONGO_DB || 'mongodb://localhost'
+const options: ConnectOptions = {
+	// useNewUrlParser: true,
+	// useUnifiedTopology: true
+}
 
 mongoose.connection.on('connecting', () => log('MongoDB', 'CONNECTING').info('Conectando...'))
 mongoose.connection.on('connected', () => log('MongoDB', 'CONNECTED', true).success('Conectado'))
@@ -12,15 +15,7 @@ mongoose.connection.on('error', (err) => {
 })
 
 function mongoConnect() {
-	mongoose.connect(mongoDBURL, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true
-	}).catch(() => { })
+	mongoose.connect(process.env.MONGO_DB, options).catch(() => { })
 }
 
-mongoConnect()
-
-require('../models/Highlight')
-require('../models/Challenge')
-require('../models/Log')
-require('../models/Student')
+if (process.env.MONGO_DB) mongoConnect()

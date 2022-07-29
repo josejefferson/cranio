@@ -1,11 +1,11 @@
-const { jsonParse } = require('../helpers/helpers')
-const basicAuth = require('express-basic-auth')
+import { jsonParse } from '../helpers/helpers'
+import basicAuth from 'express-basic-auth'
 
-const unauthorizedResponse = () => {
+export const unauthorizedResponse = () => {
 	return { error: true, code: 401, message: 'Unauthorized' }
 }
 
-module.exports = {
+export default {
 	/**
 	 * Permite acesso apenas a Usuários logados
 	 */

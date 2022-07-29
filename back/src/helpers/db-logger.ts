@@ -1,6 +1,7 @@
 
-function dbLogger(schema, modelName) {
-	const log = require('./logger')
+import log from '@josejefferson/jj-logger'
+
+export default function dbLogger(schema, modelName) {
 	schema.post('remove', (doc) => log().db({ event: 'remove', collection: modelName, id: doc._id }))
 	schema.post('updateOne', (doc) => log().db({ event: 'updateOne', collection: modelName, id: doc._id }))
 	schema.post('deleteOne', (doc) => log().db({ event: 'deleteOne', collection: modelName, id: doc._id }))
@@ -16,5 +17,3 @@ function dbLogger(schema, modelName) {
 	schema.post('updateOne', (doc) => log().db({ event: 'updateOne', collection: modelName, id: doc._id }))
 	schema.post('updateMany', (doc) => log().db({ event: 'updateMany', collection: modelName, id: doc._id }))
 }
-
-module.exports = dbLogger

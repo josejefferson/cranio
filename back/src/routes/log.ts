@@ -1,13 +1,10 @@
-const express = require('express')
-const router = express.Router()
-const asyncRoutes = require('../helpers/async-routes')
-const { jsonParse } = require('../helpers/helpers')
+import { Router } from 'express'
+import asyncRoutes from '../helpers/async-routes'
+import { jsonParse } from '../helpers/helpers'
+import Restrictions from './_restrictions'
+import Log from '../models/Log'
 
-const Restrictions = require('./_restrictions')
-
-const Logger = require('../helpers/logger')
-const Log = require('../models/Log')
-
+const router = Router()
 router.use(Restrictions.admin)
 
 /**
@@ -27,4 +24,4 @@ router.get('/', asyncRoutes(async (req, res) => {
 	})
 }))
 
-module.exports = router
+export default router

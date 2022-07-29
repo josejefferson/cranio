@@ -1,11 +1,11 @@
-const express = require('express')
-const router = express.Router()
-const asyncRoutes = require('../helpers/async-routes')
-const Restrictions = require('./_restrictions')
+import { Router } from 'express'
+import asyncRoutes from '../helpers/async-routes'
+import Restrictions from './_restrictions'
+import Student from '../models/Student'
+import dbRoutes from './_database'
 
-const Student = require('../models/Student')
-const databaseRoutes = require('./_database')(Student)
-
+const router = Router()
+const databaseRoutes = dbRoutes(Student)
 /**
  * Retorna os dados de um estudante
  */
@@ -29,10 +29,10 @@ router.get('/ranking', asyncRoutes(async (req, res) => {
 	let i = 0
 	let lastChallengesCompleted = null
 	students = students.map((student) => {
-		student = student.toObject()
-		student.place = lastChallengesCompleted === student.challengesCompleted ? i : ++i
-		lastChallengesCompleted = student.challengesCompleted
-		return student
+		const studentObj: any = student.toObject()
+		studentObj.place = lastChallengesCompleted === studentObj.challengesCompleted ? i : ++i
+		lastChallengesCompleted = studentObj.challengesCompleted
+		return studentObj
 	})
 
 	res.json(students)
@@ -43,4 +43,4 @@ router.get('/ranking', asyncRoutes(async (req, res) => {
  */
 router.use(Restrictions.admin, databaseRoutes.all)
 
-module.exports = router
+export default router

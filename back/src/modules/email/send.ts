@@ -1,10 +1,9 @@
-const nodemailer = require('nodemailer')
-const { google } = require('googleapis')
-const log = require('../../helpers/logger')
-const OAuth2 = google.auth.OAuth2
+import nodemailer from 'nodemailer'
+import log from '@josejefferson/jj-logger'
+import { OAuth2Client } from 'google-auth-library'
 
-async function createTransporter() {
-	const oauth2Client = new OAuth2(
+export async function createTransporter() {
+	const oauth2Client = new OAuth2Client(
 		process.env.GMAIL_CLIENT_ID,
 		process.env.GMAIL_CLIENT_SECRET,
 		'https://developers.google.com/oauthplayground'
@@ -24,8 +23,9 @@ async function createTransporter() {
 		return null
 	})
 
+	let transporter
 	if (accessToken) {
-		var transporter = nodemailer.createTransport({
+		transporter = nodemailer.createTransport({
 			service: 'gmail',
 			auth: {
 				type: 'OAuth2',
@@ -37,7 +37,7 @@ async function createTransporter() {
 			}
 		})
 	} else {
-		var transporter = nodemailer.createTransport({
+		transporter = nodemailer.createTransport({
 			service: 'gmail',
 			auth: {
 				user: process.env.GMAIL_EMAIL,
@@ -49,7 +49,7 @@ async function createTransporter() {
 	return transporter
 }
 
-const transporter = createTransporter()
+export const transporter = createTransporter()
 
 // Testa o e-mail
 transporter
@@ -57,12 +57,10 @@ transporter
 	.then(() => log('E-mail', true).success('E-mail testado e funcionando'))
 	.catch((err) => log('E-mail', true).error('Falha no e-mail', `(${err.message})`))
 
-async function send(options) {
+export default async function send(options) {
 	const emailTransporter = await transporter
 	options = Object.assign(options, {
 		from: { name: 'O Crânio', address: process.env.GMAIL_EMAIL }
 	})
 	return emailTransporter.sendMail(options)
 }
-
-module.exports = send
