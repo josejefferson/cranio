@@ -17,8 +17,8 @@ export default function EditChallenge() {
     try {
       const data = JSON.parse(JSON.stringify(values))
       if (!data.image?.trim?.()) data.image = undefined
-      if (!data.time?.trim?.()) data.time = undefined
-      if (!data.preparationTime?.trim?.()) data.preparationTime = undefined
+      if (!data.time) data.time = undefined
+      if (!data.preparationTime) data.preparationTime = undefined
       if (!data.preparationMessage?.trim?.()) data.preparationMessage = undefined
       if (!data.correctMessage?.trim?.()) data.correctMessage = undefined
       if (!data.incorrectMessage?.trim?.()) data.incorrectMessage = undefined
