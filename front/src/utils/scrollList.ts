@@ -4,8 +4,7 @@ export default function scrollList(e: any, i: number, array: any, listRef: any) 
   if (!['Enter', 'ArrowUp', 'ArrowDown'].includes(e.key)) return
   e.preventDefault()
   if (e.key === 'Enter') {
-    const nextItemRef = listRef.current[i + 1]
-    if (!nextItemRef) array.push(emptyAlternative)
+    array.insert(i + 1, { ...emptyAlternative })
     setTimeout(() => listRef.current[i + 1].querySelector('input').focus())
   } else {
     const itemRef = listRef.current[i + (e.key === 'ArrowDown' ? 1 : -1)]

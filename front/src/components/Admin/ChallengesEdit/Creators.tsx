@@ -34,7 +34,7 @@ export default function Creators() {
 
 export function Creator(array: any, listRef: any, isSubmitting: boolean) {
   return ({ name, email }: any, i: number) => (
-    <HStack spacing={3} w="100%" key={i} ref={(ref) => (listRef.current[i] = ref)}>
+    <HStack spacing={2} w="100%" key={i} ref={(ref) => (listRef.current[i] = ref)}>
       <Stack direction={['column', 'row']} w="100%">
         <Box w="100%">
           <FormField

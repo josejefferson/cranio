@@ -7,12 +7,15 @@ import axios from '@/api/index'
 export default function EditChallenge() {
   const [open, setOpen] = React.useState(true)
   const [error, setError] = React.useState('')
+
+  // Ao fechar o modal
   const handleClose = () => {
     setOpen(false)
     setError('')
     setTimeout(() => setOpen(true), 1000)
   }
 
+  // Ao enviar o formulário
   const handleSubmit = (values: any, { setSubmitting }: any) => {
     try {
       const data = JSON.parse(JSON.stringify(values))
@@ -34,12 +37,13 @@ export default function EditChallenge() {
       error(err)
     }
 
+    // Sucesso ao enviar o formulário
     function success({ data }: any) {
       setSubmitting(false)
-      console.log(data)
       handleClose()
     }
 
+    // Erro ao enviar o formulário
     function error(err: any) {
       setSubmitting(false)
       console.log(err)
@@ -51,8 +55,24 @@ export default function EditChallenge() {
     }
   }
 
+  // Autocompleta os criadores
+  try {
+    const defaultCreatorsString = localStorage.getItem('cranio.defaultCreators')
+    if (!defaultCreatorsString) throw new Error()
+    const defaultCreatorsObject = JSON.parse(defaultCreatorsString)
+    if (Array.isArray(defaultCreatorsObject)) throw new Error()
+    initialValues.createdBy = defaultCreatorsObject
+  } catch { }
+
   return (
-    <EditModal data={initialValues} title="desafio" handleSubmit={handleSubmit} isOpen={open} handleClose={handleClose} error={error}>
+    <EditModal
+      data={initialValues}
+      title="desafio"
+      handleSubmit={handleSubmit}
+      isOpen={open}
+      handleClose={handleClose}
+      error={error}
+    >
       <ChallengesEdit />
     </EditModal>
   )
