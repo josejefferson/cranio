@@ -60,7 +60,7 @@ export default function EditChallenge() {
     const defaultCreatorsString = localStorage.getItem('cranio.defaultCreators')
     if (!defaultCreatorsString) throw new Error()
     const defaultCreatorsObject = JSON.parse(defaultCreatorsString)
-    if (Array.isArray(defaultCreatorsObject)) throw new Error()
+    if (!Array.isArray(defaultCreatorsObject)) throw new Error()
     initialValues.createdBy = defaultCreatorsObject
   } catch { }
 
