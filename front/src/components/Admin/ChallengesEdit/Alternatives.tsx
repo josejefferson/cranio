@@ -1,10 +1,10 @@
-import { useRef } from 'react'
+import scrollList from '@/utils/scrollList'
 import { Box, Button, FormControl, FormLabel, HStack, IconButton, VStack } from '@chakra-ui/react'
 import { FieldArray, useFormikContext } from 'formik'
+import { useRef } from 'react'
 import { MdAdd, MdClose, MdDelete, MdDone, MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
-import { emptyAlternative } from './data'
 import FormField from '../EditModal/FormField'
-import scrollList from '@/utils/scrollList'
+import { emptyAlternative } from './data'
 
 const handlePaste = (e: any, i: number, array: any, listRef: any) => {
   const text = e.clipboardData.getData('text')?.split('\n')
@@ -32,7 +32,7 @@ export default function Alternatives() {
 
         {
           !array.form.values.alternatives.some((alternative: any) => alternative.correct) &&
-          <Box color="tomato" fontSize="sm" mt={2}>Nenhuma alternativa correta selecionada</Box>
+          <Box color="red.500" fontSize="sm" mt={2}>Nenhuma alternativa correta selecionada</Box>
         }
 
         <Button

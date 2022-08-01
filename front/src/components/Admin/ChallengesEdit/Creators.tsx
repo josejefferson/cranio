@@ -1,10 +1,10 @@
-import { useRef } from 'react'
+import scrollList from '@/utils/scrollList'
 import { Box, Button, FormControl, HStack, IconButton, Stack, VStack } from '@chakra-ui/react'
 import { FieldArray, useFormikContext } from 'formik'
+import { useRef } from 'react'
 import { MdAdd, MdDelete } from 'react-icons/md'
-import { emptyCreator } from './data'
 import FormField from '../EditModal/FormField'
-import scrollList from '@/utils/scrollList'
+import { emptyCreator } from './data'
 
 export default function Creators() {
   const { isSubmitting } = useFormikContext()

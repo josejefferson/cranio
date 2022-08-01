@@ -1,24 +1,24 @@
-import React from 'react'
-import EditModal from '@/components/Admin/EditModal'
-import ChallengesEdit from '@/components/Admin/ChallengesEdit'
-import { initialValues } from '@/components/Admin/ChallengesEdit/data'
 import axios from '@/api/index'
+import React from 'react'
+import EditModal from '../EditModal/index'
+import EditModalContent from './ChallengeEditModalContent'
+import { courses, initialValues } from './data'
 
-export default function EditChallenge() {
-  const [open, setOpen] = React.useState(true)
+export default function EditChallengeModal({ open, setOpen, data, onDone }: any) {
   const [error, setError] = React.useState('')
+  const editing = !!data
 
   // Ao fechar o modal
   const handleClose = () => {
     setOpen(false)
     setError('')
-    setTimeout(() => setOpen(true), 1000)
   }
 
   // Ao enviar o formulário
   const handleSubmit = (values: any, { setSubmitting }: any) => {
+    let data: any
     try {
-      const data = JSON.parse(JSON.stringify(values))
+      data = JSON.parse(JSON.stringify(values))
       if (!data.image?.trim?.()) data.image = undefined
       if (!data.time) data.time = undefined
       if (!data.preparationTime) data.preparationTime = undefined
@@ -26,9 +26,14 @@ export default function EditChallenge() {
       if (!data.correctMessage?.trim?.()) data.correctMessage = undefined
       if (!data.incorrectMessage?.trim?.()) data.incorrectMessage = undefined
       if (!data.timeOutMessage?.trim?.()) data.timeOutMessage = undefined
+      data.courseName = data.course?.map((course: string) => {
+        return courses.find((c: any) => c.value === +course)?.name
+      }) || []
       if (data.course?.length === 0) data.course = null
       setSubmitting(true)
-      axios.post('/challenge', data).then(success).catch(error)
+
+      if (editing) axios.put(`/challenge/${data._id}`, data).then(success).catch(error)
+      else axios.post('/challenge', data).then(success).catch(error)
 
       try {
         localStorage.setItem('cranio.defaultCreators', JSON.stringify(data.createdBy))
@@ -38,25 +43,27 @@ export default function EditChallenge() {
     }
 
     // Sucesso ao enviar o formulário
-    function success({ data }: any) {
+    function success({ data: result }: any) {
       setSubmitting(false)
       handleClose()
+      onDone(editing ? data : result, editing)
     }
 
     // Erro ao enviar o formulário
     function error(err: any) {
       setSubmitting(false)
-      console.log(err)
-      if (typeof err.response.data === 'object' && err.response.data.error) {
-        setError(`(${err.response.data.code}) ${err.response.data.message}`)
+      console.error(err)
+      if (typeof err?.response?.data === 'object' && err?.response?.data?.error) {
+        setError(`(${err?.response?.data?.code}) ${err?.response?.data?.message}`)
       } else {
-        setError(err.message)
+        setError(err?.message)
       }
     }
   }
 
   // Autocompleta os criadores
   try {
+    if (editing) throw new Error()
     const defaultCreatorsString = localStorage.getItem('cranio.defaultCreators')
     if (!defaultCreatorsString) throw new Error()
     const defaultCreatorsObject = JSON.parse(defaultCreatorsString)
@@ -64,16 +71,19 @@ export default function EditChallenge() {
     initialValues.createdBy = defaultCreatorsObject
   } catch { }
 
+  if (data?.course) data.course = data.course.map(String)
+
   return (
     <EditModal
-      data={initialValues}
+      editing={editing}
+      data={data || initialValues}
       title="desafio"
       handleSubmit={handleSubmit}
       isOpen={open}
       handleClose={handleClose}
       error={error}
     >
-      <ChallengesEdit />
+      <EditModalContent />
     </EditModal>
   )
 }

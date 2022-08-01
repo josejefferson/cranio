@@ -1,10 +1,9 @@
-import React from 'react'
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, FormControl, FormLabel, Heading, Stack, Switch } from '@chakra-ui/react'
 import { FastField } from 'formik'
 import FormField from '../EditModal/FormField'
 import Alternatives from './Alternatives'
-import Creators from './Creators'
 import Courses from './Courses'
+import Creators from './Creators'
 
 export default function ChallengeEditForm() {
 	return (
