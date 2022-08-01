@@ -25,11 +25,10 @@ export const initialValues = {
   image: '',
   alternatives: [emptyAlternative],
   randomizeAlternatives: false,
-  courses: ['313','353'],
+  course: [],
   createdBy: [emptyCreator],
   preparationMessage: '',
   correctMessage: '',
   incorrectMessage: '',
   timeOutMessage: ''
 }
-

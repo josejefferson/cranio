@@ -14,17 +14,21 @@ export default function EditChallenge() {
   }
 
   const handleSubmit = (values: any, { setSubmitting }: any) => {
-    const data = JSON.parse(JSON.stringify(values))
-    if (!data.image?.trim()) data.image = undefined
-    if (!data.time?.trim()) data.time = undefined
-    if (!data.preparationTime?.trim()) data.preparationTime = undefined
-    if (!data.preparationMessage?.trim()) data.preparationMessage = undefined
-    if (!data.correctMessage?.trim()) data.correctMessage = undefined
-    if (!data.incorrectMessage?.trim()) data.incorrectMessage = undefined
-    if (!data.timeOutMessage?.trim()) data.timeOutMessage = undefined
-    console.log(JSON.stringify(data, null, 2))
-    setSubmitting(true)
-    axios.post('/challengew', data).then(success).catch(error)
+    try {
+      const data = JSON.parse(JSON.stringify(values))
+      if (!data.image?.trim?.()) data.image = undefined
+      if (!data.time?.trim?.()) data.time = undefined
+      if (!data.preparationTime?.trim?.()) data.preparationTime = undefined
+      if (!data.preparationMessage?.trim?.()) data.preparationMessage = undefined
+      if (!data.correctMessage?.trim?.()) data.correctMessage = undefined
+      if (!data.incorrectMessage?.trim?.()) data.incorrectMessage = undefined
+      if (!data.timeOutMessage?.trim?.()) data.timeOutMessage = undefined
+      if (data.course?.length === 0) data.course = null
+      setSubmitting(true)
+      axios.post('/challenge', data).then(success).catch(error)
+    } catch (err) {
+      error(err)
+    }
 
     function success({ data }: any) {
       setSubmitting(false)

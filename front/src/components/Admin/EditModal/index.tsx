@@ -2,12 +2,16 @@ import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, 
 import { Formik, Form } from 'formik'
 
 export default function EditModal({ title, data, editing = false, handleSubmit, isOpen, handleClose, error, children }: any) {
+  const handleKeyPress = (e: any) => {
+    if (e.key === 'Enter') e.preventDefault()
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={() => { }} scrollBehavior="inside">
       <ModalOverlay />
       <Formik initialValues={data} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
-          <Form>
+          <Form onKeyPress={handleKeyPress}>
             <ModalContent maxW="2xl">
               <ModalHeader borderBottomWidth="1px">{editing ? 'Editar' : 'Adicionar'} {title}</ModalHeader>
               <ModalCloseButton onClick={handleClose} />

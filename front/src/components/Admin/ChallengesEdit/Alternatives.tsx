@@ -1,18 +1,21 @@
+import { useRef } from 'react'
 import { Box, Button, FormControl, FormLabel, HStack, IconButton, Stack, VStack } from '@chakra-ui/react'
 import { FieldArray, useFormikContext } from 'formik'
 import { MdAdd, MdClose, MdDelete, MdDone } from 'react-icons/md'
 import { emptyAlternative } from './data'
 import FormField from '../EditModal/FormField'
+import scrollList from '@/utils/scrollList'
 
 export default function Alternatives() {
   const { isSubmitting } = useFormikContext()
+  const listRef = useRef([])
 
   return (
     <FormControl mt={2}>
       <FormLabel>Alternativas</FormLabel>
       <FieldArray name="alternatives" render={(array) => (<>
         <VStack spacing={2}>
-          {array.form.values.alternatives.map(Alternative(array, isSubmitting))}
+          {array.form.values.alternatives.map(Alternative(array, listRef, isSubmitting))}
         </VStack>
 
         <Button
@@ -30,39 +33,40 @@ export default function Alternatives() {
   )
 }
 
-export function Alternative(array: any, isSubmitting: boolean) {
+export function Alternative(array: any, listRef: any, isSubmitting: boolean) {
   return ({ title, correct }: any, i: number) => (
-    <HStack spacing={3} w="100%" key={i}>
-        <Box w="100%">
-          <FormField
-            name={`alternatives.${i}.title`}
-            placeholder="Resposta"
-            isRequired
+    <HStack spacing={3} w="100%" key={i} ref={(ref) => (listRef.current[i] = ref)}>
+      <Box w="100%">
+        <FormField
+          name={`alternatives.${i}.title`}
+          placeholder={`Resposta ${i + 1}`}
+          isRequired
+          size="sm"
+          onKeyDown={(e: any) => scrollList(e, i, array, listRef)}
+        />
+      </Box>
+
+      <Box>
+        <label>
+          <IconButton
             size="sm"
+            variant="ghost"
+            colorScheme={correct ? 'green' : 'red'}
+            aria-label={correct ? 'Marcar como incorreto' : 'Marcar como correto'}
+            disabled={isSubmitting}
+            tabIndex={0}
+            as="div"
+          >
+            {correct ? <MdDone /> : <MdClose />}
+          </IconButton>
+
+          <FormField
+            name={`alternatives.${i}.correct`}
+            type="checkbox"
+            inputProps={{ style: { display: 'none' } }}
           />
-        </Box>
-
-        <Box>
-          <label>
-            <IconButton
-              size="sm"
-              variant="ghost"
-              colorScheme={correct ? 'green' : 'red'}
-              aria-label={correct ? 'Marcar como incorreto' : 'Marcar como correto'}
-              disabled={isSubmitting}
-              tabIndex={0}
-              as="div"
-            >
-              {correct ? <MdDone /> : <MdClose />}
-            </IconButton>
-
-            <FormField
-              name={`alternatives.${i}.correct`}
-              type="checkbox"
-              inputProps={{ style: { display: 'none' } }}
-            />
-          </label>
-        </Box>
+        </label>
+      </Box>
 
       <Box>
         <IconButton
