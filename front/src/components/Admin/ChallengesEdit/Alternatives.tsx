@@ -18,6 +18,11 @@ export default function Alternatives() {
           {array.form.values.alternatives.map(Alternative(array, listRef, isSubmitting))}
         </VStack>
 
+        {
+          !array.form.values.alternatives.some((alternative: any) => alternative.correct) &&
+          <Box color="red" fontSize="sm" mt={2}>Nenhuma alternativa correta selecionada</Box>
+        }
+
         <Button
           mt={3}
           size="sm"

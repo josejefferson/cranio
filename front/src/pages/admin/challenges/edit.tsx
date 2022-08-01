@@ -26,6 +26,10 @@ export default function EditChallenge() {
       if (data.course?.length === 0) data.course = null
       setSubmitting(true)
       axios.post('/challenge', data).then(success).catch(error)
+
+      try {
+        localStorage.setItem('cranio.defaultCreators', JSON.stringify(data.createdBy))
+      } catch { }
     } catch (err) {
       error(err)
     }

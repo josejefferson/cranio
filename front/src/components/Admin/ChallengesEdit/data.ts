@@ -16,6 +16,16 @@ export const courses = [
   { value: 357, name: 'LIBRAS' }
 ]
 
+let defaultCreators
+if (typeof window !== 'undefined') {
+  try {
+    const defaultCreatorsString = localStorage.getItem('cranio.defaultCreators')
+    if (!defaultCreatorsString) throw new Error()
+    const defaultCreatorsObject = JSON.parse(defaultCreatorsString)
+    if (Array.isArray(defaultCreatorsObject)) defaultCreators = defaultCreatorsObject
+  } catch { }
+}
+
 export const initialValues = {
   active: true,
   question: '',
@@ -26,7 +36,7 @@ export const initialValues = {
   alternatives: [emptyAlternative],
   randomizeAlternatives: false,
   course: [],
-  createdBy: [emptyCreator],
+  createdBy: defaultCreators || [emptyCreator],
   preparationMessage: '',
   correctMessage: '',
   incorrectMessage: '',
