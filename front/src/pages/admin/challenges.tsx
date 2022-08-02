@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import Challenge from '@/components/Admin/Challenges/Challenge'
 import DeleteModal from '@/components/Admin/ChallengesEdit/ChallengeDeleteModal'
 import EditModal from '@/components/Admin/ChallengesEdit/ChallengeEditModal'
@@ -69,6 +70,7 @@ export default function Challenges() {
   return (
     <>
       <Head>
+        <link rel="manifest" href="/manifest-admin.json" />
         <title>Desafios</title>
       </Head>
 

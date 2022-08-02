@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import Highlight from '@/components/Admin/Highlights/Highlight'
 import DeleteModal from '@/components/Admin/HighlightsEdit/HighlightDeleteModal'
 import EditModal from '@/components/Admin/HighlightsEdit/HighlightEditModal'
 import { Header } from '@/components/index'
 import { loginAndGetData } from '@/utils/login-and-get-data'
-import { Box, Button, Center, CircularProgress, Heading, SimpleGrid, Spinner, useToast } from '@chakra-ui/react'
+import { Box, Button, Center, CircularProgress, Heading, SimpleGrid, useToast } from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Head from 'next/head'
 import React from 'react'
@@ -69,6 +70,7 @@ export default function Highlights() {
   return (
     <>
       <Head>
+        <link rel="manifest" href="/manifest-admin.json" />
         <title>Anúncios</title>
       </Head>
 

@@ -1,0 +1,23 @@
+{
+  "name": "O Crânio ADMIN",
+  "short_name": "O Crânio ADMIN",
+  "description": "",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "fullscreen",
+  "scope": "/",
+  "start_url": "/admin",
+  "icons": [
+    {
+      "src": "/img/icon.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/img/icon-maskable.png",
+      "type": "image/png",
+      "sizes": "256x256",
+      "purpose": "maskable"
+    }
+  ]
+}
