@@ -1,7 +1,7 @@
 import type { HTMLChakraProps } from '@chakra-ui/react'
 import type { HTMLMotionProps } from 'framer-motion'
 
-export interface Data { 
+export interface Data {
   question: string
   createdBy: any
   time: number
@@ -23,13 +23,13 @@ export interface Props {
 }
 
 export interface Ianswer extends Data {
-	active?: boolean
-	timeOutCallback?: Function
+  active?: boolean
+  timeOutCallback?: Function
 }
 
 export interface IprosAlternatives extends Data {
   active: boolean
-	selected: any;
+  selected: any
   handleClick: any
 }
 
@@ -42,18 +42,18 @@ export type Iuser = {
   canPlayToday?: any
 }
 
-export interface IHighlights  {
+export interface IHighlights {
   _id: string
   title?: string
   description?: string
   image: string
 }
 
-export interface Props  {
+export interface Props {
   highlights: IHighlights[]
   challenges: any
 }
 
-type Merge<P, T> = Omit<P, keyof T> & T;
+type Merge<P, T> = Omit<P, keyof T> & T
 
-export type MotionBoxProps = Merge<HTMLChakraProps<'div'>, HTMLMotionProps<'div'>>;
+export type MotionBoxProps = Merge<HTMLChakraProps<'div'>, HTMLMotionProps<'div'>>

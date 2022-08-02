@@ -24,12 +24,12 @@ export default function ChallengeEditForm() {
 			<FormField mt={2} label="Disciplina ou tópico" name="topic" isRequired inputProps={{ autoComplete: 'on' }} />
 
 			<Stack mt={2} direction={['column', 'row']}>
-				<FormField label="Tempo" name="time" type="number" right="segundos" placeholder="60" />
+				<FormField label="Tempo" name="time" type="number" right="segundos" placeholder="60" inputProps={{ min: 1, max: 999 }} />
 
-				<FormField label="Tempo de preparação" name="preparationTime" type="number" right="segundos" placeholder="5" />
+				<FormField label="Tempo de preparação" name="preparationTime" type="number" right="segundos" placeholder="5" inputProps={{ min: 0, max: 999 }} />
 			</Stack>
 
-			<FormField mt={2} label="URL da imagem" name="image" placeholder="https://..." />
+			<FormField mt={2} label="URL da imagem" name="image" placeholder="https://..." type="url" />
 
 			<Alternatives />
 

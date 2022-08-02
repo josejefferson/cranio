@@ -1,7 +1,7 @@
 const styles = {
   global: {
     body: {
-      overflowX: 'hidden',
+      overflowX: 'hidden'
       // bg: 'gray.700',
     }
   }

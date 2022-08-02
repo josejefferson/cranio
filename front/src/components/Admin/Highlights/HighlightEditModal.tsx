@@ -1,8 +1,8 @@
 import axios from '@/api/index'
 import React from 'react'
 import EditModal from '../EditModal/index'
-import EditModalContent from './HighlightEditModalContent'
-import { initialValues } from './data'
+import EditModalContent from './HighlightEditForm'
+import { initialValues, defaultValues } from './data'
 import dayjs from 'dayjs'
 
 export default function EditHighlightModal({ open, setOpen, data, onDone }: any) {
@@ -26,8 +26,8 @@ export default function EditHighlightModal({ open, setOpen, data, onDone }: any)
     try {
       data = JSON.parse(JSON.stringify(values))
       if (data.endDateRaw) data.endDate = new Date(data.endDateRaw).toISOString()
-      if (!data.title?.trim?.()) data.title = null
-      if (!data.description?.trim?.()) data.description = null
+      if (!data.title?.trim?.()) data.title = defaultValues.title
+      if (!data.description?.trim?.()) data.description = defaultValues.description
       delete data.endDateRaw
       setSubmitting(true)
 

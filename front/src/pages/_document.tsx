@@ -38,7 +38,7 @@ export default class MyDocument extends Document {
           <meta property="og:title" content="O Crânio" />
           <meta property="og:type" content="website" />
           <meta property="og:description" content="O Crânio" />
-          <meta name="robots" content="index, follow" />
+          <meta name="robots" content="noindex, nofollow" />
           <meta property="og:locale" content="PT-BR" />
           <meta property="og:site_name" content="O Crânio" />
           <meta property="twitter:title" content="O Crânio" />

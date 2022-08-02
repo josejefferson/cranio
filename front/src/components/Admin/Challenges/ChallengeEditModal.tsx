@@ -1,8 +1,8 @@
 import axios from '@/api/index'
 import React from 'react'
 import EditModal from '../EditModal/index'
-import EditModalContent from './ChallengeEditModalContent'
-import { courses, initialValues } from './data'
+import EditModalContent from './ChallengeEditForm'
+import { courses, initialValues, defaultValues } from './data'
 
 export default function EditChallengeModal({ open, setOpen, data, onDone }: any) {
   const [error, setError] = React.useState('')
@@ -24,13 +24,13 @@ export default function EditChallengeModal({ open, setOpen, data, onDone }: any)
     let data: any
     try {
       data = JSON.parse(JSON.stringify(values))
-      if (!data.image?.trim?.()) data.image = null
-      if (!data.time) data.time = null
-      if (!data.preparationTime) data.preparationTime = null
-      if (!data.preparationMessage?.trim?.()) data.preparationMessage = null
-      if (!data.correctMessage?.trim?.()) data.correctMessage = null
-      if (!data.incorrectMessage?.trim?.()) data.incorrectMessage = null
-      if (!data.timeOutMessage?.trim?.()) data.timeOutMessage = null
+      if (!data.image?.trim?.()) data.image = defaultValues.image
+      if (!data.time) data.time = defaultValues.time
+      if (!data.preparationTime) data.preparationTime = defaultValues.preparationTime
+      if (!data.preparationMessage?.trim?.()) data.preparationMessage = defaultValues.preparationMessage
+      if (!data.correctMessage?.trim?.()) data.correctMessage = defaultValues.correctMessage
+      if (!data.incorrectMessage?.trim?.()) data.incorrectMessage = defaultValues.incorrectMessage
+      if (!data.timeOutMessage?.trim?.()) data.timeOutMessage = defaultValues.timeOutMessage
       data.courseName = data.course?.map((course: string) => {
         return courses.find((c: any) => c.value === +course)?.name
       }) || []

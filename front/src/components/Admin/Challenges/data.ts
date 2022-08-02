@@ -32,3 +32,21 @@ export const initialValues = {
   incorrectMessage: '',
   timeOutMessage: ''
 }
+
+export const defaultValues = {
+  active: true,
+  question: '',
+  topic: '',
+  course: null,
+  courseName: [],
+  image: null,
+  time: 60,
+  preparationTime: 3,
+  createdBy: [],
+  alternatives: [],
+  randomizeAlternatives: false,
+  preparationMessage: null,
+  correctMessage: null,
+  incorrectMessage: null,
+  timeOutMessage: null
+}

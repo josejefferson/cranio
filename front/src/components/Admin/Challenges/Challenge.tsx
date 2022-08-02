@@ -4,7 +4,7 @@ import 'dayjs/locale/pt-br'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Button, Ratio } from 'react-bootstrap'
 import { MdDelete, MdEdit, MdSchool, MdShuffle, MdStar, MdTimer, MdViewList, MdWarning } from 'react-icons/md'
-import { courses } from '../ChallengesEdit/data'
+import { courses } from '../Challenges/data'
 dayjs.locale('pt-br')
 dayjs.extend(relativeTime)
 

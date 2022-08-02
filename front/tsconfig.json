@@ -21,7 +21,8 @@
       "@/interface/*": ["src/interface/*"],
       "@/styles/*": ["src/styles/*"],
       "@/contexts/*": ["src/contexts/*"],
-      "@/utils/*": ["src/utils/*"]
+      "@/utils/*": ["src/utils/*"],
+      "@/*": ["src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -12,23 +12,9 @@ import { Props } from '@/interface/index'
 import Head from 'next/head'
 import { Preparation } from '@/components/index'
 import styles from '@/styles/Challenge.module.css'
-
-function getMusic(time: any) {
-  const random = Math.floor(Math.random() * 3)
-  const musicTime = getTime(time)
-
-  function getTime(time: any) {
-    if (time <= 5) return 5
-    else if (time > 5 && time <= 10) return 10
-    else if (time > 10 && time <= 20) return 20
-    else if (time > 20 && time <= 30) return 30
-    else if (time > 30 && time <= 60) return 60
-    else if (time > 60 && time <= 90) return 90
-    else if (time > 90) return 120
-  }
-
-  return `/music/answer-${musicTime}s-${random + 1}.mp3`
-}
+import getMusic from '@/utils/get-music'
+import { STATUS, ERRORS } from '@/utils/messages'
+import * as popups from '@/utils/popups'
 
 const Challenge: NextPage<Props> = ({ api }) => {
   const router = useRouter()
@@ -41,22 +27,12 @@ const Challenge: NextPage<Props> = ({ api }) => {
 
   // Responder pergunta
   const answer = useCallback(async (key: any) => {
-    // Mensagens
-    const STATUS: any = {
-      CORRECT: ['Parabéns, você acertou!', 'Você respondeu corretamente! Continue assim.', 'success', '/music/correct.mp3'],
-      INCORRECT: ['Que pena, resposta errada!', 'Não fique triste, você deu o seu melhor! Volte amanhã.', 'error', '/music/incorrect.mp3'],
-      TIMEOUT: ['Tempo esgotado!', 'Tic tac, o tempo acabou! Infelizmente você demorou muito e o relógio não parou. Amanhã você terá uma nova chance!', null, '/music/time\'s-up.mp3', '/img/alarm.gif']
-    }
-
     setActive(false)
     setAnswered(true)
+
     // Que rufem os tambores...
     setMusic('/music/end.mp3')
-    if (key) Swal.fire({
-      imageUrl: '/img/drum.gif',
-      text: 'Que rufem os tambores...',
-      showConfirmButton: false
-    })
+    if (key) popups.drum()
     try {
       if (key) {
         var { data } = await axios.post('/challenge/check', {
@@ -71,30 +47,17 @@ const Challenge: NextPage<Props> = ({ api }) => {
       // Exibe mensagem de sucesso/erro
       setTimeout(() => {
         setMusic(STATUS[data.status][3])
-        Swal.fire({
-          title: STATUS[data.status][0],
-          text: data.message || STATUS[data.status][1],
-          icon: STATUS[data.status][2],
-          imageUrl: STATUS[data.status][4],
-          imageHeight: '8em',
-          showConfirmButton: false
-        })
-
+        popups.status({ data })
       }, key ? 2000 : 0)
     } catch (err) {
+      // Erro
       console.log(err)
-      Swal.fire({
-        title: 'Ocorreu um erro',
-        icon: 'error',
-        showConfirmButton: false
-      })
+      popups.error()
     } finally {
       // Redireciona
       if (!test) setTimeout(() => {
         console.log('Redirecionando...')
-        router.push('/').then(() => {
-          Swal.close()
-        })
+        router.push('/').then(() => { Swal.close() })
       }, 5000)
       if (test) setAnswered(false)
       if (test) setSelectedAlternatives([])
@@ -138,26 +101,19 @@ const Challenge: NextPage<Props> = ({ api }) => {
   })
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>O Crânio | Desafio</title>
         <link rel="preload" as="image" href="/img/drum.gif" />
         <link rel="preload" as="image" href="/img/alarm.gif" />
       </Head>
+
       <Preparation {...api} callback={() => { setStarted(true); setActive(true) }} />
+
       <div className={styles.container}>
         <Header />
-        <Question
-          {...api}
-          active={active}
-          timeOutCallback={() => answer(null)}
-        />
-        <Alternatives
-          {...api}
-          active={active}
-          selected={selectedAlternatives}
-          handleClick={handleClick}
-        />
+        <Question {...api} active={active} timeOutCallback={() => answer(null)} />
+        <Alternatives  {...api} active={active} selected={selectedAlternatives} handleClick={handleClick} />
       </div>
 
       <div className={`${styles.waveWrapper} ${styles.waveAnimation}`}>
@@ -172,31 +128,19 @@ const Challenge: NextPage<Props> = ({ api }) => {
         </div>
       </div>
 
-      <ReactAudioPlayer
-        src={started ? music : ''}
-        autoPlay
-      />
-    </React.Fragment>
+      <ReactAudioPlayer src={started ? music : ''} autoPlay />
+    </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
-  
+export const getServerSideProps: GetServerSideProps = async ({ params, query }: any) => {
   try {
-    const { data } = await axios.get<Props>(`/challenge/start/${params.slug}`)
-    return {
-      props: {
-        api: data
-      }
-    }
+    const url = query.challenge
+      ? `/challenge/${query.challenge}`
+      : `/challenge/start/${params.slug}`
+    const { data } = await axios.get<Props>(url)
+    return { props: { api: data } }
   } catch (err: any) {
-    const ERRORS: any = {
-      // Code: [Title, Description]
-      'NO_CHALLENGES': ['Sem desafios 🙀', 'Desculpe-nos, mas não há desafios disponíveis para o seu curso no momento 😢. Por favor, tente novamente outro dia!'],
-      'STUDENT_NOT_FOUND': ['Estudante não encontrado', `Não encontramos um estudante com esta matrícula (${params.slug}) no nosso banco de dados`],
-      'CANT_PLAY_TODAY': ['Você já jogou hoje', 'Desculpe-nos, mas você só pode jogar uma vez por dia, volte amanhã para mais!'],
-      500: ['500 | Erro do servidor backend']
-    }
     const error = ERRORS[err?.response?.data?.code]
     if (!error) throw err
 

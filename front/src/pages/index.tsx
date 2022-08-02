@@ -3,7 +3,7 @@ import type { NextPage, GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import axios from '../api/'
-import { Box, Heading, chakra, Container, Text, Center, Flex, Image } from '@chakra-ui/react'
+import { Box, Heading, chakra } from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Carousel from 'react-bootstrap/Carousel'
 import { useLoadingContext } from '@/contexts/loading'
@@ -128,18 +128,14 @@ const Home: NextPage<Props> = (props) => {
         speed={100}
         gradient={false}
       >
-        {props.challenges.totalChallenges ? (
-          <>
-            {props.challenges.totalChallenges} desafios disponíveis:&nbsp;
-            {Object.entries(props.challenges.challengesPerCourse).map(([course, count]: any) => `${course} (${count})`).join(' - ')}
-            <div style={{ width: '20vh' }} />
-          </>
-        ) : (
-          <>
-            Nenhum desafio aberto no momento. Por favor, volte mais tarde
-            <div style={{ width: '20vh' }} />
-          </>
-        )}
+        {props.challenges.totalChallenges ? (<>
+          {props.challenges.totalChallenges} desafios disponíveis:&nbsp;
+          {Object.entries(props.challenges.challengesPerCourse).map(([course, count]: any) => `${course} (${count})`).join(' - ')}
+          <div style={{ width: '20vh' }} />
+        </>) : (<>
+          Nenhum desafio aberto no momento. Por favor, volte mais tarde
+          <div style={{ width: '20vh' }} />
+        </>)}
 
         Pronto para um desafio? Aperte qualquer tecla...
         <div style={{ width: '20vh' }} />

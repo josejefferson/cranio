@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import Challenge from '@/components/Admin/Challenges/Challenge'
-import DeleteModal from '@/components/Admin/ChallengesEdit/ChallengeDeleteModal'
-import EditModal from '@/components/Admin/ChallengesEdit/ChallengeEditModal'
+import DeleteModal from '@/components/Admin/Challenges/ChallengeDeleteModal'
+import EditModal from '@/components/Admin/Challenges/ChallengeEditModal'
 import { Header } from '@/components/index'
 import { loginAndGetData } from '@/utils/login-and-get-data'
 import { Box, Button, Center, CircularProgress, Heading, SimpleGrid, useToast } from '@chakra-ui/react'

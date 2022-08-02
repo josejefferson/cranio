@@ -1,4 +1,4 @@
-import { emptyAlternative } from '@/components/Admin/ChallengesEdit/data'
+import { emptyAlternative } from '@/components/Admin/Challenges/data'
 
 export default function scrollList(e: any, i: number, array: any, listRef: any) {
   if (!['Enter', 'ArrowUp', 'ArrowDown'].includes(e.key)) return

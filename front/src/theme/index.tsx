@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 import {
 	ChakraProvider,
 	cookieStorageManager,
-	localStorageManager,
+	localStorageManager
 } from '@chakra-ui/react'
 import theme from '../styles/theme'
 // import { ChakraProps } from '@/utils/types'
@@ -25,7 +25,7 @@ export function Chakra({ cookies, children }: ChakraProps) {
 export function getServerSideProps({ req }: any) {
 	return {
 		props: {
-			cookies: req.headers.cookie ?? '',
-		},
+			cookies: req.headers.cookie ?? ''
+		}
 	}
 }

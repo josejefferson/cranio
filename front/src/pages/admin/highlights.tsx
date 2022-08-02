@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import Highlight from '@/components/Admin/Highlights/Highlight'
-import DeleteModal from '@/components/Admin/HighlightsEdit/HighlightDeleteModal'
-import EditModal from '@/components/Admin/HighlightsEdit/HighlightEditModal'
+import DeleteModal from '@/components/Admin/Highlights/HighlightDeleteModal'
+import EditModal from '@/components/Admin/Highlights/HighlightEditModal'
 import { Header } from '@/components/index'
 import { loginAndGetData } from '@/utils/login-and-get-data'
 import { Box, Button, Center, CircularProgress, Heading, SimpleGrid, useToast } from '@chakra-ui/react'

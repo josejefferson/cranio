@@ -19,8 +19,8 @@ const PageNotFound: NextPage = () => {
     <React.Fragment>
       <Head>
         <title>404 | Tudo na vida tem um limite...</title>
+        <style>{'body { background-color: #202024; }'}</style>
       </Head>
-      <style>{'body{background-color:#202024;}'}</style>
       <Header />
       <Flex color="white" flexDirection="column" minHeight="calc(100vh - 7vh)" width="full" align="center" justifyContent="center">
         <Box
