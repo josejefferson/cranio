@@ -15,8 +15,13 @@ export default function DeleteHighlightModal({ open, setOpen, data, onDone }: an
 
   // Ao enviar o formulário
   const handleConfirm = () => {
+    const auth = {
+      username: localStorage.getItem('cranio.backend.username') || '',
+      password: localStorage.getItem('cranio.backend.password') || ''
+    }
+
     setIsSubmitting(true)
-    axios.delete(`/highlight/${data._id}`).then(success).catch(error)
+    axios.delete(`/highlight/${data._id}`, { auth }).then(success).catch(error)
 
     // Sucesso ao enviar o formulário
     function success() {

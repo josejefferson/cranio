@@ -16,6 +16,11 @@ export default function EditChallengeModal({ open, setOpen, data, onDone }: any)
 
   // Ao enviar o formulário
   const handleSubmit = (values: any, { setSubmitting }: any) => {
+    const auth = {
+      username: localStorage.getItem('cranio.backend.username') || '',
+      password: localStorage.getItem('cranio.backend.password') || ''
+    }
+
     let data: any
     try {
       data = JSON.parse(JSON.stringify(values))
@@ -32,8 +37,8 @@ export default function EditChallengeModal({ open, setOpen, data, onDone }: any)
       if (data.course?.length === 0) data.course = null
       setSubmitting(true)
 
-      if (editing) axios.put(`/challenge/${data._id}`, data).then(success).catch(error)
-      else axios.post('/challenge', data).then(success).catch(error)
+      if (editing) axios.put(`/challenge/${data._id}`, data, { auth }).then(success).catch(error)
+      else axios.post('/challenge', data, { auth }).then(success).catch(error)
 
       try {
         localStorage.setItem('cranio.defaultCreators', JSON.stringify(data.createdBy))

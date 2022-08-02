@@ -3,7 +3,7 @@ import DeleteModal from '@/components/Admin/ChallengesEdit/ChallengeDeleteModal'
 import EditModal from '@/components/Admin/ChallengesEdit/ChallengeEditModal'
 import { Header } from '@/components/index'
 import { loginAndGetData } from '@/utils/login-and-get-data'
-import { Box, Button, Center, Heading, SimpleGrid, Spinner, useToast } from '@chakra-ui/react'
+import { Box, Button, Center, CircularProgress, Heading, SimpleGrid, useToast } from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Head from 'next/head'
 import React from 'react'
@@ -32,7 +32,7 @@ export default function Challenges() {
     setCurrentEditing(challenge)
     setEditModalOpen(true)
   }
-  
+
   /** Ação ao clicar no botão Excluir Desafio */
   const handleDelete = (challenge: any) => {
     setCurrentEditing(challenge)
@@ -63,7 +63,7 @@ export default function Challenges() {
       title: 'O desafio foi excluído com sucesso!',
       status: 'success'
     })
-    setChallenges(challenges.filter((challenge:any) => challenge._id !== data._id))
+    setChallenges(challenges.filter((challenge: any) => challenge._id !== data._id))
   }
 
   return (
@@ -72,7 +72,7 @@ export default function Challenges() {
         <title>Desafios</title>
       </Head>
 
-      <Header />
+      <a href="/admin"><Header /></a>
 
       <EditModal open={editModalOpen} setOpen={setEditModalOpen} data={currentEditing} onDone={handleEditDone} />
       <DeleteModal open={deleteModalOpen} setOpen={setDeleteModalOpen} data={currentEditing} onDone={handleDeleteDone} />
@@ -97,7 +97,11 @@ export default function Challenges() {
       </Button>
 
       <Container className="my-3">
-        <Box as="section">
+        <Box hidden={activeChallenges || inactiveChallenges} textAlign="center">
+          <CircularProgress isIndeterminate color="blue.500" trackColor="transparent" />
+        </Box>
+
+        <Box as="section" hidden={!activeChallenges}>
           <Heading as="h3" size="xl" color="blue.500" my={7} p={0}>
             Desafios ativos ({activeChallenges?.length ?? '-'})
           </Heading>
@@ -111,12 +115,12 @@ export default function Challenges() {
                   handleEditButton={() => handleEdit(challenge)}
                   handleDeleteButton={() => handleDelete(challenge)}
                 />
-              ) || <Spinner />
+              )
             }
           </SimpleGrid>
         </Box>
 
-        <Box as="section">
+        <Box as="section" hidden={!inactiveChallenges}>
           <Heading as="h3" size="xl" color="blue.500" my={7} p={0}>
             Desafios resolvidos ou desativados ({inactiveChallenges?.length ?? '-'})
           </Heading>
@@ -130,10 +134,12 @@ export default function Challenges() {
                   handleEditButton={() => handleEdit(challenge)}
                   handleDeleteButton={() => handleDelete(challenge)}
                 />
-              ) || <Spinner />
+              )
             }
           </SimpleGrid>
         </Box>
+
+        <Box h="60px" />
       </Container>
     </>
   )

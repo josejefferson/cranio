@@ -17,17 +17,22 @@ export default function EditHighlightModal({ open, setOpen, data, onDone }: any)
 
   // Ao enviar o formulário
   const handleSubmit = (values: any, { setSubmitting }: any) => {
+    const auth = {
+      username: localStorage.getItem('cranio.backend.username') || '',
+      password: localStorage.getItem('cranio.backend.password') || ''
+    }
+
     let data: any
     try {
       data = JSON.parse(JSON.stringify(values))
-      data.endDate = new Date(data.endDateRaw).toISOString()
+      if (data.endDateRaw) data.endDate = new Date(data.endDateRaw).toISOString()
       if (!data.title?.trim?.()) data.title = undefined
       if (!data.description?.trim?.()) data.description = undefined
       delete data.endDateRaw
       setSubmitting(true)
 
-      if (editing) axios.put(`/highlight/${data._id}`, data).then(success).catch(error)
-      else axios.post('/highlight', data).then(success).catch(error)
+      if (editing) axios.put(`/highlight/${data._id}`, data, { auth }).then(success).catch(error)
+      else axios.post('/highlight', data, { auth }).then(success).catch(error)
     } catch (err) {
       error(err)
     }

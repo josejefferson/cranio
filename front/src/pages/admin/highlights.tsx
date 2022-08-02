@@ -3,7 +3,7 @@ import DeleteModal from '@/components/Admin/HighlightsEdit/HighlightDeleteModal'
 import EditModal from '@/components/Admin/HighlightsEdit/HighlightEditModal'
 import { Header } from '@/components/index'
 import { loginAndGetData } from '@/utils/login-and-get-data'
-import { Box, Button, Center, Heading, SimpleGrid, Spinner, useToast } from '@chakra-ui/react'
+import { Box, Button, Center, CircularProgress, Heading, SimpleGrid, Spinner, useToast } from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Head from 'next/head'
 import React from 'react'
@@ -18,7 +18,6 @@ export default function Highlights() {
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false)
   if (!highlights) loginAndGetData('/highlights', highlights, setHighlights)
 
-  console.log(JSON.stringify(highlights))
   const activeHighlights = highlights?.filter((highlight: any) => new Date(highlight.endDate) >= new Date())
   const inactiveHighlights = highlights?.filter((highlight: any) => new Date(highlight.endDate) < new Date())
 
@@ -73,7 +72,7 @@ export default function Highlights() {
         <title>Anúncios</title>
       </Head>
 
-      <Header />
+      <a href="/admin"><Header /></a>
 
       <EditModal open={editModalOpen} setOpen={setEditModalOpen} data={currentEditing} onDone={handleEditDone} />
       <DeleteModal open={deleteModalOpen} setOpen={setDeleteModalOpen} data={currentEditing} onDone={handleDeleteDone} />
@@ -98,7 +97,11 @@ export default function Highlights() {
       </Button>
 
       <Container className="my-3">
-        <Box as="section">
+        <Box hidden={activeHighlights || inactiveHighlights} textAlign="center">
+          <CircularProgress isIndeterminate color="blue.500" trackColor="transparent" />
+        </Box>
+
+        <Box as="section" hidden={!activeHighlights}>
           <Heading as="h3" size="xl" color="blue.500" my={7} p={0}>
             Anúncios ativos ({activeHighlights?.length ?? '-'})
           </Heading>
@@ -112,12 +115,12 @@ export default function Highlights() {
                   handleEditButton={() => handleEdit(highlight)}
                   handleDeleteButton={() => handleDelete(highlight)}
                 />
-              ) || <Spinner />
+              )
             }
           </SimpleGrid>
         </Box>
 
-        <Box as="section">
+        <Box as="section" hidden={!inactiveHighlights}>
           <Heading as="h3" size="xl" color="blue.500" my={7} p={0}>
             Anúncios passados ({inactiveHighlights?.length ?? '-'})
           </Heading>
@@ -131,10 +134,12 @@ export default function Highlights() {
                   handleEditButton={() => handleEdit(highlight)}
                   handleDeleteButton={() => handleDelete(highlight)}
                 />
-              ) || <Spinner />
+              )
             }
           </SimpleGrid>
         </Box>
+
+        <Box h="60px" />
       </Container>
     </>
   )

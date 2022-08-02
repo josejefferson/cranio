@@ -51,12 +51,27 @@ export default function Challenges({ challenge, handleEditButton, handleDeleteBu
             <Box w="100%">Nenhuma alternativa correta selecionada</Box>
           </HStack>
 
-          <HStack spacing={2} w="100%" color="gray.500" fontSize="xs" title="Criado há" mt={1}>
+          <HStack
+            spacing={2}
+            mt={1}
+            w="100%"
+            color="gray.500"
+            fontSize="xs"
+            title={`Criado em ${dayjs(challenge.createdAt).format('DD/MM/YYYY HH:mm:ss')}`}
+            hidden={!challenge.createdAt}
+          >
             <Box><MdStar /></Box>
             <Box w="100%">{dayjs(challenge.createdAt).fromNow()}</Box>
           </HStack>
 
-          <HStack spacing={2} w="100%" color="gray.500" fontSize="xs" title="Editado há">
+          <HStack
+            spacing={2}
+            w="100%"
+            color="gray.500"
+            fontSize="xs"
+            title={`Editado em ${dayjs(challenge.updatedAt).format('DD/MM/YYYY HH:mm:ss')}`}
+            hidden={!challenge.updatedAt}
+          >
             <Box><MdEdit /></Box>
             <Box w="100%">{dayjs(challenge.updatedAt).fromNow()}</Box>
           </HStack>
