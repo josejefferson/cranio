@@ -2,7 +2,7 @@ import axios from '@/api/index'
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react'
 import React from 'react'
 
-export default function DeleteChallengeModal({ open, setOpen, data, onDone }: any) {
+export default function DeleteHighlightModal({ open, setOpen, data, onDone }: any) {
   const [error, setError] = React.useState('')
   const [isSubmitting, setIsSubmitting] = React.useState(false)
 
@@ -16,7 +16,7 @@ export default function DeleteChallengeModal({ open, setOpen, data, onDone }: an
   // Ao enviar o formulário
   const handleConfirm = () => {
     setIsSubmitting(true)
-    axios.delete(`/challenge/${data._id}`).then(success).catch(error)
+    axios.delete(`/highlight/${data._id}`).then(success).catch(error)
 
     // Sucesso ao enviar o formulário
     function success() {
@@ -41,11 +41,11 @@ export default function DeleteChallengeModal({ open, setOpen, data, onDone }: an
     <Modal isOpen={open} onClose={handleClose} scrollBehavior="inside">
       <ModalOverlay />
       <ModalContent maxW="2xl">
-        <ModalHeader borderBottomWidth="1px">Excluir desafio</ModalHeader>
+        <ModalHeader borderBottomWidth="1px">Excluir anúncio</ModalHeader>
         <ModalCloseButton onClick={handleClose} />
         <ModalBody>
-          Tem certeza que deseja excluir o seguinte desafio?<br />
-          <b>&quot;{data?.question}&quot;</b>
+          Tem certeza que deseja excluir o seguinte anúncio?<br />
+          <b>&quot;{data?.title}&quot;</b>
         </ModalBody>
         <ModalFooter borderTopWidth="1px">
           <Text color="red" hidden={!error}>Erro: {error}</Text>

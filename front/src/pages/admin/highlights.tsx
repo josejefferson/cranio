@@ -1,48 +1,140 @@
+import Highlight from '@/components/Admin/Highlights/Highlight'
+import DeleteModal from '@/components/Admin/HighlightsEdit/HighlightDeleteModal'
+import EditModal from '@/components/Admin/HighlightsEdit/HighlightEditModal'
 import { Header } from '@/components/index'
-import Head from 'next/head'
-import { Heading, Center, SimpleGrid, Spinner } from '@chakra-ui/react'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { Container } from 'react-bootstrap'
-import React from 'react'
-import Highlight from '@/components/Admin/Highlights'
 import { loginAndGetData } from '@/utils/login-and-get-data'
+import { Box, Button, Center, Heading, SimpleGrid, Spinner, useToast } from '@chakra-ui/react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Head from 'next/head'
+import React from 'react'
+import { Container } from 'react-bootstrap'
+import { MdAdd } from 'react-icons/md'
 
 export default function Highlights() {
-  const [highlights, setHighlights] = React.useState<any>(null)
-  if (!highlights) loginAndGetData('/highlight', highlights, setHighlights)
+  const toast = useToast()
+  const [highlights, setHighlights] = React.useState<any>()
+  const [currentEditing, setCurrentEditing] = React.useState()
+  const [editModalOpen, setEditModalOpen] = React.useState(false)
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false)
+  if (!highlights) loginAndGetData('/highlights', highlights, setHighlights)
 
-  const activeAds = highlights?.filter((h: any) => new Date(h.endDate) > new Date())
-  const inactiveAds = highlights?.filter((h: any) => new Date(h.endDate) <= new Date())
+  console.log(JSON.stringify(highlights))
+  const activeHighlights = highlights?.filter((highlight: any) => new Date(highlight.endDate) >= new Date())
+  const inactiveHighlights = highlights?.filter((highlight: any) => new Date(highlight.endDate) < new Date())
+
+  /** Ação ao clicar no botão Adicionar */
+  const handleAdd = () => {
+    setCurrentEditing(undefined)
+    setEditModalOpen(true)
+  }
+
+  /** Ação ao clicar no botão Editar Anúncio */
+  const handleEdit = (highlight: any) => {
+    setCurrentEditing({ ...highlight })
+    setEditModalOpen(true)
+  }
+
+  /** Ação ao clicar no botão Excluir Anúncio */
+  const handleDelete = (highlight: any) => {
+    setCurrentEditing(highlight)
+    setDeleteModalOpen(true)
+  }
+
+  /** Ao finalizar a edição de um item */
+  const handleEditDone = (data: any, editing = false) => {
+    setCurrentEditing(undefined)
+    toast({
+      title: `O anúncio foi ${editing ? 'editado' : 'criado'} com sucesso!`,
+      status: 'success'
+    })
+
+    if (!editing) setHighlights([...highlights, data])
+    else setHighlights(
+      highlights.map((highlight: any) => {
+        if (highlight._id === data._id) return data
+        return highlight
+      })
+    )
+  }
+
+  /** Ao excluir um anúncio */
+  const handleDeleteDone = (data: any) => {
+    setCurrentEditing(undefined)
+    toast({
+      title: 'O anúncio foi excluído com sucesso!',
+      status: 'success'
+    })
+    setHighlights(highlights.filter((highlight: any) => highlight._id !== data._id))
+  }
 
   return (
     <>
-      <style>{'body{ background: white; color: black; font-size: initial !important; }'}</style>
       <Head>
         <title>Anúncios</title>
       </Head>
 
       <Header />
 
-      <Center>
-        <Heading mt={3}>Anúncios</Heading>
+      <EditModal open={editModalOpen} setOpen={setEditModalOpen} data={currentEditing} onDone={handleEditDone} />
+      <DeleteModal open={deleteModalOpen} setOpen={setDeleteModalOpen} data={currentEditing} onDone={handleDeleteDone} />
+
+      <Center bg="blackAlpha.200">
+        <Heading my={[5, 10]} fontWeight={200}>Anúncios</Heading>
       </Center>
 
-      <Container className="my-3">
-        <Heading as="h3" size="lg" mt={5} mb={2} p={0}>Anúncios ativos ({activeAds?.length || '-'})</Heading>
-        <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2}>
-          {
-            activeAds?.map((highlight: any, i: number) => <Highlight highlight={highlight} key={i} />) ||
-            <><Spinner /></>
-          }
-        </SimpleGrid>
+      <Button
+        size="lg"
+        colorScheme="teal"
+        rightIcon={<MdAdd />}
+        borderRadius="1000"
+        boxShadow="md"
+        position="fixed"
+        bottom="3"
+        right="3"
+        zIndex="1"
+        onClick={handleAdd}
+      >
+        Adicionar
+      </Button>
 
-        <Heading as="h3" size="lg" mt={5} mb={2} p={0}>Anúncios passados ({inactiveAds?.length || '-'})</Heading>
-        <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2}>
-          {
-            inactiveAds?.map((highlight: any, i: number) => <Highlight highlight={highlight} key={i} />) ||
-            <><Spinner /></>
-          }
-        </SimpleGrid>
+      <Container className="my-3">
+        <Box as="section">
+          <Heading as="h3" size="xl" color="blue.500" my={7} p={0}>
+            Anúncios ativos ({activeHighlights?.length ?? '-'})
+          </Heading>
+
+          <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2}>
+            {
+              activeHighlights?.map((highlight: any, i: number) =>
+                <Highlight
+                  highlight={highlight}
+                  key={i}
+                  handleEditButton={() => handleEdit(highlight)}
+                  handleDeleteButton={() => handleDelete(highlight)}
+                />
+              ) || <Spinner />
+            }
+          </SimpleGrid>
+        </Box>
+
+        <Box as="section">
+          <Heading as="h3" size="xl" color="blue.500" my={7} p={0}>
+            Anúncios passados ({inactiveHighlights?.length ?? '-'})
+          </Heading>
+
+          <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2} opacity={0.6}>
+            {
+              inactiveHighlights?.map((highlight: any, i: number) =>
+                <Highlight
+                  highlight={highlight}
+                  key={i}
+                  handleEditButton={() => handleEdit(highlight)}
+                  handleDeleteButton={() => handleDelete(highlight)}
+                />
+              ) || <Spinner />
+            }
+          </SimpleGrid>
+        </Box>
       </Container>
     </>
   )
