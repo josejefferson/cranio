@@ -19,8 +19,8 @@ export default function Highlights() {
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false)
   if (!highlights) loginAndGetData('/highlights', highlights, setHighlights)
 
-  const activeHighlights = highlights?.filter((highlight: any) => new Date(highlight.endDate) >= new Date())
-  const inactiveHighlights = highlights?.filter((highlight: any) => new Date(highlight.endDate) < new Date())
+  const activeHighlights = highlights?.filter((highlight: any) => !highlight.endDate || new Date(highlight.endDate) >= new Date())
+  const inactiveHighlights = highlights?.filter((highlight: any) => highlight.endDate && new Date(highlight.endDate) < new Date())
 
   /** Ação ao clicar no botão Adicionar */
   const handleAdd = () => {
