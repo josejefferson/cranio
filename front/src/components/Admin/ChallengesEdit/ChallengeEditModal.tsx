@@ -24,13 +24,13 @@ export default function EditChallengeModal({ open, setOpen, data, onDone }: any)
     let data: any
     try {
       data = JSON.parse(JSON.stringify(values))
-      if (!data.image?.trim?.()) data.image = undefined
-      if (!data.time) data.time = undefined
-      if (!data.preparationTime) data.preparationTime = undefined
-      if (!data.preparationMessage?.trim?.()) data.preparationMessage = undefined
-      if (!data.correctMessage?.trim?.()) data.correctMessage = undefined
-      if (!data.incorrectMessage?.trim?.()) data.incorrectMessage = undefined
-      if (!data.timeOutMessage?.trim?.()) data.timeOutMessage = undefined
+      if (!data.image?.trim?.()) data.image = null
+      if (!data.time) data.time = null
+      if (!data.preparationTime) data.preparationTime = null
+      if (!data.preparationMessage?.trim?.()) data.preparationMessage = null
+      if (!data.correctMessage?.trim?.()) data.correctMessage = null
+      if (!data.incorrectMessage?.trim?.()) data.incorrectMessage = null
+      if (!data.timeOutMessage?.trim?.()) data.timeOutMessage = null
       data.courseName = data.course?.map((course: string) => {
         return courses.find((c: any) => c.value === +course)?.name
       }) || []

@@ -26,8 +26,8 @@ export default function EditHighlightModal({ open, setOpen, data, onDone }: any)
     try {
       data = JSON.parse(JSON.stringify(values))
       if (data.endDateRaw) data.endDate = new Date(data.endDateRaw).toISOString()
-      if (!data.title?.trim?.()) data.title = undefined
-      if (!data.description?.trim?.()) data.description = undefined
+      if (!data.title?.trim?.()) data.title = null
+      if (!data.description?.trim?.()) data.description = null
       delete data.endDateRaw
       setSubmitting(true)
 
