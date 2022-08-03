@@ -23,22 +23,22 @@ export default function Challenges() {
   const inactiveChallenges = challenges?.filter((challenge: any) => !challenge.active)
 
   /** Ação ao clicar no botão Adicionar */
-  const handleAdd = () => {
+  const handleAdd = React.useCallback(() => {
     setCurrentEditing(undefined)
     setEditModalOpen(true)
-  }
+  }, [])
 
   /** Ação ao clicar no botão Editar Desafio */
-  const handleEdit = (challenge: any) => {
+  const handleEdit = React.useCallback((challenge: any) => {
     setCurrentEditing(challenge)
     setEditModalOpen(true)
-  }
+  }, [])
 
   /** Ação ao clicar no botão Excluir Desafio */
-  const handleDelete = (challenge: any) => {
+  const handleDelete = React.useCallback((challenge: any) => {
     setCurrentEditing(challenge)
     setDeleteModalOpen(true)
-  }
+  }, [])
 
   /** Ao finalizar a edição de um item */
   const handleEditDone = (data: any, editing = false) => {
@@ -114,8 +114,8 @@ export default function Challenges() {
                 <Challenge
                   challenge={challenge}
                   key={i}
-                  handleEditButton={() => handleEdit(challenge)}
-                  handleDeleteButton={() => handleDelete(challenge)}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
                 />
               )
             }
@@ -133,8 +133,8 @@ export default function Challenges() {
                 <Challenge
                   challenge={challenge}
                   key={i}
-                  handleEditButton={() => handleEdit(challenge)}
-                  handleDeleteButton={() => handleDelete(challenge)}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
                 />
               )
             }

@@ -23,22 +23,22 @@ export default function Highlights() {
   const inactiveHighlights = highlights?.filter((highlight: any) => highlight.endDate && new Date(highlight.endDate) < new Date())
 
   /** Ação ao clicar no botão Adicionar */
-  const handleAdd = () => {
+  const handleAdd = React.useCallback(() => {
     setCurrentEditing(undefined)
     setEditModalOpen(true)
-  }
+  }, [])
 
   /** Ação ao clicar no botão Editar Anúncio */
-  const handleEdit = (highlight: any) => {
+  const handleEdit = React.useCallback((highlight: any) => {
     setCurrentEditing({ ...highlight })
     setEditModalOpen(true)
-  }
+  }, [])
 
   /** Ação ao clicar no botão Excluir Anúncio */
-  const handleDelete = (highlight: any) => {
+  const handleDelete = React.useCallback((highlight: any) => {
     setCurrentEditing(highlight)
     setDeleteModalOpen(true)
-  }
+  }, [])
 
   /** Ao finalizar a edição de um item */
   const handleEditDone = (data: any, editing = false) => {
@@ -114,8 +114,8 @@ export default function Highlights() {
                 <Highlight
                   highlight={highlight}
                   key={i}
-                  handleEditButton={() => handleEdit(highlight)}
-                  handleDeleteButton={() => handleDelete(highlight)}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
                 />
               )
             }
@@ -133,8 +133,8 @@ export default function Highlights() {
                 <Highlight
                   highlight={highlight}
                   key={i}
-                  handleEditButton={() => handleEdit(highlight)}
-                  handleDeleteButton={() => handleDelete(highlight)}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
                 />
               )
             }

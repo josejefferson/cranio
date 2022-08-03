@@ -7,7 +7,7 @@ export default function EditModal({ title, data, editing = false, handleSubmit, 
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={() => { }} scrollBehavior="inside">
+    <Modal isOpen={isOpen} onClose={() => { }} scrollBehavior="inside" preserveScrollBarGap blockScrollOnMount={false}>
       <ModalOverlay />
       <Formik initialValues={data} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (

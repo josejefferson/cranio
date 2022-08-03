@@ -2,13 +2,14 @@ import { Badge, Box, HStack, Image, Text } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/pt-br'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import React from 'react'
 import { Button, Ratio } from 'react-bootstrap'
 import { MdDelete, MdEdit, MdSchool, MdShuffle, MdStar, MdTimer, MdViewList, MdWarning } from 'react-icons/md'
 import { courses } from '../Challenges/data'
 dayjs.locale('pt-br')
 dayjs.extend(relativeTime)
 
-export default function Challenges({ challenge, handleEditButton, handleDeleteButton }: any) {
+function Challenge({ challenge, handleEdit, handleDelete }: any) {
   challenge.courseName = challenge.course?.map((course: string) => {
     return courses.find((c: any) => c.value === +course)?.name || course
   })
@@ -78,10 +79,12 @@ export default function Challenges({ challenge, handleEditButton, handleDeleteBu
         </Box>
 
         <HStack spacing={1} mt={2} display="flex" flexGrow={1} alignItems="end">
-          <Button variant="outline-primary" title="Editar" onClick={handleEditButton}><MdEdit /></Button>
-          <Button variant="outline-danger" title="Excluir" onClick={handleDeleteButton}><MdDelete /></Button>
+          <Button variant="outline-primary" title="Editar" onClick={() => handleEdit(challenge)}><MdEdit /></Button>
+          <Button variant="outline-danger" title="Excluir" onClick={() => handleDelete(challenge)}><MdDelete /></Button>
         </HStack>
       </Box>
     </Box>
   )
 }
+
+export default React.memo(Challenge)

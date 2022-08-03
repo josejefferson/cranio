@@ -2,13 +2,13 @@ import { Box, HStack, Image, Text } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/pt-br'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import React from 'react'
 import { Button, Ratio } from 'react-bootstrap'
-import { MdDelete, MdEdit, MdCalendarToday, MdStar } from 'react-icons/md'
+import { MdCalendarToday, MdDelete, MdEdit, MdStar } from 'react-icons/md'
 dayjs.locale('pt-br')
 dayjs.extend(relativeTime)
 
-export default function Highlights({ highlight, handleEditButton, handleDeleteButton }: any) {
-
+function Highlight({ highlight, handleEdit, handleDelete }: any) {
   return (
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" display="flex" flexDirection="column">
       <Ratio aspectRatio="16x9">
@@ -67,10 +67,12 @@ export default function Highlights({ highlight, handleEditButton, handleDeleteBu
         </Box>
 
         <HStack spacing={1} mt={2} display="flex" flexGrow={1} alignItems="end">
-          <Button variant="outline-primary" title="Editar" onClick={handleEditButton}><MdEdit /></Button>
-          <Button variant="outline-danger" title="Excluir" onClick={handleDeleteButton}><MdDelete /></Button>
+          <Button variant="outline-primary" title="Editar" onClick={() => handleEdit(highlight)}><MdEdit /></Button>
+          <Button variant="outline-danger" title="Excluir" onClick={() => handleDelete(highlight)}><MdDelete /></Button>
         </HStack>
       </Box>
     </Box>
   )
 }
+
+export default React.memo(Highlight)
