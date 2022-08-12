@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import './config/database'
 import './config/logger'
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import log from '@josejefferson/jj-logger'
 import Restrictions from './routes/_restrictions'
@@ -15,15 +15,13 @@ import authRoutes from './routes/auth'
 
 const app = express()
 
-declare global {
-	namespace Express {
-		interface Response { time?: any }
-	}
+interface IUserResponse extends Response {
+	time?: number
 }
 
 app.set('trust proxy', true)
-app.use(responseTime((req, res, time: number) => res.time = Math.round(time)))
-app.use((req, res, next) => {
+app.use(responseTime((req: Request, res: IUserResponse, time: number) => res.time = Math.round(time)))
+app.use((req: Request, res: IUserResponse, next: NextFunction) => {
 	res.on('finish', () => {
 		log().http({
 			body: req.body,
