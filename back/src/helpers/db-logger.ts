@@ -1,5 +1,4 @@
-
-import log from '@josejefferson/jj-logger'
+import { log } from '@josejefferson/jj-logger'
 
 export default function dbLogger(schema, modelName) {
 	schema.post('remove', (doc) => log().db({ event: 'remove', collection: modelName, id: doc._id }))

@@ -1,4 +1,4 @@
-import jjLoggerConfig from '@josejefferson/jj-logger/config'
+import { config } from '@josejefferson/jj-logger'
 import Log from '../models/Log'
 import './database'
-jjLoggerConfig.setMongooseModel(Log)
+config.setMongooseModel(Log)

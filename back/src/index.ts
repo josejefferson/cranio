@@ -3,7 +3,7 @@ import './config/database'
 import './config/logger'
 import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
-import log from '@josejefferson/jj-logger'
+import { log, logExpress } from '@josejefferson/jj-logger'
 import Restrictions from './routes/_restrictions'
 import responseTime from 'response-time'
 
@@ -21,21 +21,7 @@ interface IUserResponse extends Response {
 
 app.set('trust proxy', true)
 app.use(responseTime((req: Request, res: IUserResponse, time: number) => res.time = Math.round(time)))
-app.use((req: Request, res: IUserResponse, next: NextFunction) => {
-	res.on('finish', () => {
-		log().http({
-			body: req.body,
-			hostname: req.hostname,
-			ips: req.ips,
-			method: req.method,
-			url: req.originalUrl,
-			referer: req.headers.referrer || req.headers.referer || req.headers.origin,
-			time: res.time,
-			status: res.statusCode
-		})
-	})
-	next()
-})
+app.use(logExpress())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(Restrictions.user)

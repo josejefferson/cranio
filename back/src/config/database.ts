@@ -1,5 +1,5 @@
 import mongoose, { ConnectOptions } from 'mongoose'
-import log from '@josejefferson/jj-logger'
+import { log } from '@josejefferson/jj-logger'
 
 const options: ConnectOptions = {
 	// useNewUrlParser: true,

@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer'
-import log from '@josejefferson/jj-logger'
+import { log } from '@josejefferson/jj-logger'
 import { OAuth2Client } from 'google-auth-library'
 
 export async function createTransporter() {
