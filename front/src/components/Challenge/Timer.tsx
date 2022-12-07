@@ -3,25 +3,11 @@ import 'react-circular-progressbar/dist/styles.css'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import { useState, useEffect } from 'react'
 import chroma from 'chroma-js'
+import useTimer from '@/hooks/useTimer'
 
 export default function Timer({ time, active, timeOutCallback }: any) {
   const [timeChange, setTimeChange] = useState(false)
-
-  // Timer
-  const [timer, setTimer] = useState(time)
-  useEffect(() => {
-    console.log('Iniciando timer...')
-    if (active && timer > 0) {
-      const _timer = setInterval(() => {
-        setTimer(timer - 1)
-        setTimeChange(true)
-        setTimeout(() => setTimeChange(false), 200)
-      }, 1000)
-      return () => clearInterval(_timer)
-    } else if (active && timer === 0) {
-      timeOutCallback(null)
-    }
-  }, [timer, active])
+  const { timer } = useTimer(time, active, setTimeChange, timeOutCallback)
 
   const color = chroma.scale(['#ff595e', '#ffca3a', '#8ac926']).mode('hsl')(timer / time)
 
