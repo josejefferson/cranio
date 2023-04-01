@@ -1,7 +1,10 @@
 import axios from '@/api/index'
 import { Alternatives, Header, Preparation, Question } from '@/components/index'
 import { Props } from '@/interface/index'
+import ChallengeModel from '@/models/Challenge'
+import Student from '@/models/Student'
 import styles from '@/styles/Challenge.module.css'
+import dbConnect from '@/utils/db-connect'
 import getMusic from '@/utils/get-music'
 import { ERRORS, STATUS } from '@/utils/messages'
 import * as popups from '@/utils/popups'
@@ -24,43 +27,52 @@ const Challenge: NextPage<Props> = ({ api }) => {
   const [started, setStarted] = useState(false)
 
   // Responder pergunta
-  const answer = useCallback(async (key: any) => {
-    setActive(false)
-    setAnswered(true)
+  const answer = useCallback(
+    async (key: any) => {
+      setActive(false)
+      setAnswered(true)
 
-    // Que rufem os tambores...
-    setMusic('/music/end.mp3')
-    if (key) popups.drum()
-    try {
-      if (key) {
-        var { data } = await axios.post('/challenge/check', {
-          studentRegistration: slug,
-          challengeID: api._id,
-          choiceID: api.alternatives[key - 1]?._id || null
-        })
-      } else {
-        var data: any = { status: 'TIMEOUT' }
+      // Que rufem os tambores...
+      setMusic('/music/end.mp3')
+      if (key) popups.drum()
+      try {
+        if (key) {
+          var { data } = await axios.post('/challenge/check', {
+            studentRegistration: slug,
+            challengeID: api._id,
+            choiceID: api.alternatives[key - 1]?._id || null
+          })
+        } else {
+          var data: any = { status: 'TIMEOUT' }
+        }
+
+        // Exibe mensagem de sucesso/erro
+        setTimeout(
+          () => {
+            setMusic(STATUS[data.status][3])
+            popups.status({ data })
+          },
+          key ? 2000 : 0
+        )
+      } catch (err) {
+        // Erro
+        console.log(err)
+        popups.error()
+      } finally {
+        // Redireciona
+        if (!test)
+          setTimeout(() => {
+            console.log('Redirecionando...')
+            router.push('/').then(() => {
+              Swal.close()
+            })
+          }, 5000)
+        if (test) setAnswered(false)
+        if (test) setSelectedAlternatives([])
       }
-
-      // Exibe mensagem de sucesso/erro
-      setTimeout(() => {
-        setMusic(STATUS[data.status][3])
-        popups.status({ data })
-      }, key ? 2000 : 0)
-    } catch (err) {
-      // Erro
-      console.log(err)
-      popups.error()
-    } finally {
-      // Redireciona
-      if (!test) setTimeout(() => {
-        console.log('Redirecionando...')
-        router.push('/').then(() => { Swal.close() })
-      }, 5000)
-      if (test) setAnswered(false)
-      if (test) setSelectedAlternatives([])
-    }
-  }, [api, slug, router, test])
+    },
+    [api, slug, router, test]
+  )
 
   // Quando a tecla for apertada
   const handleKeyDown = (e: any) => {
@@ -77,7 +89,7 @@ const Challenge: NextPage<Props> = ({ api }) => {
     if (e.altKey || e.ctrlKey || e.metaKey) return
     const key = parseInt(e.key)
     if (key > api.alternatives.length) return
-    const alternatives = selectedAlternatives.filter(a => a !== key)
+    const alternatives = selectedAlternatives.filter((a) => a !== key)
     if (!alternatives.length && key) return answer(key)
     if (key) setSelectedAlternatives(alternatives)
   }
@@ -106,12 +118,23 @@ const Challenge: NextPage<Props> = ({ api }) => {
         <link rel="preload" as="image" href="/img/alarm.gif" />
       </Head>
 
-      <Preparation {...api} callback={() => { setStarted(true); setActive(true) }} />
+      <Preparation
+        {...api}
+        callback={() => {
+          setStarted(true)
+          setActive(true)
+        }}
+      />
 
       <div className={styles.container}>
         <Header />
         <Question {...api} active={active} timeOutCallback={() => answer(null)} />
-        <Alternatives  {...api} active={active} selected={selectedAlternatives} handleClick={handleClick} />
+        <Alternatives
+          {...api}
+          active={active}
+          selected={selectedAlternatives}
+          handleClick={handleClick}
+        />
       </div>
 
       <div className={`${styles.waveWrapper} ${styles.waveAnimation}`}>
@@ -132,14 +155,38 @@ const Challenge: NextPage<Props> = ({ api }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params, query }: any) => {
+  await dbConnect()
+
   try {
-    const url = query.challenge
-      ? `/challenge/${query.challenge}`
-      : `/challenge/start/${params.slug}`
-    const { data } = await axios.get<Props>(url)
-    return { props: { api: data } }
+    if (query.challenge) {
+      const challenge = await ChallengeModel.findById(query.challenge)
+      return { props: { api: JSON.parse(JSON.stringify(challenge)) } }
+    }
+
+    const registration = params.slug
+    const student = await Student.findOne({ registration })
+    if (!student)
+      throw { error: true, code: 'STUDENT_NOT_FOUND', message: 'Estudante não encontrado' }
+    if (!student.canPlayToday)
+      throw { error: true, code: 'CANT_PLAY_TODAY', message: 'Você só pode jogar amanhã' }
+
+    const challenge = await (ChallengeModel as any).findRandom(student.course, student.testUser)
+    if (!challenge)
+      throw {
+        error: true,
+        code: 'NO_CHALLENGES',
+        message: 'Não há desafios disponíveis para o seu curso'
+      }
+
+    if (!student.testUser) student.playedToday()
+
+    return {
+      props: {
+        api: JSON.parse(JSON.stringify(challenge))
+      }
+    }
   } catch (err: any) {
-    const error = ERRORS[err?.response?.data?.code]
+    const error = ERRORS[err?.code]
     if (!error) throw err
 
     const query = new URLSearchParams()

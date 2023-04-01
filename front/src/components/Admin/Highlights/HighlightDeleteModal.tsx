@@ -21,7 +21,7 @@ export default function DeleteHighlightModal({ open, setOpen, data, onDone }: an
     }
 
     setIsSubmitting(true)
-    axios.delete(`/highlight/${data._id}`, { auth }).then(success).catch(error)
+    axios.delete(`/admin/highlights/${data._id}`).then(success).catch(error)
 
     // Sucesso ao enviar o formulário
     function success() {

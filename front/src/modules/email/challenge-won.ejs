@@ -1,0 +1,77 @@
+<html lang="pt-BR">
+
+<head></head>
+
+<body bgcolor="#ffffff" style="font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0;">
+	<!-- Barra de navegação -->
+	<table style="margin: auto;">
+		<tr>
+			<td style="padding-top: 10px; padding-left: 10px;">
+				<img src="https://i.imgur.com/a1tIo0C.png" width="42px" height="42px" style="width: 42px; height: 42px;">
+			</td>
+			<td style="padding-top: 10px;">
+				<div style="color: #9B2226; font-size: 1.5rem; line-height: 40px; text-align: center; padding-left: 10px;"><b>O Crânio</b></div>
+			</td>
+		</tr>
+	</table>
+
+	<div style="padding-top: 10px; border-bottom: #e8eaed 1px solid;"></div>
+
+	<!-- Texto da mensagem -->
+	<div align="center" style="padding: 0 16px;">
+		<table align="center" width="100%" style="max-width: 528px; min-width: 256px; border-spacing: 0 10px;">
+			<tbody>
+				<tr><td style="text-align: center;" colspan="2"><img src="https://i.imgur.com/bjOW174.gif"></td></tr>
+				<tr><td style="color: #5F6368; text-align: center;" colspan="2"><h1><u><%= student.shortName %></u> cumpriu o desafio!</h1></td></tr>
+
+				<tr><td colspan="2"><h2>👨‍🎓 Dados do estudante</h2></td></tr>
+				<tr>
+					<td><span style="background: #388E3C; color: white; display: inline-block; width: 110px; text-align: center; padding: 5px 10px; border-radius: 1000px;">Nome</span></td>
+					<td style="padding-left: 10px; width: 100%"><b><%= student.name %></b></td>
+				</tr>
+				<tr style="padding-top: 10px;">
+					<td><span style="background: #1976D2; color: white; display: inline-block; width: 110px; text-align: center; padding: 5px 10px; border-radius: 1000px;">Curso</span></td>
+					<td style="padding-left: 10px; width: 100%"><%= student.courseName %> (<%= student.course %>)</td>
+				</tr>
+				<tr>
+					<td><span style="background: #F57C00; color: white; display: inline-block; width: 110px; text-align: center; padding: 5px 10px; border-radius: 1000px;">Matrícula</span></td>
+					<td style="padding-left: 10px; width: 100%"><b><%= student.registration %></b></td>
+				</tr>
+
+				<tr><td colspan="2"><h2 style="margin-top: 24px;">🧩 Desafio</h2></td></tr>
+				<tr>
+					<td><span style="background: #512DA8; color: white; display: inline-block; width: 110px; text-align: center; padding: 5px 10px; border-radius: 1000px;">Tópico</span></td>
+					<td style="padding-left: 10px; width: 100%"><b><%= challenge.topic %></b></td>
+				</tr>
+				<tr>
+					<td><span style="background: #D32F2F; color: white; display: inline-block; width: 110px; text-align: center; padding: 5px 10px; border-radius: 1000px;">Pergunta</span></td>
+					<td style="padding-left: 10px; width: 100%"><%= challenge.question %></td>
+				</tr>
+
+				<tr>
+					<td colspan="2" style="padding-top: 20px;">
+						<span style="background: #455A64; color: white; display: inline-block; width: 100%; text-align: center; padding: 5px 10px; border-radius: 1000px;">
+							Alternativas
+						</span>
+					</td>
+				</tr>
+
+				<% for (const i in challenge.alternatives) { %>
+				<% const alternative = challenge.alternatives[i] %>
+				<tr>
+					<td colspan="2" style="text-align: center; padding-top: 5px">
+						<span style="border: <%= alternative.correct ? '#00796B' : '#E64A19' %> 2px solid; color: <%= alternative.correct ? '#00796B' : '#E64A19' %>; display: inline-block; text-align: left; width: 98%; padding: 5px 10px; border-radius: 10px;">
+							<b><%= +i + 1 %>.</b> <%= alternative.title %>
+							<% if (alternative.subtitle) { %>
+							<small><%= alternative.subtitle %></small>
+							<% } %>
+						</span>
+					</td>
+				</tr>
+				<% } %>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

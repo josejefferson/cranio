@@ -17,7 +17,7 @@ export default function Challenges() {
   const [currentEditing, setCurrentEditing] = React.useState()
   const [editModalOpen, setEditModalOpen] = React.useState(false)
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false)
-  if (!challenges) loginAndGetData('/challenges', challenges, setChallenges)
+  if (!challenges) loginAndGetData('/admin/challenges', challenges, setChallenges)
 
   const activeChallenges = challenges?.filter((challenge: any) => challenge.active)
   const inactiveChallenges = challenges?.filter((challenge: any) => !challenge.active)

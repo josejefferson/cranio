@@ -31,8 +31,8 @@ export default function EditHighlightModal({ open, setOpen, data, onDone }: any)
       delete data.endDateRaw
       setSubmitting(true)
 
-      if (editing) axios.put(`/highlight/${data._id}`, data, { auth }).then(success).catch(error)
-      else axios.post('/highlight', data, { auth }).then(success).catch(error)
+      if (editing) axios.put(`/admin/highlights/${data._id}`, data).then(success).catch(error)
+      else axios.post('/admin/highlights', data).then(success).catch(error)
     } catch (err) {
       error(err)
     }

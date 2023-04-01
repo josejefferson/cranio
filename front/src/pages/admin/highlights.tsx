@@ -17,7 +17,7 @@ export default function Highlights() {
   const [currentEditing, setCurrentEditing] = React.useState()
   const [editModalOpen, setEditModalOpen] = React.useState(false)
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false)
-  if (!highlights) loginAndGetData('/highlights', highlights, setHighlights)
+  if (!highlights) loginAndGetData('/admin/highlights', highlights, setHighlights)
 
   const activeHighlights = highlights?.filter((highlight: any) => !highlight.endDate || new Date(highlight.endDate) >= new Date())
   const inactiveHighlights = highlights?.filter((highlight: any) => highlight.endDate && new Date(highlight.endDate) < new Date())

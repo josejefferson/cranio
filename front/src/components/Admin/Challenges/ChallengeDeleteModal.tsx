@@ -21,7 +21,7 @@ export default function DeleteChallengeModal({ open, setOpen, data, onDone }: an
     }
 
     setIsSubmitting(true)
-    axios.delete(`/challenge/${data._id}`, { auth }).then(success).catch(error)
+    axios.delete(`/admin/challenges/${data._id}`).then(success).catch(error)
 
     // Sucesso ao enviar o formulário
     function success() {

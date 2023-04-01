@@ -20,12 +20,18 @@ interface IUserResponse extends Response {
 }
 
 app.set('trust proxy', true)
-app.use(responseTime((req: Request, res: IUserResponse, time: number) => res.time = Math.round(time)))
+app.options('*', cors({ credentials: true, origin: true }))
+app.use(cors({ credentials: true, origin: true }))
+app.use(
+	responseTime(
+		(req: Request, res: IUserResponse, time: number) =>
+			(res.time = Math.round(time))
+	)
+)
 app.use(logExpress())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(Restrictions.user)
-app.use(cors())
 app.use(['/highlight', '/highlights'], highlightRoutes)
 app.use(['/challenge', '/challenges'], challengeRoutes)
 app.use(['/log', '/logs'], logRoutes)
@@ -40,7 +46,9 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
 	if (res.headersSent) return
 	log('Erro').error(err)
-	res.status(500).send({ error: true, code: 500, message: err.message, details: err })
+	res
+		.status(500)
+		.send({ error: true, code: 500, message: err.message, details: err })
 })
 
 const PORT = process.env.PORT || 3000

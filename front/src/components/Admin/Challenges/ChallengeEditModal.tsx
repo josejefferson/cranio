@@ -37,8 +37,8 @@ export default function EditChallengeModal({ open, setOpen, data, onDone }: any)
       if (data.course?.length === 0) data.course = null
       setSubmitting(true)
 
-      if (editing) axios.put(`/challenge/${data._id}`, data, { auth }).then(success).catch(error)
-      else axios.post('/challenge', data, { auth }).then(success).catch(error)
+      if (editing) axios.put(`/admin/challenges/${data._id}`, data).then(success).catch(error)
+      else axios.post('/admin/challenges', data).then(success).catch(error)
 
       try {
         localStorage.setItem('cranio.defaultCreators', JSON.stringify(data.createdBy))

@@ -1,18 +1,41 @@
-import React from 'react'
-import type { NextPage, GetServerSideProps } from 'next'
+import { useLoadingContext } from '@/contexts/loading'
+import Challenge from '@/models/Challenge'
+import Highlight from '@/models/Highlight'
+import dbConnect from '@/utils/db-connect'
+import { Box, chakra, Heading } from '@chakra-ui/react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import axios from '../api/'
-import { Box, Heading, chakra } from '@chakra-ui/react'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React from 'react'
 import Carousel from 'react-bootstrap/Carousel'
-import { useLoadingContext } from '@/contexts/loading'
 import Marquee from 'react-fast-marquee'
 import { IHighlights, Props } from '../interface'
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data: highlights } = await axios.get<IHighlights>('/highlight/active')
-  const { data: challenges } = await axios.get<IHighlights>('/challenge/active')
+  await dbConnect()
+  const currentDate = new Date().toISOString()
+  const highlights = await Highlight.find({
+    $or: [{ endDate: { $gte: currentDate } }, { endDate: null }]
+  })
+
+  const rawChallenges = await Challenge.find({ active: true })
+  let challengesPerCourse: any = {}
+
+  for (const challenge of rawChallenges) {
+    if (!challenge.courseName) continue
+    for (let courseName of challenge.courseName) {
+      courseName = courseName.trim()
+      challengesPerCourse[courseName] = challengesPerCourse[courseName] || 0
+      challengesPerCourse[courseName]++
+    }
+  }
+
+  const challenges = {
+    totalChallenges: rawChallenges.length,
+    challengesPerCourse
+  }
+
   return {
     props: {
       highlights,
@@ -71,12 +94,7 @@ const Home: NextPage<Props> = (props) => {
         <title>O Crânio</title>
       </Head>
 
-      <Carousel
-        className="highlights-carousel"
-        pause={false}
-        controls={false}
-        interval={10000}
-      >
+      <Carousel className="highlights-carousel" pause={false} controls={false} interval={10000}>
         {props.highlights?.map((highlight: IHighlights, index: number) => {
           return (
             <Carousel.Item key={index} onClick={handleClick}>
@@ -86,12 +104,7 @@ const Home: NextPage<Props> = (props) => {
                 <React.Fragment />
               ) : (
                 <Carousel.Caption>
-                  <Box
-                    w="full"
-                    shadow="lg"
-                    rounded="lg"
-                    overflow="hidden"
-                  >
+                  <Box w="full" shadow="lg" rounded="lg" overflow="hidden">
                     <Heading
                       py={2}
                       textAlign="center"
@@ -103,11 +116,7 @@ const Home: NextPage<Props> = (props) => {
                     >
                       {highlight.title}
                     </Heading>
-                    <chakra.span
-                      fontWeight="bold"
-                      color="gray.200"
-                      textAlign={'center'}
-                    >
+                    <chakra.span fontWeight="bold" color="gray.200" textAlign={'center'}>
                       {highlight.description}
                     </chakra.span>
                   </Box>
@@ -128,19 +137,25 @@ const Home: NextPage<Props> = (props) => {
         speed={100}
         gradient={false}
       >
-        {props.challenges.totalChallenges ? (<>
-          {props.challenges.totalChallenges} desafios disponíveis:&nbsp;
-          {Object.entries(props.challenges.challengesPerCourse).map(([course, count]: any) => `${course} (${count})`).join(' - ')}
-          <div style={{ width: '20vh' }} />
-        </>) : (<>
-          Nenhum desafio aberto no momento. Por favor, volte mais tarde
-          <div style={{ width: '20vh' }} />
-        </>)}
-
+        {props.challenges.totalChallenges ? (
+          <>
+            {props.challenges.totalChallenges} desafios disponíveis:&nbsp;
+            {Object.entries(props.challenges.challengesPerCourse)
+              .map(([course, count]: any) => `${course} (${count})`)
+              .join(' - ')}
+            <div style={{ width: '20vh' }} />
+          </>
+        ) : (
+          <>
+            Nenhum desafio aberto no momento. Por favor, volte mais tarde
+            <div style={{ width: '20vh' }} />
+          </>
+        )}
         Pronto para um desafio? Aperte qualquer tecla...
         <div style={{ width: '20vh' }} />
       </Marquee>
     </Box>
   )
 }
+
 export default Home

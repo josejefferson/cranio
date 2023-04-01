@@ -5,10 +5,10 @@ const Swal = swalReact(_Swal)
 
 export function loginAndGetData(path: string, data: any, setData: Function) {
   axios.get(path, {
-    auth: {
-      username: typeof window !== 'undefined' ? localStorage.getItem('cranio.backend.username') || '' : '',
-      password: typeof window !== 'undefined' ? localStorage.getItem('cranio.backend.password') || '' : ''
-    }
+    // auth: {
+    //   username: typeof window !== 'undefined' ? localStorage.getItem('cranio.backend.username') || '' : '',
+    //   password: typeof window !== 'undefined' ? localStorage.getItem('cranio.backend.password') || '' : ''
+    // }
   }).then((res) => {
     setData(res.data)
   }).catch(async (err) => {
