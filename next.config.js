@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
 	publicRuntimeConfig: {
-		apiEndpoint: process.env.API_ENDPOINT
+		apiEndpoint: process.env.API_ENDPOINT || '/api'
 	}
 }
 

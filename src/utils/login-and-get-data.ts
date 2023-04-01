@@ -12,7 +12,7 @@ export function loginAndGetData(path: string, data: any, setData: Function) {
   }).then((res) => {
     setData(res.data)
   }).catch(async (err) => {
-    if (err.response.status === 401) {
+    if (err?.response?.status === 401) {
       const { value: username } = await Swal.fire({
         title: 'Fazer login',
         input: 'text',
