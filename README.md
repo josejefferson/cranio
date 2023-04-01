@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/josejefferson/cranio/blob/main/front/public/img/icon.png?raw=true" alt="Logo">
+    <img src="https://github.com/josejefferson/cranio/blob/main/public/img/icon.png?raw=true" alt="Logo">
 </div>
 
 # 💀 O Crânio
@@ -17,7 +17,9 @@ O Crânio consiste em uma tela em que passam anúncios e um jogo de perguntas.
 
 Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu **.env**
 
-`API_ENDPOINT` - URL do servidor _backend_
+`MONGO_DB` - _Connection string_ do MongoDB
+
+`GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_EMAIL`, `GMAIL_REFRESH_TOKEN` - Credenciais do Gmail
 
 ## 📖 Documentação da API
 
@@ -27,14 +29,12 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 #### Retorna todos os anúncios ativos
 
 ```http
-GET /ad/active
-GET /ads/active
+GET /highlights/active
 ```
 
 #### Retorna um desafio para um determinado estudante
 
 ```http
-GET /challenge/start/${registration}
 GET /challenges/start/${registration}
 ```
 
@@ -45,7 +45,6 @@ GET /challenges/start/${registration}
 #### Verifica se a resposta está correta
 
 ```http
-POST /challenge/check
 POST /challenges/check
 ```
 
@@ -58,7 +57,6 @@ POST /challenges/check
 #### Retorna os dados de um estudante
 
 ```http
-GET /student/find/${registration}
 GET /students/find/${registration}
 ```
 
