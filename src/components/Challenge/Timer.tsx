@@ -22,7 +22,9 @@ export default function Timer({ time, active, timeOutCallback }: any) {
         maxValue={time}
       />
       <div
-        className={`${styles.timerText} ${timer <= 5 ? styles.timeEnding : ''} ${timeChange ? styles.scale : ''}`}
+        className={`${styles.timerText} ${timer <= 5 ? styles.timeEnding : ''} ${
+          timeChange ? styles.scale : ''
+        }`}
       >
         {timer}
       </div>

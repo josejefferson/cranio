@@ -11,7 +11,8 @@ export default function Footer() {
         {/* </AvatarGroup> */}
       </div>
       <div className={styles.developedBy}>
-        Desenvolvido por <b>Jefferson Dantas</b> &amp; <b>Kayo Ronald</b> com o professor <b>Marcos</b> para os estudantes do IFPB Campus Picuí
+        Desenvolvido por <b>Jefferson Dantas</b> &amp; <b>Kayo Ronald</b> com o professor{' '}
+        <b>Marcos</b> para os estudantes do IFPB Campus Picuí
       </div>
       <Divider orientation="vertical" height="2vh" />
       <div className={styles.formText}>

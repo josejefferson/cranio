@@ -4,7 +4,15 @@ import DeleteModal from '@/components/Admin/Challenges/ChallengeDeleteModal'
 import EditModal from '@/components/Admin/Challenges/ChallengeEditModal'
 import { Header } from '@/components/index'
 import { loginAndGetData } from '@/utils/login-and-get-data'
-import { Box, Button, Center, CircularProgress, Heading, SimpleGrid, useToast } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Center,
+  CircularProgress,
+  Heading,
+  SimpleGrid,
+  useToast
+} from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Head from 'next/head'
 import React from 'react'
@@ -49,12 +57,13 @@ export default function Challenges() {
     })
 
     if (!editing) setChallenges([...challenges, data])
-    else setChallenges(
-      challenges.map((challenge: any) => {
-        if (challenge._id === data._id) return data
-        return challenge
-      })
-    )
+    else
+      setChallenges(
+        challenges.map((challenge: any) => {
+          if (challenge._id === data._id) return data
+          return challenge
+        })
+      )
   }
 
   /** Ao excluir um desafio */
@@ -74,13 +83,27 @@ export default function Challenges() {
         <title>Desafios</title>
       </Head>
 
-      <a href="/admin"><Header /></a>
+      <a href="/admin">
+        <Header />
+      </a>
 
-      <EditModal open={editModalOpen} setOpen={setEditModalOpen} data={currentEditing} onDone={handleEditDone} />
-      <DeleteModal open={deleteModalOpen} setOpen={setDeleteModalOpen} data={currentEditing} onDone={handleDeleteDone} />
+      <EditModal
+        open={editModalOpen}
+        setOpen={setEditModalOpen}
+        data={currentEditing}
+        onDone={handleEditDone}
+      />
+      <DeleteModal
+        open={deleteModalOpen}
+        setOpen={setDeleteModalOpen}
+        data={currentEditing}
+        onDone={handleDeleteDone}
+      />
 
       <Center bg="blackAlpha.200">
-        <Heading my={[5, 10]} fontWeight={200}>Desafios</Heading>
+        <Heading my={[5, 10]} fontWeight={200}>
+          Desafios
+        </Heading>
       </Center>
 
       <Button
@@ -109,16 +132,14 @@ export default function Challenges() {
           </Heading>
 
           <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2}>
-            {
-              activeChallenges?.map((challenge: any, i: number) =>
-                <Challenge
-                  challenge={challenge}
-                  key={i}
-                  handleEdit={handleEdit}
-                  handleDelete={handleDelete}
-                />
-              )
-            }
+            {activeChallenges?.map((challenge: any, i: number) => (
+              <Challenge
+                challenge={challenge}
+                key={i}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            ))}
           </SimpleGrid>
         </Box>
 
@@ -128,16 +149,14 @@ export default function Challenges() {
           </Heading>
 
           <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2} opacity={0.6}>
-            {
-              inactiveChallenges?.map((challenge: any, i: number) =>
-                <Challenge
-                  challenge={challenge}
-                  key={i}
-                  handleEdit={handleEdit}
-                  handleDelete={handleDelete}
-                />
-              )
-            }
+            {inactiveChallenges?.map((challenge: any, i: number) => (
+              <Challenge
+                challenge={challenge}
+                key={i}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            ))}
           </SimpleGrid>
         </Box>
 

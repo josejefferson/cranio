@@ -23,23 +23,23 @@ body {
 
 /* Fontes */
 @font-face {
-  font-family: "Bungee";
-  src: url("/fonts/Bungee.otf") format("opentype");
+  font-family: 'Bungee';
+  src: url('/fonts/Bungee.otf') format('opentype');
 }
 
 @font-face {
-  font-family: "Cherry Bomb";
-  src: url("/fonts/CherryBomb.ttf") format("truetype");
+  font-family: 'Cherry Bomb';
+  src: url('/fonts/CherryBomb.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Days One";
-  src: url("/fonts/DaysOne.ttf") format("truetype");
+  font-family: 'Days One';
+  src: url('/fonts/DaysOne.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Varela Round";
-  src: url("/fonts/VarelaRound.ttf") format("truetype");
+  font-family: 'Varela Round';
+  src: url('/fonts/VarelaRound.ttf') format('truetype');
 }
 
 .no-border-radius {
@@ -125,7 +125,7 @@ body {
 .marquee-container {
   background: linear-gradient(0deg, #000000c4, transparent);
   bottom: 0;
-  font-family: "Varela Round";
+  font-family: 'Varela Round';
   height: 4vh;
   position: absolute !important;
   z-index: 1;
@@ -136,7 +136,7 @@ body {
   background: none !important;
 }
 
-.progress>div {
+.progress > div {
   transition: width 1s linear;
 }
 
@@ -215,8 +215,6 @@ body {
   height: 5vh !important;
 }
 
-
-
 /* Modal do Chakra */
 @media screen and (max-width: 30em) {
   .chakra-modal__content {
@@ -227,7 +225,6 @@ body {
 }
 
 @media screen and (max-width: 30em) and (max-height: 300px) {
-
   .chakra-modal__footer,
   .chakra-modal__header {
     padding: 0.25rem 0.5rem !important;

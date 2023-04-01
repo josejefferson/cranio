@@ -14,12 +14,12 @@
 }
 
 .avatars span:not(:last-child) {
-  margin-right: .5vh;
+  margin-right: 0.5vh;
 }
 
 .avatars span {
   width: 2.5vh;
-	height: 2.5vh;
+  height: 2.5vh;
 }
 
 .developedBy {
@@ -32,7 +32,6 @@
 }
 
 .formQRCode {
-
 }
 
 .formQRCode img {

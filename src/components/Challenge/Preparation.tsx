@@ -3,7 +3,13 @@ import { Header } from '@/components/index'
 import Timer from '@/components/Challenge/Timer'
 import { useState } from 'react'
 
-export default function Preparation({ topic, time, preparationTime, preparationMessage, callback }: any) {
+export default function Preparation({
+  topic,
+  time,
+  preparationTime,
+  preparationMessage,
+  callback
+}: any) {
   preparationTime = preparationTime || 3
   preparationMessage = preparationMessage || 'O desafio já vai começar!'
   const [active, setActive] = useState(true)
@@ -30,7 +36,7 @@ export default function Preparation({ topic, time, preparationTime, preparationM
           </div>
         </div>
         <div className={styles.timer}>
-          <Timer {...({ time: preparationTime, active, timeOutCallback })} />
+          <Timer {...{ time: preparationTime, active, timeOutCallback }} />
         </div>
       </div>
     </div>

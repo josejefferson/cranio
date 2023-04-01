@@ -22,15 +22,15 @@ const PageNotFound: NextPage = () => {
         <style>{'body { background-color: #202024; }'}</style>
       </Head>
       <Header />
-      <Flex color="white" flexDirection="column" minHeight="calc(100vh - 7vh)" width="full" align="center" justifyContent="center">
-        <Box
-          px={4}
-          width="94%"
-          maxWidth="900px"
-          borderRadius="sm"
-          textAlign="center"
-          mt={10}
-        >
+      <Flex
+        color="white"
+        flexDirection="column"
+        minHeight="calc(100vh - 7vh)"
+        width="full"
+        align="center"
+        justifyContent="center"
+      >
+        <Box px={4} width="94%" maxWidth="900px" borderRadius="sm" textAlign="center" mt={10}>
           <Box p={4}>
             <MotionBox
               width={['100%', '70%', '60%', '60%']}
@@ -51,9 +51,7 @@ const PageNotFound: NextPage = () => {
             </MotionBox>
             <VStack justify="center" spacing="4" textAlign="center" as="article" mt={5}>
               <Heading fontSize="3xl">404 | Página não encontrada :(</Heading>
-              <Text fontSize={{ md: 'xl' }}>
-                Desculpe-nos, mas esta página não existe
-              </Text>
+              <Text fontSize={{ md: 'xl' }}>Desculpe-nos, mas esta página não existe</Text>
             </VStack>
           </Box>
         </Box>

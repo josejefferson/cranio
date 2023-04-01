@@ -51,7 +51,7 @@
 }
 
 .waveTop {
-  background-image: url("/img/wave-top.png");
+  background-image: url('/img/wave-top.png');
   background-size: 50% 100px;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .waveMiddle {
-  background-image: url("/img/wave-mid.png");
+  background-image: url('/img/wave-mid.png');
   background-size: 50% 120px;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .waveBottom {
-  background-image: url("/img/wave-bot.png");
+  background-image: url('/img/wave-bot.png');
   background-size: 50% 100px;
 }
 

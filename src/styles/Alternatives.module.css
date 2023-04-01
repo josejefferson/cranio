@@ -42,7 +42,7 @@
   cursor: pointer;
   display: flex;
   flex: 1;
-  font-family: "Varela Round";
+  font-family: 'Varela Round';
   gap: 2vh;
   max-height: 10vh;
   opacity: 1;
@@ -60,7 +60,7 @@
 }
 
 .alternativeNumber {
-  font-family: "Cherry Bomb";
+  font-family: 'Cherry Bomb';
   font-size: 3vh;
   margin-left: 1vh;
 }
@@ -75,7 +75,7 @@
     opacity: 0;
     transform: translateX(-110%);
   }
-  
+
   to {
     opacity: 1;
     transform: translateX(0);

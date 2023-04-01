@@ -51,10 +51,12 @@ export default function Login(): JSX.Element {
 
       if (data.canPlayToday) {
         loading(true, 'Procurando um desafio')
-        router.push({
-          pathname: '/challenge/[slug]',
-          query: { slug: data.registration }
-        }).then(() => loading(false))
+        router
+          .push({
+            pathname: '/challenge/[slug]',
+            query: { slug: data.registration }
+          })
+          .then(() => loading(false))
       } else {
         await popups.cantPlayToday()
         setIsActive(true)

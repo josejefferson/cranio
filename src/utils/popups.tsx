@@ -10,13 +10,22 @@ import { BsAsterisk, BsHash } from 'react-icons/bs'
 export function studentConfirm({ data }: any) {
   return Swal.fire({
     title: `Você é <u>${data.shortName}</u>?`,
-    html: `Você digitou a matrícula <b>${data.registration}</b> correspondente a(o) aluno(a) ` +
+    html:
+      `Você digitou a matrícula <b>${data.registration}</b> correspondente a(o) aluno(a) ` +
       `<b>${data.shortName}</b> do curso de <b>${data.courseName}</b>.<br><br>Caso esteja correta, ` +
       'pressione <b>*</b><br>Se você deseja corrigir, pressione <b>#</b>',
     icon: 'question',
     showCancelButton: true,
-    confirmButtonText: <Center><BsAsterisk /> SIM</Center>,
-    cancelButtonText: <Center><BsHash /> NÃO</Center>,
+    confirmButtonText: (
+      <Center>
+        <BsAsterisk /> SIM
+      </Center>
+    ),
+    cancelButtonText: (
+      <Center>
+        <BsHash /> NÃO
+      </Center>
+    ),
     timer: 10000,
     timerProgressBar: true
   })

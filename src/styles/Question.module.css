@@ -15,8 +15,12 @@
 }
 
 @keyframes translate {
-  from {transform:translateY(-100%);}
-  to {transform:translateY(0);}
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .details {
@@ -27,17 +31,17 @@
 }
 
 .topic {
-  font-family: "Bungee";
+  font-family: 'Bungee';
   margin-bottom: 0.6vh;
 }
 
 .question {
-  font-family: "Varela Round";
+  font-family: 'Varela Round';
   flex: 1;
 }
 
 .createdBy {
-  font-family: "Varela Round";
+  font-family: 'Varela Round';
   display: flex;
   align-items: flex-end;
   font-size: 1vh;

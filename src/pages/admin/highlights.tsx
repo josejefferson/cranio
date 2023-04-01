@@ -4,7 +4,15 @@ import DeleteModal from '@/components/Admin/Highlights/HighlightDeleteModal'
 import EditModal from '@/components/Admin/Highlights/HighlightEditModal'
 import { Header } from '@/components/index'
 import { loginAndGetData } from '@/utils/login-and-get-data'
-import { Box, Button, Center, CircularProgress, Heading, SimpleGrid, useToast } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Center,
+  CircularProgress,
+  Heading,
+  SimpleGrid,
+  useToast
+} from '@chakra-ui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Head from 'next/head'
 import React from 'react'
@@ -19,8 +27,12 @@ export default function Highlights() {
   const [deleteModalOpen, setDeleteModalOpen] = React.useState(false)
   if (!highlights) loginAndGetData('/admin/highlights', highlights, setHighlights)
 
-  const activeHighlights = highlights?.filter((highlight: any) => !highlight.endDate || new Date(highlight.endDate) >= new Date())
-  const inactiveHighlights = highlights?.filter((highlight: any) => highlight.endDate && new Date(highlight.endDate) < new Date())
+  const activeHighlights = highlights?.filter(
+    (highlight: any) => !highlight.endDate || new Date(highlight.endDate) >= new Date()
+  )
+  const inactiveHighlights = highlights?.filter(
+    (highlight: any) => highlight.endDate && new Date(highlight.endDate) < new Date()
+  )
 
   /** Ação ao clicar no botão Adicionar */
   const handleAdd = React.useCallback(() => {
@@ -49,12 +61,13 @@ export default function Highlights() {
     })
 
     if (!editing) setHighlights([...highlights, data])
-    else setHighlights(
-      highlights.map((highlight: any) => {
-        if (highlight._id === data._id) return data
-        return highlight
-      })
-    )
+    else
+      setHighlights(
+        highlights.map((highlight: any) => {
+          if (highlight._id === data._id) return data
+          return highlight
+        })
+      )
   }
 
   /** Ao excluir um anúncio */
@@ -74,13 +87,27 @@ export default function Highlights() {
         <title>Anúncios</title>
       </Head>
 
-      <a href="/admin"><Header /></a>
+      <a href="/admin">
+        <Header />
+      </a>
 
-      <EditModal open={editModalOpen} setOpen={setEditModalOpen} data={currentEditing} onDone={handleEditDone} />
-      <DeleteModal open={deleteModalOpen} setOpen={setDeleteModalOpen} data={currentEditing} onDone={handleDeleteDone} />
+      <EditModal
+        open={editModalOpen}
+        setOpen={setEditModalOpen}
+        data={currentEditing}
+        onDone={handleEditDone}
+      />
+      <DeleteModal
+        open={deleteModalOpen}
+        setOpen={setDeleteModalOpen}
+        data={currentEditing}
+        onDone={handleDeleteDone}
+      />
 
       <Center bg="blackAlpha.200">
-        <Heading my={[5, 10]} fontWeight={200}>Anúncios</Heading>
+        <Heading my={[5, 10]} fontWeight={200}>
+          Anúncios
+        </Heading>
       </Center>
 
       <Button
@@ -109,16 +136,14 @@ export default function Highlights() {
           </Heading>
 
           <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2}>
-            {
-              activeHighlights?.map((highlight: any, i: number) =>
-                <Highlight
-                  highlight={highlight}
-                  key={i}
-                  handleEdit={handleEdit}
-                  handleDelete={handleDelete}
-                />
-              )
-            }
+            {activeHighlights?.map((highlight: any, i: number) => (
+              <Highlight
+                highlight={highlight}
+                key={i}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            ))}
           </SimpleGrid>
         </Box>
 
@@ -128,16 +153,14 @@ export default function Highlights() {
           </Heading>
 
           <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={2} opacity={0.6}>
-            {
-              inactiveHighlights?.map((highlight: any, i: number) =>
-                <Highlight
-                  highlight={highlight}
-                  key={i}
-                  handleEdit={handleEdit}
-                  handleDelete={handleDelete}
-                />
-              )
-            }
+            {inactiveHighlights?.map((highlight: any, i: number) => (
+              <Highlight
+                highlight={highlight}
+                key={i}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            ))}
           </SimpleGrid>
         </Box>
 

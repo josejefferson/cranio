@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 /**
- * 
+ *
  * @param time total timer duration in ticks (default = seconds)
  * @param active boolean indicating whether the timer is on
  * @param timeCallback function that will be executed every second and at the end of animation

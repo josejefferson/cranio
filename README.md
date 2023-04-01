@@ -13,7 +13,6 @@ O Crânio consiste em uma tela em que passam anúncios e um jogo de perguntas.
 - [@josejefferson](https://www.github.com/josejefferson)
 - [@KayoRonald](https://www.github.com/KayoRonald)
 
-
 ## 🔑 Variáveis de Ambiente
 
 Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu **.env**
@@ -39,10 +38,9 @@ GET /challenge/start/${registration}
 GET /challenges/start/${registration}
 ```
 
-| Parâmetro      | Tipo       | Descrição                                   |
-| :------------- | :--------- | :------------------------------------------ |
-| `registration` | `string`   | **Obrigatório**. Matrícula do estudante     |
-
+| Parâmetro      | Tipo     | Descrição                               |
+| :------------- | :------- | :-------------------------------------- |
+| `registration` | `string` | **Obrigatório**. Matrícula do estudante |
 
 #### Verifica se a resposta está correta
 
@@ -51,12 +49,11 @@ POST /challenge/check
 POST /challenges/check
 ```
 
-| Parâmetro             | Tipo       | Descrição                                    |
-| :-------------------- | :--------- | :------------------------------------------- |
-| `studentRegistration` | `string`   | **Obrigatório**. Matrícula do estudante      |
-| `challengeID`         | `string`   | **Obrigatório**. ID do desafio               |
-| `choiceID`            | `string`   | **Obrigatório**. ID da alternativa escolhida |
-
+| Parâmetro             | Tipo     | Descrição                                    |
+| :-------------------- | :------- | :------------------------------------------- |
+| `studentRegistration` | `string` | **Obrigatório**. Matrícula do estudante      |
+| `challengeID`         | `string` | **Obrigatório**. ID do desafio               |
+| `choiceID`            | `string` | **Obrigatório**. ID da alternativa escolhida |
 
 #### Retorna os dados de um estudante
 
@@ -65,10 +62,9 @@ GET /student/find/${registration}
 GET /students/find/${registration}
 ```
 
-| Parâmetro      | Tipo       | Descrição                                    |
-| :------------- | :--------- | :------------------------------------------- |
-| `registration` | `string`   | **Obrigatório**. Matrícula do estudante      |
-
+| Parâmetro      | Tipo     | Descrição                               |
+| :------------- | :------- | :-------------------------------------- |
+| `registration` | `string` | **Obrigatório**. Matrícula do estudante |
 
 ## 🚀 Rodando localmente
 
@@ -102,13 +98,11 @@ yarn build
 yarn start
 ```
 
-
 ## 💿 Stack utilizada
 
 **Front-end:** React, NextJS, Bootstrap, Chakra UI
 
 **Back-end:** NodeJS, Express
-
 
 ## 🗨 Feedback
 

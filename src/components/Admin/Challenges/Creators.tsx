@@ -12,22 +12,27 @@ export default function Creators() {
 
   return (
     <FormControl mt={2}>
-      <FieldArray name="createdBy" render={(array) => (<>
-        <VStack spacing={2}>
-          {array.form.values.createdBy.map(Creator(array, listRef, isSubmitting))}
-        </VStack>
+      <FieldArray
+        name="createdBy"
+        render={(array) => (
+          <>
+            <VStack spacing={2}>
+              {array.form.values.createdBy.map(Creator(array, listRef, isSubmitting))}
+            </VStack>
 
-        <Button
-          mt={3}
-          size="sm"
-          colorScheme="green"
-          onClick={() => array.push(emptyCreator)}
-          leftIcon={<MdAdd />}
-          disabled={isSubmitting}
-        >
-          Adicionar remetente
-        </Button>
-      </>)} />
+            <Button
+              mt={3}
+              size="sm"
+              colorScheme="green"
+              onClick={() => array.push(emptyCreator)}
+              leftIcon={<MdAdd />}
+              disabled={isSubmitting}
+            >
+              Adicionar remetente
+            </Button>
+          </>
+        )}
+      />
     </FormControl>
   )
 }

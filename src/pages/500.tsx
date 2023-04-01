@@ -23,15 +23,15 @@ const Page500: NextPage = () => {
         <style>{'body { background-color: #202024; }'}</style>
       </Head>
       <Header />
-      <Flex color="white" flexDirection="column" minHeight="calc(100vh - 7vh)" width="full" align="center" justifyContent="center">
-        <Box
-          px={4}
-          width="94%"
-          maxWidth="900px"
-          borderRadius="sm"
-          textAlign="center"
-          mt={10}
-        >
+      <Flex
+        color="white"
+        flexDirection="column"
+        minHeight="calc(100vh - 7vh)"
+        width="full"
+        align="center"
+        justifyContent="center"
+      >
+        <Box px={4} width="94%" maxWidth="900px" borderRadius="sm" textAlign="center" mt={10}>
           <Box p={4}>
             <MotionBox
               width={['100%', '70%', '60%', '60%']}
@@ -53,7 +53,8 @@ const Page500: NextPage = () => {
             <VStack justify="center" spacing="4" textAlign="center" as="article" mt={5}>
               <Heading fontSize="3xl">{title || '500 | Erro do servidor'}</Heading>
               <Text fontSize={{ md: 'xl' }}>
-                {description || 'Desculpe-nos, mas estamos com problemas para responder a sua requisição'}
+                {description ||
+                  'Desculpe-nos, mas estamos com problemas para responder a sua requisição'}
               </Text>
             </VStack>
           </Box>

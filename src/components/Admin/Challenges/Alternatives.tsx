@@ -2,7 +2,14 @@ import scrollList from '@/utils/scrollList'
 import { Box, Button, FormControl, FormLabel, HStack, IconButton, VStack } from '@chakra-ui/react'
 import { FieldArray, useFormikContext } from 'formik'
 import { useRef } from 'react'
-import { MdAdd, MdClose, MdDelete, MdDone, MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
+import {
+  MdAdd,
+  MdClose,
+  MdDelete,
+  MdDone,
+  MdKeyboardArrowDown,
+  MdKeyboardArrowUp
+} from 'react-icons/md'
 import FormField from '../EditModal/FormField'
 import { emptyAlternative } from './data'
 
@@ -25,27 +32,33 @@ export default function Alternatives() {
   return (
     <FormControl mt={2}>
       <FormLabel>Alternativas</FormLabel>
-      <FieldArray name="alternatives" render={(array) => (<>
-        <VStack spacing={2}>
-          {array.form.values.alternatives.map(Alternative(array, listRef, isSubmitting))}
-        </VStack>
+      <FieldArray
+        name="alternatives"
+        render={(array) => (
+          <>
+            <VStack spacing={2}>
+              {array.form.values.alternatives.map(Alternative(array, listRef, isSubmitting))}
+            </VStack>
 
-        {
-          !array.form.values.alternatives.some((alternative: any) => alternative.correct) &&
-          <Box color="red.500" fontSize="sm" mt={2}>Nenhuma alternativa correta selecionada</Box>
-        }
+            {!array.form.values.alternatives.some((alternative: any) => alternative.correct) && (
+              <Box color="red.500" fontSize="sm" mt={2}>
+                Nenhuma alternativa correta selecionada
+              </Box>
+            )}
 
-        <Button
-          mt={3}
-          size="sm"
-          colorScheme="green"
-          onClick={() => array.push({ ...emptyAlternative })}
-          leftIcon={<MdAdd />}
-          disabled={isSubmitting}
-        >
-          Adicionar alternativa
-        </Button>
-      </>)} />
+            <Button
+              mt={3}
+              size="sm"
+              colorScheme="green"
+              onClick={() => array.push({ ...emptyAlternative })}
+              leftIcon={<MdAdd />}
+              disabled={isSubmitting}
+            >
+              Adicionar alternativa
+            </Button>
+          </>
+        )}
+      />
     </FormControl>
   )
 }
@@ -98,12 +111,7 @@ export function Alternative(array: any, listRef: any, isSubmitting: boolean) {
         </IconButton>
       </Box>
 
-      <Box
-        width="min-content"
-        display="flex"
-        alignItems="center"
-        flexDirection="column"
-      >
+      <Box width="min-content" display="flex" alignItems="center" flexDirection="column">
         <IconButton
           size="xs"
           variant="ghost"

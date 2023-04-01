@@ -1,4 +1,11 @@
-import { Checkbox, FormControl, FormHelperText, FormLabel, SimpleGrid, Text } from '@chakra-ui/react'
+import {
+  Checkbox,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  SimpleGrid,
+  Text
+} from '@chakra-ui/react'
 import { FastField } from 'formik'
 import { courses } from './data'
 

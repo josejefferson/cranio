@@ -35,16 +35,27 @@ export default function Highlights() {
         <title>Administração do Crânio</title>
       </Head>
 
-      <a href="/admin"><Header /></a>
+      <a href="/admin">
+        <Header />
+      </a>
 
       <Center bg="blackAlpha.200">
-        <Heading my={[5, 10]} fontWeight={200}>Administração</Heading>
+        <Heading my={[5, 10]} fontWeight={200}>
+          Administração
+        </Heading>
       </Center>
 
       <Container className="my-3">
         <Box display="flex" justifyContent="center" gap="3">
           <a href="/admin/challenges">
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" display="flex" flexDirection="column" maxWidth="300px">
+            <Box
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              display="flex"
+              flexDirection="column"
+              maxWidth="300px"
+            >
               <Image
                 src="/img/challenges-card.svg"
                 fallbackSrc="/img/challenges-card.svg"
@@ -55,7 +66,14 @@ export default function Highlights() {
           </a>
 
           <a href="/admin/highlights">
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" display="flex" flexDirection="column" maxWidth="300px">
+            <Box
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              display="flex"
+              flexDirection="column"
+              maxWidth="300px"
+            >
               <Image
                 src="/img/highlights-card.svg"
                 fallbackSrc="/img/highlights-card.svg"
@@ -67,7 +85,9 @@ export default function Highlights() {
         </Box>
 
         <Box textAlign="center" hidden={!hasLoginInformation}>
-          <Button mt={3} colorScheme="red" size="sm" onClick={logOut}>Esquecer informações de login</Button>
+          <Button mt={3} colorScheme="red" size="sm" onClick={logOut}>
+            Esquecer informações de login
+          </Button>
         </Box>
       </Container>
     </>

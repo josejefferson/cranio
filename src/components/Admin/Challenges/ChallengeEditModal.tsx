@@ -27,13 +27,15 @@ export default function EditChallengeModal({ open, setOpen, data, onDone }: any)
       if (!data.image?.trim?.()) data.image = defaultValues.image
       if (!data.time) data.time = defaultValues.time
       if (!data.preparationTime) data.preparationTime = defaultValues.preparationTime
-      if (!data.preparationMessage?.trim?.()) data.preparationMessage = defaultValues.preparationMessage
+      if (!data.preparationMessage?.trim?.())
+        data.preparationMessage = defaultValues.preparationMessage
       if (!data.correctMessage?.trim?.()) data.correctMessage = defaultValues.correctMessage
       if (!data.incorrectMessage?.trim?.()) data.incorrectMessage = defaultValues.incorrectMessage
       if (!data.timeOutMessage?.trim?.()) data.timeOutMessage = defaultValues.timeOutMessage
-      data.courseName = data.course?.map((course: string) => {
-        return courses.find((c: any) => c.value === +course)?.name
-      }) || []
+      data.courseName =
+        data.course?.map((course: string) => {
+          return courses.find((c: any) => c.value === +course)?.name
+        }) || []
       if (data.course?.length === 0) data.course = null
       setSubmitting(true)
 
@@ -42,7 +44,7 @@ export default function EditChallengeModal({ open, setOpen, data, onDone }: any)
 
       try {
         localStorage.setItem('cranio.defaultCreators', JSON.stringify(data.createdBy))
-      } catch { }
+      } catch {}
     } catch (err) {
       error(err)
     }
@@ -74,7 +76,7 @@ export default function EditChallengeModal({ open, setOpen, data, onDone }: any)
     const defaultCreatorsObject = JSON.parse(defaultCreatorsString)
     if (!Array.isArray(defaultCreatorsObject)) throw new Error()
     initialValues.createdBy = defaultCreatorsObject
-  } catch { }
+  } catch {}
 
   if (data?.course) data.course = data.course.map(String)
 

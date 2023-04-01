@@ -1,4 +1,12 @@
-import { Checkbox, FormControl, FormLabel, Input, InputGroup, InputLeftAddon, InputRightAddon } from '@chakra-ui/react'
+import {
+  Checkbox,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon
+} from '@chakra-ui/react'
 import { FastField } from 'formik'
 
 export default function FormField({
@@ -22,18 +30,24 @@ export default function FormField({
         {({ field, meta, form }: any) => (
           <InputGroup>
             {left && <InputLeftAddon children={left} />}
-            {!checkbox && <Input
-              {...field}
-              type={type}
-              placeholder={placeholder}
-              size={size}
-              autoFocus={autoFocus}
-              isInvalid={meta.error && meta.touched}
-              autoComplete="off"
-              disabled={form.isSubmitting}
-              {...inputProps}
-            />}
-            {checkbox && <Checkbox {...field} {...inputProps} disabled={form.isSubmitting}>{checkbox}</Checkbox>}
+            {!checkbox && (
+              <Input
+                {...field}
+                type={type}
+                placeholder={placeholder}
+                size={size}
+                autoFocus={autoFocus}
+                isInvalid={meta.error && meta.touched}
+                autoComplete="off"
+                disabled={form.isSubmitting}
+                {...inputProps}
+              />
+            )}
+            {checkbox && (
+              <Checkbox {...field} {...inputProps} disabled={form.isSubmitting}>
+                {checkbox}
+              </Checkbox>
+            )}
             {right && <InputRightAddon children={right} />}
           </InputGroup>
         )}

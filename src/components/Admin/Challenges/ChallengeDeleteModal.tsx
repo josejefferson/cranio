@@ -1,5 +1,15 @@
 import axios from '@/api/index'
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react'
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text
+} from '@chakra-ui/react'
 import React from 'react'
 
 export default function DeleteChallengeModal({ open, setOpen, data, onDone }: any) {
@@ -49,13 +59,20 @@ export default function DeleteChallengeModal({ open, setOpen, data, onDone }: an
         <ModalHeader borderBottomWidth="1px">Excluir desafio</ModalHeader>
         <ModalCloseButton onClick={handleClose} />
         <ModalBody>
-          Tem certeza que deseja excluir o seguinte desafio?<br />
+          Tem certeza que deseja excluir o seguinte desafio?
+          <br />
           <b>&quot;{data?.question}&quot;</b>
         </ModalBody>
         <ModalFooter borderTopWidth="1px">
-          <Text color="red" hidden={!error}>Erro: {error}</Text>
-          <Button autoFocus variant="ghost" mr={3} onClick={handleClose}>Não</Button>
-          <Button isLoading={isSubmitting} colorScheme="red" onClick={handleConfirm}>Sim</Button>
+          <Text color="red" hidden={!error}>
+            Erro: {error}
+          </Text>
+          <Button autoFocus variant="ghost" mr={3} onClick={handleClose}>
+            Não
+          </Button>
+          <Button isLoading={isSubmitting} colorScheme="red" onClick={handleConfirm}>
+            Sim
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

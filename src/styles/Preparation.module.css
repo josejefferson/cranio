@@ -1,6 +1,6 @@
 .container {
   background-color: var(--color-background-preparation);
-  background-image: url("/img/preparation-background.svg");
+  background-image: url('/img/preparation-background.svg');
   background-position: bottom;
   background-size: 100%;
   color: white;
@@ -55,7 +55,7 @@
   animation: zoom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   animation-delay: 0s;
   animation-fill-mode: both;
-  font-family: "Bungee";
+  font-family: 'Bungee';
   font-size: 6vh;
   line-height: 10vh !important;
   margin-bottom: 1vh;
@@ -66,20 +66,20 @@
   animation: zoom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   animation-delay: 0.2s;
   animation-fill-mode: both;
-  font-family: "Varela Round";
+  font-family: 'Varela Round';
   font-size: 3vh;
 }
 
 .topic,
 .time {
-  font-family: "Days One";
+  font-family: 'Days One';
   font-size: 4vh;
   margin-top: 3vh;
 }
 
 .topicName,
 .timeValue {
-  font-family: "Varela Round";
+  font-family: 'Varela Round';
   font-size: 3vh;
 }
 
