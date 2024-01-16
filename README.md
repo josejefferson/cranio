@@ -4,14 +4,14 @@
 
 # 💀 O Crânio
 
-O Crânio consiste em uma tela em que passam anúncios e um jogo de perguntas.
+O "Crânio" é um sistema de mural de avisos eletrônicos desenvolvido especificamente para o IFPB. Além de servir como um mural informativo, o Crânio oferece aos alunos a oportunidade de participar de um jogo de perguntas integrado, onde podem responder às questões e, a critério do professor, ter a chance de ganhar recompensas.
 
-[Acesse aqui](https://cranio-ifpb.vercel.app/)
+Este projeto foi concebido por um professor do campus com a ideia de executá-lo em uma Raspberry Pi, conectada a um monitor e um teclado numérico. Isso permite que os alunos visualizem os avisos no mural e interajam facilmente com o jogo de perguntas. Quando um aluno responde a uma pergunta corretamente, o sistema envia automaticamente um e-mail ao professor notificando-o da resposta correta.
 
 ## 👨‍💻 Autores
 
-- [@josejefferson](https://www.github.com/josejefferson)
-- [@KayoRonald](https://www.github.com/KayoRonald)
+- [@josejefferson](https://github.com/josejefferson)
+- [@KayoRonald](https://github.com/KayoRonald)
 
 ## 🔑 Variáveis de Ambiente
 
@@ -35,7 +35,7 @@ GET /highlights/active
 #### Retorna um desafio para um determinado estudante
 
 ```http
-GET /challenges/start/${registration}
+GET /challenges/start/:registration
 ```
 
 | Parâmetro      | Tipo     | Descrição                               |
@@ -57,7 +57,7 @@ POST /challenges/check
 #### Retorna os dados de um estudante
 
 ```http
-GET /students/find/${registration}
+GET /students/find/:registration
 ```
 
 | Parâmetro      | Tipo     | Descrição                               |
@@ -96,11 +96,15 @@ yarn build
 yarn start
 ```
 
-## 💿 Stack utilizada
+## 💿 Tecnologias utilizadas
 
-**Front-end:** React, NextJS, Bootstrap, Chakra UI
-
-**Back-end:** NodeJS, Express
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Chakra](https://img.shields.io/badge/chakra-%234ED1C5.svg?style=for-the-badge&logo=chakraui&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
 ## 🗨 Feedback
 
